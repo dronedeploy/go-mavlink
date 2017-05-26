@@ -27,8 +27,8 @@ type SensPower struct {
 	Adc121Cs2Amp   float32 //  Board current sensor 2 reading in amps
 }
 
-func (self *SensPower) MsgID() uint8 {
-	return 201
+func (self *SensPower) MsgID() MessageID {
+	return MSG_ID_SENS_POWER
 }
 
 func (self *SensPower) MsgName() string {
@@ -75,8 +75,8 @@ type SensMppt struct {
 	Mppt3Status   uint8   //  MPPT3 status
 }
 
-func (self *SensMppt) MsgID() uint8 {
-	return 202
+func (self *SensMppt) MsgID() MessageID {
+	return MSG_ID_SENS_MPPT
 }
 
 func (self *SensMppt) MsgName() string {
@@ -153,8 +153,8 @@ type AslctrlData struct {
 	Spoilersengaged uint8   //
 }
 
-func (self *AslctrlData) MsgID() uint8 {
-	return 203
+func (self *AslctrlData) MsgID() MessageID {
+	return MSG_ID_ASLCTRL_DATA
 }
 
 func (self *AslctrlData) MsgName() string {
@@ -241,8 +241,8 @@ type AslctrlDebug struct {
 	I82  uint8   //  Debug data
 }
 
-func (self *AslctrlDebug) MsgID() uint8 {
-	return 204
+func (self *AslctrlDebug) MsgID() MessageID {
+	return MSG_ID_ASLCTRL_DEBUG
 }
 
 func (self *AslctrlDebug) MsgName() string {
@@ -294,8 +294,8 @@ type AsluavStatus struct {
 	ServoStatus  [8]uint8 //  Status vector for up to 8 servos
 }
 
-func (self *AsluavStatus) MsgID() uint8 {
-	return 205
+func (self *AsluavStatus) MsgID() MessageID {
+	return MSG_ID_ASLUAV_STATUS
 }
 
 func (self *AsluavStatus) MsgName() string {
@@ -336,8 +336,8 @@ type EkfExt struct {
 	Alpha     float32 //  Angle of attack [rad]
 }
 
-func (self *EkfExt) MsgID() uint8 {
-	return 206
+func (self *EkfExt) MsgID() MessageID {
+	return MSG_ID_EKF_EXT
 }
 
 func (self *EkfExt) MsgName() string {
@@ -385,8 +385,8 @@ type AslObctrl struct {
 	ObctrlStatus uint8   //  Off-board computer status
 }
 
-func (self *AslObctrl) MsgID() uint8 {
-	return 207
+func (self *AslObctrl) MsgID() MessageID {
+	return MSG_ID_ASL_OBCTRL
 }
 
 func (self *AslObctrl) MsgName() string {
@@ -430,8 +430,8 @@ type SensAtmos struct {
 	Humidity    float32 //  Relative humidity [%]
 }
 
-func (self *SensAtmos) MsgID() uint8 {
-	return 208
+func (self *SensAtmos) MsgID() MessageID {
+	return MSG_ID_SENS_ATMOS
 }
 
 func (self *SensAtmos) MsgName() string {
@@ -474,8 +474,8 @@ type SensBatmon struct {
 	Soc            uint8   // Battery pack state-of-charge
 }
 
-func (self *SensBatmon) MsgID() uint8 {
-	return 209
+func (self *SensBatmon) MsgID() MessageID {
+	return MSG_ID_SENS_BATMON
 }
 
 func (self *SensBatmon) MsgName() string {
@@ -552,8 +552,8 @@ type FwSoaringData struct {
 	Valid                uint8   // Data valid [-]
 }
 
-func (self *FwSoaringData) MsgID() uint8 {
-	return 210
+func (self *FwSoaringData) MsgID() MessageID {
+	return MSG_ID_FW_SOARING_DATA
 }
 
 func (self *FwSoaringData) MsgName() string {
@@ -637,8 +637,8 @@ type SensorpodStatus struct {
 	CpuTemp             uint8  // Temperature of sensorpod CPU in [deg C]
 }
 
-func (self *SensorpodStatus) MsgID() uint8 {
-	return 211
+func (self *SensorpodStatus) MsgID() MessageID {
+	return MSG_ID_SENSORPOD_STATUS
 }
 
 func (self *SensorpodStatus) MsgName() string {
@@ -692,8 +692,8 @@ type SensPowerBoard struct {
 	PwrBrdLedStatus  uint8   // Power board leds status
 }
 
-func (self *SensPowerBoard) MsgID() uint8 {
-	return 212
+func (self *SensPowerBoard) MsgID() MessageID {
+	return MSG_ID_SENS_POWER_BOARD
 }
 
 func (self *SensPowerBoard) MsgName() string {
@@ -741,24 +741,24 @@ func (self *SensPowerBoard) Unpack(p *Packet) error {
 
 // Message IDs
 const (
-	MSG_ID_SENS_POWER       = 201
-	MSG_ID_SENS_MPPT        = 202
-	MSG_ID_ASLCTRL_DATA     = 203
-	MSG_ID_ASLCTRL_DEBUG    = 204
-	MSG_ID_ASLUAV_STATUS    = 205
-	MSG_ID_EKF_EXT          = 206
-	MSG_ID_ASL_OBCTRL       = 207
-	MSG_ID_SENS_ATMOS       = 208
-	MSG_ID_SENS_BATMON      = 209
-	MSG_ID_FW_SOARING_DATA  = 210
-	MSG_ID_SENSORPOD_STATUS = 211
-	MSG_ID_SENS_POWER_BOARD = 212
+	MSG_ID_SENS_POWER       MessageID = 201
+	MSG_ID_SENS_MPPT        MessageID = 202
+	MSG_ID_ASLCTRL_DATA     MessageID = 203
+	MSG_ID_ASLCTRL_DEBUG    MessageID = 204
+	MSG_ID_ASLUAV_STATUS    MessageID = 205
+	MSG_ID_EKF_EXT          MessageID = 206
+	MSG_ID_ASL_OBCTRL       MessageID = 207
+	MSG_ID_SENS_ATMOS       MessageID = 208
+	MSG_ID_SENS_BATMON      MessageID = 209
+	MSG_ID_FW_SOARING_DATA  MessageID = 210
+	MSG_ID_SENSORPOD_STATUS MessageID = 211
+	MSG_ID_SENS_POWER_BOARD MessageID = 212
 )
 
 // DialectAsluav is the dialect represented by ASLUAV.xml
 var DialectAsluav *Dialect = &Dialect{
 	Name: "ASLUAV",
-	crcExtras: map[uint8]uint8{
+	crcExtras: map[MessageID]uint8{
 		MSG_ID_SENS_POWER:       218,
 		MSG_ID_SENS_MPPT:        231,
 		MSG_ID_ASLCTRL_DATA:     172,
@@ -772,7 +772,7 @@ var DialectAsluav *Dialect = &Dialect{
 		MSG_ID_SENSORPOD_STATUS: 54,
 		MSG_ID_SENS_POWER_BOARD: 242,
 	},
-	messageConstructorByMsgId: map[uint8]func(*Packet) Message{
+	messageConstructorByMsgId: map[MessageID]func(*Packet) Message{
 		MSG_ID_SENS_POWER: func(pkt *Packet) Message {
 			msg := new(SensPower)
 			msg.Unpack(pkt)

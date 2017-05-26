@@ -400,8 +400,8 @@ type SensorOffsets struct {
 	MagOfsZ        int16   // magnetometer Z offset
 }
 
-func (self *SensorOffsets) MsgID() uint8 {
-	return 150
+func (self *SensorOffsets) MsgID() MessageID {
+	return MSG_ID_SENSOR_OFFSETS
 }
 
 func (self *SensorOffsets) MsgName() string {
@@ -456,8 +456,8 @@ type SetMagOffsets struct {
 	TargetComponent uint8 // Component ID
 }
 
-func (self *SetMagOffsets) MsgID() uint8 {
-	return 151
+func (self *SetMagOffsets) MsgID() MessageID {
+	return MSG_ID_SET_MAG_OFFSETS
 }
 
 func (self *SetMagOffsets) MsgName() string {
@@ -496,8 +496,8 @@ type Meminfo struct {
 	Freemem   uint16 // free memory
 }
 
-func (self *Meminfo) MsgID() uint8 {
-	return 152
+func (self *Meminfo) MsgID() MessageID {
+	return MSG_ID_MEMINFO
 }
 
 func (self *Meminfo) MsgName() string {
@@ -535,8 +535,8 @@ type ApAdc struct {
 	Adc6 uint16 // ADC output 6
 }
 
-func (self *ApAdc) MsgID() uint8 {
-	return 153
+func (self *ApAdc) MsgID() MessageID {
+	return MSG_ID_AP_ADC
 }
 
 func (self *ApAdc) MsgName() string {
@@ -585,8 +585,8 @@ type DigicamConfigure struct {
 	ExtraParam      uint8   // Extra parameters enumeration (0 means ignore)
 }
 
-func (self *DigicamConfigure) MsgID() uint8 {
-	return 154
+func (self *DigicamConfigure) MsgID() MessageID {
+	return MSG_ID_DIGICAM_CONFIGURE
 }
 
 func (self *DigicamConfigure) MsgName() string {
@@ -644,8 +644,8 @@ type DigicamControl struct {
 	ExtraParam      uint8   // Extra parameters enumeration (0 means ignore)
 }
 
-func (self *DigicamControl) MsgID() uint8 {
-	return 155
+func (self *DigicamControl) MsgID() MessageID {
+	return MSG_ID_DIGICAM_CONTROL
 }
 
 func (self *DigicamControl) MsgName() string {
@@ -697,8 +697,8 @@ type MountConfigure struct {
 	StabYaw         uint8 // (1 = yes, 0 = no)
 }
 
-func (self *MountConfigure) MsgID() uint8 {
-	return 156
+func (self *MountConfigure) MsgID() MessageID {
+	return MSG_ID_MOUNT_CONFIGURE
 }
 
 func (self *MountConfigure) MsgName() string {
@@ -742,8 +742,8 @@ type MountControl struct {
 	SavePosition    uint8 // if "1" it will save current trimmed position on EEPROM (just valid for NEUTRAL and LANDING)
 }
 
-func (self *MountControl) MsgID() uint8 {
-	return 157
+func (self *MountControl) MsgID() MessageID {
+	return MSG_ID_MOUNT_CONTROL
 }
 
 func (self *MountControl) MsgName() string {
@@ -786,8 +786,8 @@ type MountStatus struct {
 	TargetComponent uint8 // Component ID
 }
 
-func (self *MountStatus) MsgID() uint8 {
-	return 158
+func (self *MountStatus) MsgID() MessageID {
+	return MSG_ID_MOUNT_STATUS
 }
 
 func (self *MountStatus) MsgName() string {
@@ -829,8 +829,8 @@ type FencePoint struct {
 	Count           uint8   // total number of points (for sanity checking)
 }
 
-func (self *FencePoint) MsgID() uint8 {
-	return 160
+func (self *FencePoint) MsgID() MessageID {
+	return MSG_ID_FENCE_POINT
 }
 
 func (self *FencePoint) MsgName() string {
@@ -871,8 +871,8 @@ type FenceFetchPoint struct {
 	Idx             uint8 // point index (first point is 1, 0 is for return point)
 }
 
-func (self *FenceFetchPoint) MsgID() uint8 {
-	return 161
+func (self *FenceFetchPoint) MsgID() MessageID {
+	return MSG_ID_FENCE_FETCH_POINT
 }
 
 func (self *FenceFetchPoint) MsgName() string {
@@ -908,8 +908,8 @@ type FenceStatus struct {
 	BreachType   uint8  // last breach type (see FENCE_BREACH_* enum)
 }
 
-func (self *FenceStatus) MsgID() uint8 {
-	return 162
+func (self *FenceStatus) MsgID() MessageID {
+	return MSG_ID_FENCE_STATUS
 }
 
 func (self *FenceStatus) MsgName() string {
@@ -950,8 +950,8 @@ type Ahrs struct {
 	ErrorYaw    float32 // average error_yaw value
 }
 
-func (self *Ahrs) MsgID() uint8 {
-	return 163
+func (self *Ahrs) MsgID() MessageID {
+	return MSG_ID_AHRS
 }
 
 func (self *Ahrs) MsgName() string {
@@ -1002,8 +1002,8 @@ type Simstate struct {
 	Lng   int32   // Longitude in degrees * 1E7
 }
 
-func (self *Simstate) MsgID() uint8 {
-	return 164
+func (self *Simstate) MsgID() MessageID {
+	return MSG_ID_SIMSTATE
 }
 
 func (self *Simstate) MsgName() string {
@@ -1053,8 +1053,8 @@ type Hwstatus struct {
 	I2cerr uint8  // I2C error count
 }
 
-func (self *Hwstatus) MsgID() uint8 {
-	return 165
+func (self *Hwstatus) MsgID() MessageID {
+	return MSG_ID_HWSTATUS
 }
 
 func (self *Hwstatus) MsgName() string {
@@ -1091,8 +1091,8 @@ type Radio struct {
 	Remnoise uint8  // remote background noise level
 }
 
-func (self *Radio) MsgID() uint8 {
-	return 166
+func (self *Radio) MsgID() MessageID {
+	return MSG_ID_RADIO
 }
 
 func (self *Radio) MsgName() string {
@@ -1141,8 +1141,8 @@ type LimitsStatus struct {
 	ModsTriggered uint8  // AP_Limit_Module bitfield of triggered modules, (see enum moduleid or LIMIT_MODULE)
 }
 
-func (self *LimitsStatus) MsgID() uint8 {
-	return 167
+func (self *LimitsStatus) MsgID() MessageID {
+	return MSG_ID_LIMITS_STATUS
 }
 
 func (self *LimitsStatus) MsgName() string {
@@ -1189,8 +1189,8 @@ type Wind struct {
 	SpeedZ    float32 // vertical wind speed (m/s)
 }
 
-func (self *Wind) MsgID() uint8 {
-	return 168
+func (self *Wind) MsgID() MessageID {
+	return MSG_ID_WIND
 }
 
 func (self *Wind) MsgName() string {
@@ -1225,8 +1225,8 @@ type Data16 struct {
 	Data [16]uint8 // raw data
 }
 
-func (self *Data16) MsgID() uint8 {
-	return 169
+func (self *Data16) MsgID() MessageID {
+	return MSG_ID_DATA16
 }
 
 func (self *Data16) MsgName() string {
@@ -1261,8 +1261,8 @@ type Data32 struct {
 	Data [32]uint8 // raw data
 }
 
-func (self *Data32) MsgID() uint8 {
-	return 170
+func (self *Data32) MsgID() MessageID {
+	return MSG_ID_DATA32
 }
 
 func (self *Data32) MsgName() string {
@@ -1297,8 +1297,8 @@ type Data64 struct {
 	Data [64]uint8 // raw data
 }
 
-func (self *Data64) MsgID() uint8 {
-	return 171
+func (self *Data64) MsgID() MessageID {
+	return MSG_ID_DATA64
 }
 
 func (self *Data64) MsgName() string {
@@ -1333,8 +1333,8 @@ type Data96 struct {
 	Data [96]uint8 // raw data
 }
 
-func (self *Data96) MsgID() uint8 {
-	return 172
+func (self *Data96) MsgID() MessageID {
+	return MSG_ID_DATA96
 }
 
 func (self *Data96) MsgName() string {
@@ -1368,8 +1368,8 @@ type Rangefinder struct {
 	Voltage  float32 // raw voltage if available, zero otherwise
 }
 
-func (self *Rangefinder) MsgID() uint8 {
-	return 173
+func (self *Rangefinder) MsgID() MessageID {
+	return MSG_ID_RANGEFINDER
 }
 
 func (self *Rangefinder) MsgName() string {
@@ -1411,8 +1411,8 @@ type AirspeedAutocal struct {
 	Pcz          float32 // EKF Pcz
 }
 
-func (self *AirspeedAutocal) MsgID() uint8 {
-	return 174
+func (self *AirspeedAutocal) MsgID() MessageID {
+	return MSG_ID_AIRSPEED_AUTOCAL
 }
 
 func (self *AirspeedAutocal) MsgName() string {
@@ -1472,8 +1472,8 @@ type RallyPoint struct {
 	Flags           uint8  // See RALLY_FLAGS enum for definition of the bitmask.
 }
 
-func (self *RallyPoint) MsgID() uint8 {
-	return 175
+func (self *RallyPoint) MsgID() MessageID {
+	return MSG_ID_RALLY_POINT
 }
 
 func (self *RallyPoint) MsgName() string {
@@ -1522,8 +1522,8 @@ type RallyFetchPoint struct {
 	Idx             uint8 // point index (first point is 0)
 }
 
-func (self *RallyFetchPoint) MsgID() uint8 {
-	return 176
+func (self *RallyFetchPoint) MsgID() MessageID {
+	return MSG_ID_RALLY_FETCH_POINT
 }
 
 func (self *RallyFetchPoint) MsgName() string {
@@ -1561,8 +1561,8 @@ type CompassmotStatus struct {
 	Interference  uint16  // interference (percent)
 }
 
-func (self *CompassmotStatus) MsgID() uint8 {
-	return 177
+func (self *CompassmotStatus) MsgID() MessageID {
+	return MSG_ID_COMPASSMOT_STATUS
 }
 
 func (self *CompassmotStatus) MsgName() string {
@@ -1606,8 +1606,8 @@ type Ahrs2 struct {
 	Lng      int32   // Longitude in degrees * 1E7
 }
 
-func (self *Ahrs2) MsgID() uint8 {
-	return 178
+func (self *Ahrs2) MsgID() MessageID {
+	return MSG_ID_AHRS2
 }
 
 func (self *Ahrs2) MsgName() string {
@@ -1654,8 +1654,8 @@ type CameraStatus struct {
 	EventId      uint8   // See CAMERA_STATUS_TYPES enum for definition of the bitmask
 }
 
-func (self *CameraStatus) MsgID() uint8 {
-	return 179
+func (self *CameraStatus) MsgID() MessageID {
+	return MSG_ID_CAMERA_STATUS
 }
 
 func (self *CameraStatus) MsgName() string {
@@ -1712,8 +1712,8 @@ type CameraFeedback struct {
 	Flags        uint8   // See CAMERA_FEEDBACK_FLAGS enum for definition of the bitmask
 }
 
-func (self *CameraFeedback) MsgID() uint8 {
-	return 180
+func (self *CameraFeedback) MsgID() MessageID {
+	return MSG_ID_CAMERA_FEEDBACK
 }
 
 func (self *CameraFeedback) MsgName() string {
@@ -1767,8 +1767,8 @@ type Battery2 struct {
 	CurrentBattery int16  // Battery current, in 10*milliamperes (1 = 10 milliampere), -1: autopilot does not measure the current
 }
 
-func (self *Battery2) MsgID() uint8 {
-	return 181
+func (self *Battery2) MsgID() MessageID {
+	return MSG_ID_BATTERY2
 }
 
 func (self *Battery2) MsgName() string {
@@ -1808,8 +1808,8 @@ type Ahrs3 struct {
 	V4       float32 // test variable4
 }
 
-func (self *Ahrs3) MsgID() uint8 {
-	return 182
+func (self *Ahrs3) MsgID() MessageID {
+	return MSG_ID_AHRS3
 }
 
 func (self *Ahrs3) MsgName() string {
@@ -1857,8 +1857,8 @@ type AutopilotVersionRequest struct {
 	TargetComponent uint8 // Component ID
 }
 
-func (self *AutopilotVersionRequest) MsgID() uint8 {
-	return 183
+func (self *AutopilotVersionRequest) MsgID() MessageID {
+	return MSG_ID_AUTOPILOT_VERSION_REQUEST
 }
 
 func (self *AutopilotVersionRequest) MsgName() string {
@@ -1892,8 +1892,8 @@ type RemoteLogDataBlock struct {
 	Data            [200]uint8 // log data block
 }
 
-func (self *RemoteLogDataBlock) MsgID() uint8 {
-	return 184
+func (self *RemoteLogDataBlock) MsgID() MessageID {
+	return MSG_ID_REMOTE_LOG_DATA_BLOCK
 }
 
 func (self *RemoteLogDataBlock) MsgName() string {
@@ -1931,8 +1931,8 @@ type RemoteLogBlockStatus struct {
 	Status          uint8  // log data block status
 }
 
-func (self *RemoteLogBlockStatus) MsgID() uint8 {
-	return 185
+func (self *RemoteLogBlockStatus) MsgID() MessageID {
+	return MSG_ID_REMOTE_LOG_BLOCK_STATUS
 }
 
 func (self *RemoteLogBlockStatus) MsgName() string {
@@ -1972,8 +1972,8 @@ type LedControl struct {
 	CustomBytes     [24]uint8 // Custom Bytes
 }
 
-func (self *LedControl) MsgID() uint8 {
-	return 186
+func (self *LedControl) MsgID() MessageID {
+	return MSG_ID_LED_CONTROL
 }
 
 func (self *LedControl) MsgName() string {
@@ -2020,8 +2020,8 @@ type MagCalProgress struct {
 	CompletionMask [10]uint8 // Bitmask of sphere sections (see http://en.wikipedia.org/wiki/Geodesic_grid)
 }
 
-func (self *MagCalProgress) MsgID() uint8 {
-	return 191
+func (self *MagCalProgress) MsgID() MessageID {
+	return MSG_ID_MAG_CAL_PROGRESS
 }
 
 func (self *MagCalProgress) MsgName() string {
@@ -2079,8 +2079,8 @@ type MagCalReport struct {
 	Autosaved uint8   // 0=requires a MAV_CMD_DO_ACCEPT_MAG_CAL, 1=saved to parameters
 }
 
-func (self *MagCalReport) MsgID() uint8 {
-	return 192
+func (self *MagCalReport) MsgID() MessageID {
+	return MSG_ID_MAG_CAL_REPORT
 }
 
 func (self *MagCalReport) MsgName() string {
@@ -2140,8 +2140,8 @@ type EkfStatusReport struct {
 	Flags              uint16  // Flags
 }
 
-func (self *EkfStatusReport) MsgID() uint8 {
-	return 193
+func (self *EkfStatusReport) MsgID() MessageID {
+	return MSG_ID_EKF_STATUS_REPORT
 }
 
 func (self *EkfStatusReport) MsgName() string {
@@ -2186,8 +2186,8 @@ type PidTuning struct {
 	Axis     uint8   // axis
 }
 
-func (self *PidTuning) MsgID() uint8 {
-	return 194
+func (self *PidTuning) MsgID() MessageID {
+	return MSG_ID_PID_TUNING
 }
 
 func (self *PidTuning) MsgName() string {
@@ -2239,8 +2239,8 @@ type GimbalReport struct {
 	TargetComponent uint8   // Component ID
 }
 
-func (self *GimbalReport) MsgID() uint8 {
-	return 200
+func (self *GimbalReport) MsgID() MessageID {
+	return MSG_ID_GIMBAL_REPORT
 }
 
 func (self *GimbalReport) MsgName() string {
@@ -2295,8 +2295,8 @@ type GimbalControl struct {
 	TargetComponent uint8   // Component ID
 }
 
-func (self *GimbalControl) MsgID() uint8 {
-	return 201
+func (self *GimbalControl) MsgID() MessageID {
+	return MSG_ID_GIMBAL_CONTROL
 }
 
 func (self *GimbalControl) MsgName() string {
@@ -2337,8 +2337,8 @@ type GimbalTorqueCmdReport struct {
 	TargetComponent uint8 // Component ID
 }
 
-func (self *GimbalTorqueCmdReport) MsgID() uint8 {
-	return 214
+func (self *GimbalTorqueCmdReport) MsgID() MessageID {
+	return MSG_ID_GIMBAL_TORQUE_CMD_REPORT
 }
 
 func (self *GimbalTorqueCmdReport) MsgName() string {
@@ -2377,8 +2377,8 @@ type GoproHeartbeat struct {
 	Flags       uint8 // additional status bits
 }
 
-func (self *GoproHeartbeat) MsgID() uint8 {
-	return 215
+func (self *GoproHeartbeat) MsgID() MessageID {
+	return MSG_ID_GOPRO_HEARTBEAT
 }
 
 func (self *GoproHeartbeat) MsgName() string {
@@ -2413,8 +2413,8 @@ type GoproGetRequest struct {
 	CmdId           uint8 // Command ID
 }
 
-func (self *GoproGetRequest) MsgID() uint8 {
-	return 216
+func (self *GoproGetRequest) MsgID() MessageID {
+	return MSG_ID_GOPRO_GET_REQUEST
 }
 
 func (self *GoproGetRequest) MsgName() string {
@@ -2449,8 +2449,8 @@ type GoproGetResponse struct {
 	Value  [4]uint8 // Value
 }
 
-func (self *GoproGetResponse) MsgID() uint8 {
-	return 217
+func (self *GoproGetResponse) MsgID() MessageID {
+	return MSG_ID_GOPRO_GET_RESPONSE
 }
 
 func (self *GoproGetResponse) MsgName() string {
@@ -2486,8 +2486,8 @@ type GoproSetRequest struct {
 	Value           [4]uint8 // Value
 }
 
-func (self *GoproSetRequest) MsgID() uint8 {
-	return 218
+func (self *GoproSetRequest) MsgID() MessageID {
+	return MSG_ID_GOPRO_SET_REQUEST
 }
 
 func (self *GoproSetRequest) MsgName() string {
@@ -2523,8 +2523,8 @@ type GoproSetResponse struct {
 	Status uint8 // Status
 }
 
-func (self *GoproSetResponse) MsgID() uint8 {
-	return 219
+func (self *GoproSetResponse) MsgID() MessageID {
+	return MSG_ID_GOPRO_SET_RESPONSE
 }
 
 func (self *GoproSetResponse) MsgName() string {
@@ -2556,8 +2556,8 @@ type Rpm struct {
 	Rpm2 float32 // RPM Sensor2
 }
 
-func (self *Rpm) MsgID() uint8 {
-	return 226
+func (self *Rpm) MsgID() MessageID {
+	return MSG_ID_RPM
 }
 
 func (self *Rpm) MsgName() string {
@@ -2585,61 +2585,61 @@ func (self *Rpm) Unpack(p *Packet) error {
 
 // Message IDs
 const (
-	MSG_ID_SENSOR_OFFSETS            = 150
-	MSG_ID_SET_MAG_OFFSETS           = 151
-	MSG_ID_MEMINFO                   = 152
-	MSG_ID_AP_ADC                    = 153
-	MSG_ID_DIGICAM_CONFIGURE         = 154
-	MSG_ID_DIGICAM_CONTROL           = 155
-	MSG_ID_MOUNT_CONFIGURE           = 156
-	MSG_ID_MOUNT_CONTROL             = 157
-	MSG_ID_MOUNT_STATUS              = 158
-	MSG_ID_FENCE_POINT               = 160
-	MSG_ID_FENCE_FETCH_POINT         = 161
-	MSG_ID_FENCE_STATUS              = 162
-	MSG_ID_AHRS                      = 163
-	MSG_ID_SIMSTATE                  = 164
-	MSG_ID_HWSTATUS                  = 165
-	MSG_ID_RADIO                     = 166
-	MSG_ID_LIMITS_STATUS             = 167
-	MSG_ID_WIND                      = 168
-	MSG_ID_DATA16                    = 169
-	MSG_ID_DATA32                    = 170
-	MSG_ID_DATA64                    = 171
-	MSG_ID_DATA96                    = 172
-	MSG_ID_RANGEFINDER               = 173
-	MSG_ID_AIRSPEED_AUTOCAL          = 174
-	MSG_ID_RALLY_POINT               = 175
-	MSG_ID_RALLY_FETCH_POINT         = 176
-	MSG_ID_COMPASSMOT_STATUS         = 177
-	MSG_ID_AHRS2                     = 178
-	MSG_ID_CAMERA_STATUS             = 179
-	MSG_ID_CAMERA_FEEDBACK           = 180
-	MSG_ID_BATTERY2                  = 181
-	MSG_ID_AHRS3                     = 182
-	MSG_ID_AUTOPILOT_VERSION_REQUEST = 183
-	MSG_ID_REMOTE_LOG_DATA_BLOCK     = 184
-	MSG_ID_REMOTE_LOG_BLOCK_STATUS   = 185
-	MSG_ID_LED_CONTROL               = 186
-	MSG_ID_MAG_CAL_PROGRESS          = 191
-	MSG_ID_MAG_CAL_REPORT            = 192
-	MSG_ID_EKF_STATUS_REPORT         = 193
-	MSG_ID_PID_TUNING                = 194
-	MSG_ID_GIMBAL_REPORT             = 200
-	MSG_ID_GIMBAL_CONTROL            = 201
-	MSG_ID_GIMBAL_TORQUE_CMD_REPORT  = 214
-	MSG_ID_GOPRO_HEARTBEAT           = 215
-	MSG_ID_GOPRO_GET_REQUEST         = 216
-	MSG_ID_GOPRO_GET_RESPONSE        = 217
-	MSG_ID_GOPRO_SET_REQUEST         = 218
-	MSG_ID_GOPRO_SET_RESPONSE        = 219
-	MSG_ID_RPM                       = 226
+	MSG_ID_SENSOR_OFFSETS            MessageID = 150
+	MSG_ID_SET_MAG_OFFSETS           MessageID = 151
+	MSG_ID_MEMINFO                   MessageID = 152
+	MSG_ID_AP_ADC                    MessageID = 153
+	MSG_ID_DIGICAM_CONFIGURE         MessageID = 154
+	MSG_ID_DIGICAM_CONTROL           MessageID = 155
+	MSG_ID_MOUNT_CONFIGURE           MessageID = 156
+	MSG_ID_MOUNT_CONTROL             MessageID = 157
+	MSG_ID_MOUNT_STATUS              MessageID = 158
+	MSG_ID_FENCE_POINT               MessageID = 160
+	MSG_ID_FENCE_FETCH_POINT         MessageID = 161
+	MSG_ID_FENCE_STATUS              MessageID = 162
+	MSG_ID_AHRS                      MessageID = 163
+	MSG_ID_SIMSTATE                  MessageID = 164
+	MSG_ID_HWSTATUS                  MessageID = 165
+	MSG_ID_RADIO                     MessageID = 166
+	MSG_ID_LIMITS_STATUS             MessageID = 167
+	MSG_ID_WIND                      MessageID = 168
+	MSG_ID_DATA16                    MessageID = 169
+	MSG_ID_DATA32                    MessageID = 170
+	MSG_ID_DATA64                    MessageID = 171
+	MSG_ID_DATA96                    MessageID = 172
+	MSG_ID_RANGEFINDER               MessageID = 173
+	MSG_ID_AIRSPEED_AUTOCAL          MessageID = 174
+	MSG_ID_RALLY_POINT               MessageID = 175
+	MSG_ID_RALLY_FETCH_POINT         MessageID = 176
+	MSG_ID_COMPASSMOT_STATUS         MessageID = 177
+	MSG_ID_AHRS2                     MessageID = 178
+	MSG_ID_CAMERA_STATUS             MessageID = 179
+	MSG_ID_CAMERA_FEEDBACK           MessageID = 180
+	MSG_ID_BATTERY2                  MessageID = 181
+	MSG_ID_AHRS3                     MessageID = 182
+	MSG_ID_AUTOPILOT_VERSION_REQUEST MessageID = 183
+	MSG_ID_REMOTE_LOG_DATA_BLOCK     MessageID = 184
+	MSG_ID_REMOTE_LOG_BLOCK_STATUS   MessageID = 185
+	MSG_ID_LED_CONTROL               MessageID = 186
+	MSG_ID_MAG_CAL_PROGRESS          MessageID = 191
+	MSG_ID_MAG_CAL_REPORT            MessageID = 192
+	MSG_ID_EKF_STATUS_REPORT         MessageID = 193
+	MSG_ID_PID_TUNING                MessageID = 194
+	MSG_ID_GIMBAL_REPORT             MessageID = 200
+	MSG_ID_GIMBAL_CONTROL            MessageID = 201
+	MSG_ID_GIMBAL_TORQUE_CMD_REPORT  MessageID = 214
+	MSG_ID_GOPRO_HEARTBEAT           MessageID = 215
+	MSG_ID_GOPRO_GET_REQUEST         MessageID = 216
+	MSG_ID_GOPRO_GET_RESPONSE        MessageID = 217
+	MSG_ID_GOPRO_SET_REQUEST         MessageID = 218
+	MSG_ID_GOPRO_SET_RESPONSE        MessageID = 219
+	MSG_ID_RPM                       MessageID = 226
 )
 
 // DialectArdupilotmega is the dialect represented by ardupilotmega.xml
 var DialectArdupilotmega *Dialect = &Dialect{
 	Name: "ardupilotmega",
-	crcExtras: map[uint8]uint8{
+	crcExtras: map[MessageID]uint8{
 		MSG_ID_SENSOR_OFFSETS:            134,
 		MSG_ID_SET_MAG_OFFSETS:           219,
 		MSG_ID_MEMINFO:                   112,
@@ -2690,7 +2690,7 @@ var DialectArdupilotmega *Dialect = &Dialect{
 		MSG_ID_GOPRO_SET_RESPONSE:        162,
 		MSG_ID_RPM:                       207,
 	},
-	messageConstructorByMsgId: map[uint8]func(*Packet) Message{
+	messageConstructorByMsgId: map[MessageID]func(*Packet) Message{
 		MSG_ID_SENSOR_OFFSETS: func(pkt *Packet) Message {
 			msg := new(SensorOffsets)
 			msg.Unpack(pkt)

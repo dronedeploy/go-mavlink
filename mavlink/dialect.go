@@ -8,8 +8,8 @@ package mavlink
 // The 'DialectCommon' dialect is added to all Encoders/Decoders by default.
 type Dialect struct {
 	Name                      string
-	crcExtras                 map[uint8]uint8
-	messageConstructorByMsgId map[uint8]func(*Packet) Message
+	crcExtras                 map[MessageID]uint8
+	messageConstructorByMsgId map[MessageID]func(*Packet) Message
 }
 
 func (d *Dialect) GetMessage(pkt *Packet) (msg Message, ok bool) {
@@ -25,7 +25,7 @@ func (d *Dialect) GetMessage(pkt *Packet) (msg Message, ok bool) {
 type DialectSlice []*Dialect
 
 // look up the crcextra for msgid
-func (ds *DialectSlice) findCrcX(msgid uint8) (uint8, error) {
+func (ds *DialectSlice) findCrcX(msgid MessageID) (uint8, error) {
 
 	// http://www.mavlink.org/mavlink/crc_extra_calculation
 	for _, d := range *ds {

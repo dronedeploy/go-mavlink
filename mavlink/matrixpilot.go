@@ -35,8 +35,8 @@ type FlexifunctionSet struct {
 	TargetComponent uint8 // Component ID
 }
 
-func (self *FlexifunctionSet) MsgID() uint8 {
-	return 150
+func (self *FlexifunctionSet) MsgID() MessageID {
+	return MSG_ID_FLEXIFUNCTION_SET
 }
 
 func (self *FlexifunctionSet) MsgName() string {
@@ -70,8 +70,8 @@ type FlexifunctionReadReq struct {
 	TargetComponent uint8 // Component ID
 }
 
-func (self *FlexifunctionReadReq) MsgID() uint8 {
-	return 151
+func (self *FlexifunctionReadReq) MsgID() MessageID {
+	return MSG_ID_FLEXIFUNCTION_READ_REQ
 }
 
 func (self *FlexifunctionReadReq) MsgName() string {
@@ -112,8 +112,8 @@ type FlexifunctionBufferFunction struct {
 	Data            [48]int8 // Settings data
 }
 
-func (self *FlexifunctionBufferFunction) MsgID() uint8 {
-	return 152
+func (self *FlexifunctionBufferFunction) MsgID() MessageID {
+	return MSG_ID_FLEXIFUNCTION_BUFFER_FUNCTION
 }
 
 func (self *FlexifunctionBufferFunction) MsgName() string {
@@ -161,8 +161,8 @@ type FlexifunctionBufferFunctionAck struct {
 	TargetComponent uint8  // Component ID
 }
 
-func (self *FlexifunctionBufferFunctionAck) MsgID() uint8 {
-	return 153
+func (self *FlexifunctionBufferFunctionAck) MsgID() MessageID {
+	return MSG_ID_FLEXIFUNCTION_BUFFER_FUNCTION_ACK
 }
 
 func (self *FlexifunctionBufferFunctionAck) MsgName() string {
@@ -202,8 +202,8 @@ type FlexifunctionDirectory struct {
 	DirectoryData   [48]int8 // Settings data
 }
 
-func (self *FlexifunctionDirectory) MsgID() uint8 {
-	return 155
+func (self *FlexifunctionDirectory) MsgID() MessageID {
+	return MSG_ID_FLEXIFUNCTION_DIRECTORY
 }
 
 func (self *FlexifunctionDirectory) MsgName() string {
@@ -251,8 +251,8 @@ type FlexifunctionDirectoryAck struct {
 	Count           uint8  // count of directory entries to write
 }
 
-func (self *FlexifunctionDirectoryAck) MsgID() uint8 {
-	return 156
+func (self *FlexifunctionDirectoryAck) MsgID() MessageID {
+	return MSG_ID_FLEXIFUNCTION_DIRECTORY_ACK
 }
 
 func (self *FlexifunctionDirectoryAck) MsgName() string {
@@ -293,8 +293,8 @@ type FlexifunctionCommand struct {
 	CommandType     uint8 // Flexifunction command type
 }
 
-func (self *FlexifunctionCommand) MsgID() uint8 {
-	return 157
+func (self *FlexifunctionCommand) MsgID() MessageID {
+	return MSG_ID_FLEXIFUNCTION_COMMAND
 }
 
 func (self *FlexifunctionCommand) MsgName() string {
@@ -328,8 +328,8 @@ type FlexifunctionCommandAck struct {
 	Result      uint16 // result of acknowledge
 }
 
-func (self *FlexifunctionCommandAck) MsgID() uint8 {
-	return 158
+func (self *FlexifunctionCommandAck) MsgID() MessageID {
+	return MSG_ID_FLEXIFUNCTION_COMMAND_ACK
 }
 
 func (self *FlexifunctionCommandAck) MsgName() string {
@@ -386,8 +386,8 @@ type SerialUdbExtraF2A struct {
 	SueStatus         uint8  // Serial UDB Extra Status
 }
 
-func (self *SerialUdbExtraF2A) MsgID() uint8 {
-	return 170
+func (self *SerialUdbExtraF2A) MsgID() MessageID {
+	return MSG_ID_SERIAL_UDB_EXTRA_F2_A
 }
 
 func (self *SerialUdbExtraF2A) MsgName() string {
@@ -517,8 +517,8 @@ type SerialUdbExtraF2B struct {
 	SueMemoryStackFree     int16  // Serial UDB Extra Stack Memory Free
 }
 
-func (self *SerialUdbExtraF2B) MsgID() uint8 {
-	return 171
+func (self *SerialUdbExtraF2B) MsgID() MessageID {
+	return MSG_ID_SERIAL_UDB_EXTRA_F2_B
 }
 
 func (self *SerialUdbExtraF2B) MsgName() string {
@@ -654,8 +654,8 @@ type SerialUdbExtraF4 struct {
 	SueRacingMode                uint8 // Serial UDB Extra Firmware racing mode enabled
 }
 
-func (self *SerialUdbExtraF4) MsgID() uint8 {
-	return 172
+func (self *SerialUdbExtraF4) MsgID() MessageID {
+	return MSG_ID_SERIAL_UDB_EXTRA_F4
 }
 
 func (self *SerialUdbExtraF4) MsgName() string {
@@ -705,8 +705,8 @@ type SerialUdbExtraF5 struct {
 	SueRollkd       float32 // Serial UDB Extra ROLLKD Gain for Rate control of roll stabilization
 }
 
-func (self *SerialUdbExtraF5) MsgID() uint8 {
-	return 173
+func (self *SerialUdbExtraF5) MsgID() MessageID {
+	return MSG_ID_SERIAL_UDB_EXTRA_F5
 }
 
 func (self *SerialUdbExtraF5) MsgName() string {
@@ -745,8 +745,8 @@ type SerialUdbExtraF6 struct {
 	SueElevatorBoost float32 // Gain For Boosting Manual Elevator control When Plane Stabilized
 }
 
-func (self *SerialUdbExtraF6) MsgID() uint8 {
-	return 174
+func (self *SerialUdbExtraF6) MsgID() MessageID {
+	return MSG_ID_SERIAL_UDB_EXTRA_F6
 }
 
 func (self *SerialUdbExtraF6) MsgName() string {
@@ -788,8 +788,8 @@ type SerialUdbExtraF7 struct {
 	SueRtlPitchDown float32 // Serial UDB Extra Return To Landing - Angle to Pitch Plane Down
 }
 
-func (self *SerialUdbExtraF7) MsgID() uint8 {
-	return 175
+func (self *SerialUdbExtraF7) MsgID() MessageID {
+	return MSG_ID_SERIAL_UDB_EXTRA_F7
 }
 
 func (self *SerialUdbExtraF7) MsgName() string {
@@ -834,8 +834,8 @@ type SerialUdbExtraF8 struct {
 	SueAltHoldPitchHigh   float32 // Serial UDB Extra ALT_HOLD_PITCH_HIGH
 }
 
-func (self *SerialUdbExtraF8) MsgID() uint8 {
-	return 176
+func (self *SerialUdbExtraF8) MsgID() MessageID {
+	return MSG_ID_SERIAL_UDB_EXTRA_F8
 }
 
 func (self *SerialUdbExtraF8) MsgName() string {
@@ -879,8 +879,8 @@ type SerialUdbExtraF13 struct {
 	SueWeekNo    int16 // Serial UDB Extra GPS Week Number
 }
 
-func (self *SerialUdbExtraF13) MsgID() uint8 {
-	return 177
+func (self *SerialUdbExtraF13) MsgID() MessageID {
+	return MSG_ID_SERIAL_UDB_EXTRA_F13
 }
 
 func (self *SerialUdbExtraF13) MsgName() string {
@@ -925,8 +925,8 @@ type SerialUdbExtraF14 struct {
 	SueFlightPlanType uint8  // Serial UDB Extra Type of Flight Plan
 }
 
-func (self *SerialUdbExtraF14) MsgID() uint8 {
-	return 178
+func (self *SerialUdbExtraF14) MsgID() MessageID {
+	return MSG_ID_SERIAL_UDB_EXTRA_F14
 }
 
 func (self *SerialUdbExtraF14) MsgName() string {
@@ -976,8 +976,8 @@ type SerialUdbExtraF15 struct {
 	SueIdVehicleRegistration [20]uint8 // Serial UDB Extra Registraton Number of Vehicle
 }
 
-func (self *SerialUdbExtraF15) MsgID() uint8 {
-	return 179
+func (self *SerialUdbExtraF15) MsgID() MessageID {
+	return MSG_ID_SERIAL_UDB_EXTRA_F15
 }
 
 func (self *SerialUdbExtraF15) MsgName() string {
@@ -1009,8 +1009,8 @@ type SerialUdbExtraF16 struct {
 	SueIdDiyDronesUrl [70]uint8 // Serial UDB Extra URL of Lead Pilot or Team
 }
 
-func (self *SerialUdbExtraF16) MsgID() uint8 {
-	return 180
+func (self *SerialUdbExtraF16) MsgID() MessageID {
+	return MSG_ID_SERIAL_UDB_EXTRA_F16
 }
 
 func (self *SerialUdbExtraF16) MsgName() string {
@@ -1047,8 +1047,8 @@ type Altitudes struct {
 	AltExtra       int32  // Extra altitude above ground in meters, expressed as * 1000 (millimeters)
 }
 
-func (self *Altitudes) MsgID() uint8 {
-	return 181
+func (self *Altitudes) MsgID() MessageID {
+	return MSG_ID_ALTITUDES
 }
 
 func (self *Altitudes) MsgName() string {
@@ -1095,8 +1095,8 @@ type Airspeeds struct {
 	Aoy                int16  // Yaw angle sensor, degrees * 10
 }
 
-func (self *Airspeeds) MsgID() uint8 {
-	return 182
+func (self *Airspeeds) MsgID() MessageID {
+	return MSG_ID_AIRSPEEDS
 }
 
 func (self *Airspeeds) MsgName() string {
@@ -1139,8 +1139,8 @@ type SerialUdbExtraF17 struct {
 	SueTurnRateFbw float32 // SUE Max Turn Rate in Fly By Wire Mode
 }
 
-func (self *SerialUdbExtraF17) MsgID() uint8 {
-	return 183
+func (self *SerialUdbExtraF17) MsgID() MessageID {
+	return MSG_ID_SERIAL_UDB_EXTRA_F17
 }
 
 func (self *SerialUdbExtraF17) MsgName() string {
@@ -1177,8 +1177,8 @@ type SerialUdbExtraF18 struct {
 	ReferenceSpeed        float32 // SUE reference_speed
 }
 
-func (self *SerialUdbExtraF18) MsgID() uint8 {
-	return 184
+func (self *SerialUdbExtraF18) MsgID() MessageID {
+	return MSG_ID_SERIAL_UDB_EXTRA_F18
 }
 
 func (self *SerialUdbExtraF18) MsgName() string {
@@ -1222,8 +1222,8 @@ type SerialUdbExtraF19 struct {
 	SueRudderReversed        uint8 // SUE rudder reversed
 }
 
-func (self *SerialUdbExtraF19) MsgID() uint8 {
-	return 185
+func (self *SerialUdbExtraF19) MsgID() MessageID {
+	return MSG_ID_SERIAL_UDB_EXTRA_F19
 }
 
 func (self *SerialUdbExtraF19) MsgName() string {
@@ -1278,8 +1278,8 @@ type SerialUdbExtraF20 struct {
 	SueNumberOfInputs   uint8 // SUE Number of Input Channels
 }
 
-func (self *SerialUdbExtraF20) MsgID() uint8 {
-	return 186
+func (self *SerialUdbExtraF20) MsgID() MessageID {
+	return MSG_ID_SERIAL_UDB_EXTRA_F20
 }
 
 func (self *SerialUdbExtraF20) MsgName() string {
@@ -1337,8 +1337,8 @@ type SerialUdbExtraF21 struct {
 	SueGyroZOffset  int16 // SUE Z gyro offset
 }
 
-func (self *SerialUdbExtraF21) MsgID() uint8 {
-	return 187
+func (self *SerialUdbExtraF21) MsgID() MessageID {
+	return MSG_ID_SERIAL_UDB_EXTRA_F21
 }
 
 func (self *SerialUdbExtraF21) MsgName() string {
@@ -1382,8 +1382,8 @@ type SerialUdbExtraF22 struct {
 	SueGyroZAtCalibration  int16 // SUE Z gyro at calibration time
 }
 
-func (self *SerialUdbExtraF22) MsgID() uint8 {
-	return 188
+func (self *SerialUdbExtraF22) MsgID() MessageID {
+	return MSG_ID_SERIAL_UDB_EXTRA_F22
 }
 
 func (self *SerialUdbExtraF22) MsgName() string {
@@ -1419,39 +1419,39 @@ func (self *SerialUdbExtraF22) Unpack(p *Packet) error {
 
 // Message IDs
 const (
-	MSG_ID_FLEXIFUNCTION_SET                 = 150
-	MSG_ID_FLEXIFUNCTION_READ_REQ            = 151
-	MSG_ID_FLEXIFUNCTION_BUFFER_FUNCTION     = 152
-	MSG_ID_FLEXIFUNCTION_BUFFER_FUNCTION_ACK = 153
-	MSG_ID_FLEXIFUNCTION_DIRECTORY           = 155
-	MSG_ID_FLEXIFUNCTION_DIRECTORY_ACK       = 156
-	MSG_ID_FLEXIFUNCTION_COMMAND             = 157
-	MSG_ID_FLEXIFUNCTION_COMMAND_ACK         = 158
-	MSG_ID_SERIAL_UDB_EXTRA_F2_A             = 170
-	MSG_ID_SERIAL_UDB_EXTRA_F2_B             = 171
-	MSG_ID_SERIAL_UDB_EXTRA_F4               = 172
-	MSG_ID_SERIAL_UDB_EXTRA_F5               = 173
-	MSG_ID_SERIAL_UDB_EXTRA_F6               = 174
-	MSG_ID_SERIAL_UDB_EXTRA_F7               = 175
-	MSG_ID_SERIAL_UDB_EXTRA_F8               = 176
-	MSG_ID_SERIAL_UDB_EXTRA_F13              = 177
-	MSG_ID_SERIAL_UDB_EXTRA_F14              = 178
-	MSG_ID_SERIAL_UDB_EXTRA_F15              = 179
-	MSG_ID_SERIAL_UDB_EXTRA_F16              = 180
-	MSG_ID_ALTITUDES                         = 181
-	MSG_ID_AIRSPEEDS                         = 182
-	MSG_ID_SERIAL_UDB_EXTRA_F17              = 183
-	MSG_ID_SERIAL_UDB_EXTRA_F18              = 184
-	MSG_ID_SERIAL_UDB_EXTRA_F19              = 185
-	MSG_ID_SERIAL_UDB_EXTRA_F20              = 186
-	MSG_ID_SERIAL_UDB_EXTRA_F21              = 187
-	MSG_ID_SERIAL_UDB_EXTRA_F22              = 188
+	MSG_ID_FLEXIFUNCTION_SET                 MessageID = 150
+	MSG_ID_FLEXIFUNCTION_READ_REQ            MessageID = 151
+	MSG_ID_FLEXIFUNCTION_BUFFER_FUNCTION     MessageID = 152
+	MSG_ID_FLEXIFUNCTION_BUFFER_FUNCTION_ACK MessageID = 153
+	MSG_ID_FLEXIFUNCTION_DIRECTORY           MessageID = 155
+	MSG_ID_FLEXIFUNCTION_DIRECTORY_ACK       MessageID = 156
+	MSG_ID_FLEXIFUNCTION_COMMAND             MessageID = 157
+	MSG_ID_FLEXIFUNCTION_COMMAND_ACK         MessageID = 158
+	MSG_ID_SERIAL_UDB_EXTRA_F2_A             MessageID = 170
+	MSG_ID_SERIAL_UDB_EXTRA_F2_B             MessageID = 171
+	MSG_ID_SERIAL_UDB_EXTRA_F4               MessageID = 172
+	MSG_ID_SERIAL_UDB_EXTRA_F5               MessageID = 173
+	MSG_ID_SERIAL_UDB_EXTRA_F6               MessageID = 174
+	MSG_ID_SERIAL_UDB_EXTRA_F7               MessageID = 175
+	MSG_ID_SERIAL_UDB_EXTRA_F8               MessageID = 176
+	MSG_ID_SERIAL_UDB_EXTRA_F13              MessageID = 177
+	MSG_ID_SERIAL_UDB_EXTRA_F14              MessageID = 178
+	MSG_ID_SERIAL_UDB_EXTRA_F15              MessageID = 179
+	MSG_ID_SERIAL_UDB_EXTRA_F16              MessageID = 180
+	MSG_ID_ALTITUDES                         MessageID = 181
+	MSG_ID_AIRSPEEDS                         MessageID = 182
+	MSG_ID_SERIAL_UDB_EXTRA_F17              MessageID = 183
+	MSG_ID_SERIAL_UDB_EXTRA_F18              MessageID = 184
+	MSG_ID_SERIAL_UDB_EXTRA_F19              MessageID = 185
+	MSG_ID_SERIAL_UDB_EXTRA_F20              MessageID = 186
+	MSG_ID_SERIAL_UDB_EXTRA_F21              MessageID = 187
+	MSG_ID_SERIAL_UDB_EXTRA_F22              MessageID = 188
 )
 
 // DialectMatrixpilot is the dialect represented by matrixpilot.xml
 var DialectMatrixpilot *Dialect = &Dialect{
 	Name: "matrixpilot",
-	crcExtras: map[uint8]uint8{
+	crcExtras: map[MessageID]uint8{
 		MSG_ID_FLEXIFUNCTION_SET:                 181,
 		MSG_ID_FLEXIFUNCTION_READ_REQ:            26,
 		MSG_ID_FLEXIFUNCTION_BUFFER_FUNCTION:     101,
@@ -1480,7 +1480,7 @@ var DialectMatrixpilot *Dialect = &Dialect{
 		MSG_ID_SERIAL_UDB_EXTRA_F21:              134,
 		MSG_ID_SERIAL_UDB_EXTRA_F22:              91,
 	},
-	messageConstructorByMsgId: map[uint8]func(*Packet) Message{
+	messageConstructorByMsgId: map[MessageID]func(*Packet) Message{
 		MSG_ID_FLEXIFUNCTION_SET: func(pkt *Packet) Message {
 			msg := new(FlexifunctionSet)
 			msg.Unpack(pkt)
