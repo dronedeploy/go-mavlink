@@ -406,7 +406,14 @@ const ({{range .Messages}}
 var Dialect{{.Name | UpperCamelCase}} *Dialect = &Dialect{
 	Name: "{{.Name}}",
 	crcExtras: map[uint8]uint8{ {{range .Messages}}
-		{{.ID}}: {{.CRCExtra}}, // MSG_ID_{{.Name}}{{end}}
+		MSG_ID_{{.Name}}: {{.CRCExtra}},{{end}}
+	},
+	messageConstructorByMsgId: map[uint8]func(*Packet) Message{ {{range .Messages}}
+		MSG_ID_{{.Name}}: func(pkt *Packet) Message {
+			msg := new({{.Name | UpperCamelCase}})
+			msg.Unpack(pkt)
+			return msg
+		},{{end}}
 	},
 }
 `
