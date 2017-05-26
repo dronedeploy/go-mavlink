@@ -2640,54 +2640,301 @@ const (
 var DialectArdupilotmega *Dialect = &Dialect{
 	Name: "ardupilotmega",
 	crcExtras: map[uint8]uint8{
-		150: 134, // MSG_ID_SENSOR_OFFSETS
-		151: 219, // MSG_ID_SET_MAG_OFFSETS
-		152: 112, // MSG_ID_MEMINFO
-		153: 188, // MSG_ID_AP_ADC
-		154: 84,  // MSG_ID_DIGICAM_CONFIGURE
-		155: 22,  // MSG_ID_DIGICAM_CONTROL
-		156: 19,  // MSG_ID_MOUNT_CONFIGURE
-		157: 21,  // MSG_ID_MOUNT_CONTROL
-		158: 134, // MSG_ID_MOUNT_STATUS
-		160: 78,  // MSG_ID_FENCE_POINT
-		161: 68,  // MSG_ID_FENCE_FETCH_POINT
-		162: 189, // MSG_ID_FENCE_STATUS
-		163: 127, // MSG_ID_AHRS
-		164: 154, // MSG_ID_SIMSTATE
-		165: 21,  // MSG_ID_HWSTATUS
-		166: 21,  // MSG_ID_RADIO
-		167: 144, // MSG_ID_LIMITS_STATUS
-		168: 1,   // MSG_ID_WIND
-		169: 234, // MSG_ID_DATA16
-		170: 73,  // MSG_ID_DATA32
-		171: 181, // MSG_ID_DATA64
-		172: 22,  // MSG_ID_DATA96
-		173: 83,  // MSG_ID_RANGEFINDER
-		174: 167, // MSG_ID_AIRSPEED_AUTOCAL
-		175: 138, // MSG_ID_RALLY_POINT
-		176: 234, // MSG_ID_RALLY_FETCH_POINT
-		177: 240, // MSG_ID_COMPASSMOT_STATUS
-		178: 47,  // MSG_ID_AHRS2
-		179: 189, // MSG_ID_CAMERA_STATUS
-		180: 52,  // MSG_ID_CAMERA_FEEDBACK
-		181: 174, // MSG_ID_BATTERY2
-		182: 229, // MSG_ID_AHRS3
-		183: 85,  // MSG_ID_AUTOPILOT_VERSION_REQUEST
-		184: 159, // MSG_ID_REMOTE_LOG_DATA_BLOCK
-		185: 186, // MSG_ID_REMOTE_LOG_BLOCK_STATUS
-		186: 72,  // MSG_ID_LED_CONTROL
-		191: 92,  // MSG_ID_MAG_CAL_PROGRESS
-		192: 36,  // MSG_ID_MAG_CAL_REPORT
-		193: 71,  // MSG_ID_EKF_STATUS_REPORT
-		194: 98,  // MSG_ID_PID_TUNING
-		200: 134, // MSG_ID_GIMBAL_REPORT
-		201: 205, // MSG_ID_GIMBAL_CONTROL
-		214: 69,  // MSG_ID_GIMBAL_TORQUE_CMD_REPORT
-		215: 101, // MSG_ID_GOPRO_HEARTBEAT
-		216: 50,  // MSG_ID_GOPRO_GET_REQUEST
-		217: 202, // MSG_ID_GOPRO_GET_RESPONSE
-		218: 17,  // MSG_ID_GOPRO_SET_REQUEST
-		219: 162, // MSG_ID_GOPRO_SET_RESPONSE
-		226: 207, // MSG_ID_RPM
+		MSG_ID_SENSOR_OFFSETS:            134,
+		MSG_ID_SET_MAG_OFFSETS:           219,
+		MSG_ID_MEMINFO:                   112,
+		MSG_ID_AP_ADC:                    188,
+		MSG_ID_DIGICAM_CONFIGURE:         84,
+		MSG_ID_DIGICAM_CONTROL:           22,
+		MSG_ID_MOUNT_CONFIGURE:           19,
+		MSG_ID_MOUNT_CONTROL:             21,
+		MSG_ID_MOUNT_STATUS:              134,
+		MSG_ID_FENCE_POINT:               78,
+		MSG_ID_FENCE_FETCH_POINT:         68,
+		MSG_ID_FENCE_STATUS:              189,
+		MSG_ID_AHRS:                      127,
+		MSG_ID_SIMSTATE:                  154,
+		MSG_ID_HWSTATUS:                  21,
+		MSG_ID_RADIO:                     21,
+		MSG_ID_LIMITS_STATUS:             144,
+		MSG_ID_WIND:                      1,
+		MSG_ID_DATA16:                    234,
+		MSG_ID_DATA32:                    73,
+		MSG_ID_DATA64:                    181,
+		MSG_ID_DATA96:                    22,
+		MSG_ID_RANGEFINDER:               83,
+		MSG_ID_AIRSPEED_AUTOCAL:          167,
+		MSG_ID_RALLY_POINT:               138,
+		MSG_ID_RALLY_FETCH_POINT:         234,
+		MSG_ID_COMPASSMOT_STATUS:         240,
+		MSG_ID_AHRS2:                     47,
+		MSG_ID_CAMERA_STATUS:             189,
+		MSG_ID_CAMERA_FEEDBACK:           52,
+		MSG_ID_BATTERY2:                  174,
+		MSG_ID_AHRS3:                     229,
+		MSG_ID_AUTOPILOT_VERSION_REQUEST: 85,
+		MSG_ID_REMOTE_LOG_DATA_BLOCK:     159,
+		MSG_ID_REMOTE_LOG_BLOCK_STATUS:   186,
+		MSG_ID_LED_CONTROL:               72,
+		MSG_ID_MAG_CAL_PROGRESS:          92,
+		MSG_ID_MAG_CAL_REPORT:            36,
+		MSG_ID_EKF_STATUS_REPORT:         71,
+		MSG_ID_PID_TUNING:                98,
+		MSG_ID_GIMBAL_REPORT:             134,
+		MSG_ID_GIMBAL_CONTROL:            205,
+		MSG_ID_GIMBAL_TORQUE_CMD_REPORT:  69,
+		MSG_ID_GOPRO_HEARTBEAT:           101,
+		MSG_ID_GOPRO_GET_REQUEST:         50,
+		MSG_ID_GOPRO_GET_RESPONSE:        202,
+		MSG_ID_GOPRO_SET_REQUEST:         17,
+		MSG_ID_GOPRO_SET_RESPONSE:        162,
+		MSG_ID_RPM:                       207,
+	},
+	messageConstructorByMsgId: map[uint8]func(*Packet) Message{
+		MSG_ID_SENSOR_OFFSETS: func(pkt *Packet) Message {
+			msg := new(SensorOffsets)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SET_MAG_OFFSETS: func(pkt *Packet) Message {
+			msg := new(SetMagOffsets)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_MEMINFO: func(pkt *Packet) Message {
+			msg := new(Meminfo)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_AP_ADC: func(pkt *Packet) Message {
+			msg := new(ApAdc)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_DIGICAM_CONFIGURE: func(pkt *Packet) Message {
+			msg := new(DigicamConfigure)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_DIGICAM_CONTROL: func(pkt *Packet) Message {
+			msg := new(DigicamControl)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_MOUNT_CONFIGURE: func(pkt *Packet) Message {
+			msg := new(MountConfigure)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_MOUNT_CONTROL: func(pkt *Packet) Message {
+			msg := new(MountControl)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_MOUNT_STATUS: func(pkt *Packet) Message {
+			msg := new(MountStatus)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_FENCE_POINT: func(pkt *Packet) Message {
+			msg := new(FencePoint)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_FENCE_FETCH_POINT: func(pkt *Packet) Message {
+			msg := new(FenceFetchPoint)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_FENCE_STATUS: func(pkt *Packet) Message {
+			msg := new(FenceStatus)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_AHRS: func(pkt *Packet) Message {
+			msg := new(Ahrs)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SIMSTATE: func(pkt *Packet) Message {
+			msg := new(Simstate)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_HWSTATUS: func(pkt *Packet) Message {
+			msg := new(Hwstatus)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_RADIO: func(pkt *Packet) Message {
+			msg := new(Radio)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_LIMITS_STATUS: func(pkt *Packet) Message {
+			msg := new(LimitsStatus)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_WIND: func(pkt *Packet) Message {
+			msg := new(Wind)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_DATA16: func(pkt *Packet) Message {
+			msg := new(Data16)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_DATA32: func(pkt *Packet) Message {
+			msg := new(Data32)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_DATA64: func(pkt *Packet) Message {
+			msg := new(Data64)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_DATA96: func(pkt *Packet) Message {
+			msg := new(Data96)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_RANGEFINDER: func(pkt *Packet) Message {
+			msg := new(Rangefinder)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_AIRSPEED_AUTOCAL: func(pkt *Packet) Message {
+			msg := new(AirspeedAutocal)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_RALLY_POINT: func(pkt *Packet) Message {
+			msg := new(RallyPoint)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_RALLY_FETCH_POINT: func(pkt *Packet) Message {
+			msg := new(RallyFetchPoint)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_COMPASSMOT_STATUS: func(pkt *Packet) Message {
+			msg := new(CompassmotStatus)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_AHRS2: func(pkt *Packet) Message {
+			msg := new(Ahrs2)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_CAMERA_STATUS: func(pkt *Packet) Message {
+			msg := new(CameraStatus)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_CAMERA_FEEDBACK: func(pkt *Packet) Message {
+			msg := new(CameraFeedback)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_BATTERY2: func(pkt *Packet) Message {
+			msg := new(Battery2)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_AHRS3: func(pkt *Packet) Message {
+			msg := new(Ahrs3)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_AUTOPILOT_VERSION_REQUEST: func(pkt *Packet) Message {
+			msg := new(AutopilotVersionRequest)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_REMOTE_LOG_DATA_BLOCK: func(pkt *Packet) Message {
+			msg := new(RemoteLogDataBlock)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_REMOTE_LOG_BLOCK_STATUS: func(pkt *Packet) Message {
+			msg := new(RemoteLogBlockStatus)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_LED_CONTROL: func(pkt *Packet) Message {
+			msg := new(LedControl)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_MAG_CAL_PROGRESS: func(pkt *Packet) Message {
+			msg := new(MagCalProgress)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_MAG_CAL_REPORT: func(pkt *Packet) Message {
+			msg := new(MagCalReport)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_EKF_STATUS_REPORT: func(pkt *Packet) Message {
+			msg := new(EkfStatusReport)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_PID_TUNING: func(pkt *Packet) Message {
+			msg := new(PidTuning)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_GIMBAL_REPORT: func(pkt *Packet) Message {
+			msg := new(GimbalReport)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_GIMBAL_CONTROL: func(pkt *Packet) Message {
+			msg := new(GimbalControl)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_GIMBAL_TORQUE_CMD_REPORT: func(pkt *Packet) Message {
+			msg := new(GimbalTorqueCmdReport)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_GOPRO_HEARTBEAT: func(pkt *Packet) Message {
+			msg := new(GoproHeartbeat)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_GOPRO_GET_REQUEST: func(pkt *Packet) Message {
+			msg := new(GoproGetRequest)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_GOPRO_GET_RESPONSE: func(pkt *Packet) Message {
+			msg := new(GoproGetResponse)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_GOPRO_SET_REQUEST: func(pkt *Packet) Message {
+			msg := new(GoproSetRequest)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_GOPRO_SET_RESPONSE: func(pkt *Packet) Message {
+			msg := new(GoproSetResponse)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_RPM: func(pkt *Packet) Message {
+			msg := new(Rpm)
+			msg.Unpack(pkt)
+			return msg
+		},
 	},
 }

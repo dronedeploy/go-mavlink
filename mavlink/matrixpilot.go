@@ -1452,32 +1452,169 @@ const (
 var DialectMatrixpilot *Dialect = &Dialect{
 	Name: "matrixpilot",
 	crcExtras: map[uint8]uint8{
-		150: 181, // MSG_ID_FLEXIFUNCTION_SET
-		151: 26,  // MSG_ID_FLEXIFUNCTION_READ_REQ
-		152: 101, // MSG_ID_FLEXIFUNCTION_BUFFER_FUNCTION
-		153: 109, // MSG_ID_FLEXIFUNCTION_BUFFER_FUNCTION_ACK
-		155: 12,  // MSG_ID_FLEXIFUNCTION_DIRECTORY
-		156: 218, // MSG_ID_FLEXIFUNCTION_DIRECTORY_ACK
-		157: 133, // MSG_ID_FLEXIFUNCTION_COMMAND
-		158: 208, // MSG_ID_FLEXIFUNCTION_COMMAND_ACK
-		170: 103, // MSG_ID_SERIAL_UDB_EXTRA_F2_A
-		171: 245, // MSG_ID_SERIAL_UDB_EXTRA_F2_B
-		172: 191, // MSG_ID_SERIAL_UDB_EXTRA_F4
-		173: 54,  // MSG_ID_SERIAL_UDB_EXTRA_F5
-		174: 54,  // MSG_ID_SERIAL_UDB_EXTRA_F6
-		175: 171, // MSG_ID_SERIAL_UDB_EXTRA_F7
-		176: 142, // MSG_ID_SERIAL_UDB_EXTRA_F8
-		177: 249, // MSG_ID_SERIAL_UDB_EXTRA_F13
-		178: 123, // MSG_ID_SERIAL_UDB_EXTRA_F14
-		179: 7,   // MSG_ID_SERIAL_UDB_EXTRA_F15
-		180: 222, // MSG_ID_SERIAL_UDB_EXTRA_F16
-		181: 55,  // MSG_ID_ALTITUDES
-		182: 154, // MSG_ID_AIRSPEEDS
-		183: 175, // MSG_ID_SERIAL_UDB_EXTRA_F17
-		184: 41,  // MSG_ID_SERIAL_UDB_EXTRA_F18
-		185: 87,  // MSG_ID_SERIAL_UDB_EXTRA_F19
-		186: 144, // MSG_ID_SERIAL_UDB_EXTRA_F20
-		187: 134, // MSG_ID_SERIAL_UDB_EXTRA_F21
-		188: 91,  // MSG_ID_SERIAL_UDB_EXTRA_F22
+		MSG_ID_FLEXIFUNCTION_SET:                 181,
+		MSG_ID_FLEXIFUNCTION_READ_REQ:            26,
+		MSG_ID_FLEXIFUNCTION_BUFFER_FUNCTION:     101,
+		MSG_ID_FLEXIFUNCTION_BUFFER_FUNCTION_ACK: 109,
+		MSG_ID_FLEXIFUNCTION_DIRECTORY:           12,
+		MSG_ID_FLEXIFUNCTION_DIRECTORY_ACK:       218,
+		MSG_ID_FLEXIFUNCTION_COMMAND:             133,
+		MSG_ID_FLEXIFUNCTION_COMMAND_ACK:         208,
+		MSG_ID_SERIAL_UDB_EXTRA_F2_A:             103,
+		MSG_ID_SERIAL_UDB_EXTRA_F2_B:             245,
+		MSG_ID_SERIAL_UDB_EXTRA_F4:               191,
+		MSG_ID_SERIAL_UDB_EXTRA_F5:               54,
+		MSG_ID_SERIAL_UDB_EXTRA_F6:               54,
+		MSG_ID_SERIAL_UDB_EXTRA_F7:               171,
+		MSG_ID_SERIAL_UDB_EXTRA_F8:               142,
+		MSG_ID_SERIAL_UDB_EXTRA_F13:              249,
+		MSG_ID_SERIAL_UDB_EXTRA_F14:              123,
+		MSG_ID_SERIAL_UDB_EXTRA_F15:              7,
+		MSG_ID_SERIAL_UDB_EXTRA_F16:              222,
+		MSG_ID_ALTITUDES:                         55,
+		MSG_ID_AIRSPEEDS:                         154,
+		MSG_ID_SERIAL_UDB_EXTRA_F17:              175,
+		MSG_ID_SERIAL_UDB_EXTRA_F18:              41,
+		MSG_ID_SERIAL_UDB_EXTRA_F19:              87,
+		MSG_ID_SERIAL_UDB_EXTRA_F20:              144,
+		MSG_ID_SERIAL_UDB_EXTRA_F21:              134,
+		MSG_ID_SERIAL_UDB_EXTRA_F22:              91,
+	},
+	messageConstructorByMsgId: map[uint8]func(*Packet) Message{
+		MSG_ID_FLEXIFUNCTION_SET: func(pkt *Packet) Message {
+			msg := new(FlexifunctionSet)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_FLEXIFUNCTION_READ_REQ: func(pkt *Packet) Message {
+			msg := new(FlexifunctionReadReq)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_FLEXIFUNCTION_BUFFER_FUNCTION: func(pkt *Packet) Message {
+			msg := new(FlexifunctionBufferFunction)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_FLEXIFUNCTION_BUFFER_FUNCTION_ACK: func(pkt *Packet) Message {
+			msg := new(FlexifunctionBufferFunctionAck)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_FLEXIFUNCTION_DIRECTORY: func(pkt *Packet) Message {
+			msg := new(FlexifunctionDirectory)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_FLEXIFUNCTION_DIRECTORY_ACK: func(pkt *Packet) Message {
+			msg := new(FlexifunctionDirectoryAck)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_FLEXIFUNCTION_COMMAND: func(pkt *Packet) Message {
+			msg := new(FlexifunctionCommand)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_FLEXIFUNCTION_COMMAND_ACK: func(pkt *Packet) Message {
+			msg := new(FlexifunctionCommandAck)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SERIAL_UDB_EXTRA_F2_A: func(pkt *Packet) Message {
+			msg := new(SerialUdbExtraF2A)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SERIAL_UDB_EXTRA_F2_B: func(pkt *Packet) Message {
+			msg := new(SerialUdbExtraF2B)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SERIAL_UDB_EXTRA_F4: func(pkt *Packet) Message {
+			msg := new(SerialUdbExtraF4)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SERIAL_UDB_EXTRA_F5: func(pkt *Packet) Message {
+			msg := new(SerialUdbExtraF5)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SERIAL_UDB_EXTRA_F6: func(pkt *Packet) Message {
+			msg := new(SerialUdbExtraF6)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SERIAL_UDB_EXTRA_F7: func(pkt *Packet) Message {
+			msg := new(SerialUdbExtraF7)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SERIAL_UDB_EXTRA_F8: func(pkt *Packet) Message {
+			msg := new(SerialUdbExtraF8)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SERIAL_UDB_EXTRA_F13: func(pkt *Packet) Message {
+			msg := new(SerialUdbExtraF13)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SERIAL_UDB_EXTRA_F14: func(pkt *Packet) Message {
+			msg := new(SerialUdbExtraF14)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SERIAL_UDB_EXTRA_F15: func(pkt *Packet) Message {
+			msg := new(SerialUdbExtraF15)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SERIAL_UDB_EXTRA_F16: func(pkt *Packet) Message {
+			msg := new(SerialUdbExtraF16)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_ALTITUDES: func(pkt *Packet) Message {
+			msg := new(Altitudes)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_AIRSPEEDS: func(pkt *Packet) Message {
+			msg := new(Airspeeds)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SERIAL_UDB_EXTRA_F17: func(pkt *Packet) Message {
+			msg := new(SerialUdbExtraF17)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SERIAL_UDB_EXTRA_F18: func(pkt *Packet) Message {
+			msg := new(SerialUdbExtraF18)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SERIAL_UDB_EXTRA_F19: func(pkt *Packet) Message {
+			msg := new(SerialUdbExtraF19)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SERIAL_UDB_EXTRA_F20: func(pkt *Packet) Message {
+			msg := new(SerialUdbExtraF20)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SERIAL_UDB_EXTRA_F21: func(pkt *Packet) Message {
+			msg := new(SerialUdbExtraF21)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SERIAL_UDB_EXTRA_F22: func(pkt *Packet) Message {
+			msg := new(SerialUdbExtraF22)
+			msg.Unpack(pkt)
+			return msg
+		},
 	},
 }
