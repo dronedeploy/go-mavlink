@@ -7744,141 +7744,823 @@ const (
 var DialectCommon *Dialect = &Dialect{
 	Name: "common",
 	crcExtras: map[uint8]uint8{
-		0:   50,  // MSG_ID_HEARTBEAT
-		1:   124, // MSG_ID_SYS_STATUS
-		2:   137, // MSG_ID_SYSTEM_TIME
-		4:   237, // MSG_ID_PING
-		5:   217, // MSG_ID_CHANGE_OPERATOR_CONTROL
-		6:   104, // MSG_ID_CHANGE_OPERATOR_CONTROL_ACK
-		7:   119, // MSG_ID_AUTH_KEY
-		11:  89,  // MSG_ID_SET_MODE
-		20:  214, // MSG_ID_PARAM_REQUEST_READ
-		21:  159, // MSG_ID_PARAM_REQUEST_LIST
-		22:  220, // MSG_ID_PARAM_VALUE
-		23:  168, // MSG_ID_PARAM_SET
-		24:  24,  // MSG_ID_GPS_RAW_INT
-		25:  23,  // MSG_ID_GPS_STATUS
-		26:  170, // MSG_ID_SCALED_IMU
-		27:  144, // MSG_ID_RAW_IMU
-		28:  67,  // MSG_ID_RAW_PRESSURE
-		29:  115, // MSG_ID_SCALED_PRESSURE
-		30:  39,  // MSG_ID_ATTITUDE
-		31:  246, // MSG_ID_ATTITUDE_QUATERNION
-		32:  185, // MSG_ID_LOCAL_POSITION_NED
-		33:  104, // MSG_ID_GLOBAL_POSITION_INT
-		34:  237, // MSG_ID_RC_CHANNELS_SCALED
-		35:  244, // MSG_ID_RC_CHANNELS_RAW
-		36:  175, // MSG_ID_SERVO_OUTPUT_RAW
-		37:  4,   // MSG_ID_MISSION_REQUEST_PARTIAL_LIST
-		38:  168, // MSG_ID_MISSION_WRITE_PARTIAL_LIST
-		39:  95,  // MSG_ID_MISSION_ITEM
-		40:  177, // MSG_ID_MISSION_REQUEST
-		41:  28,  // MSG_ID_MISSION_SET_CURRENT
-		42:  28,  // MSG_ID_MISSION_CURRENT
-		43:  148, // MSG_ID_MISSION_REQUEST_LIST
-		44:  52,  // MSG_ID_MISSION_COUNT
-		45:  25,  // MSG_ID_MISSION_CLEAR_ALL
-		46:  11,  // MSG_ID_MISSION_ITEM_REACHED
-		47:  146, // MSG_ID_MISSION_ACK
-		48:  41,  // MSG_ID_SET_GPS_GLOBAL_ORIGIN
-		49:  39,  // MSG_ID_GPS_GLOBAL_ORIGIN
-		50:  78,  // MSG_ID_PARAM_MAP_RC
-		51:  129, // MSG_ID_MISSION_REQUEST_INT
-		54:  15,  // MSG_ID_SAFETY_SET_ALLOWED_AREA
-		55:  3,   // MSG_ID_SAFETY_ALLOWED_AREA
-		61:  167, // MSG_ID_ATTITUDE_QUATERNION_COV
-		62:  183, // MSG_ID_NAV_CONTROLLER_OUTPUT
-		63:  119, // MSG_ID_GLOBAL_POSITION_INT_COV
-		64:  191, // MSG_ID_LOCAL_POSITION_NED_COV
-		65:  118, // MSG_ID_RC_CHANNELS
-		66:  148, // MSG_ID_REQUEST_DATA_STREAM
-		67:  21,  // MSG_ID_DATA_STREAM
-		69:  243, // MSG_ID_MANUAL_CONTROL
-		70:  124, // MSG_ID_RC_CHANNELS_OVERRIDE
-		73:  209, // MSG_ID_MISSION_ITEM_INT
-		74:  20,  // MSG_ID_VFR_HUD
-		75:  158, // MSG_ID_COMMAND_INT
-		76:  152, // MSG_ID_COMMAND_LONG
-		77:  189, // MSG_ID_COMMAND_ACK
-		81:  106, // MSG_ID_MANUAL_SETPOINT
-		82:  49,  // MSG_ID_SET_ATTITUDE_TARGET
-		83:  22,  // MSG_ID_ATTITUDE_TARGET
-		84:  143, // MSG_ID_SET_POSITION_TARGET_LOCAL_NED
-		85:  140, // MSG_ID_POSITION_TARGET_LOCAL_NED
-		86:  5,   // MSG_ID_SET_POSITION_TARGET_GLOBAL_INT
-		87:  150, // MSG_ID_POSITION_TARGET_GLOBAL_INT
-		89:  231, // MSG_ID_LOCAL_POSITION_NED_SYSTEM_GLOBAL_OFFSET
-		90:  183, // MSG_ID_HIL_STATE
-		91:  63,  // MSG_ID_HIL_CONTROLS
-		92:  54,  // MSG_ID_HIL_RC_INPUTS_RAW
-		93:  47,  // MSG_ID_HIL_ACTUATOR_CONTROLS
-		100: 145, // MSG_ID_OPTICAL_FLOW
-		101: 102, // MSG_ID_GLOBAL_VISION_POSITION_ESTIMATE
-		102: 158, // MSG_ID_VISION_POSITION_ESTIMATE
-		103: 208, // MSG_ID_VISION_SPEED_ESTIMATE
-		104: 56,  // MSG_ID_VICON_POSITION_ESTIMATE
-		105: 93,  // MSG_ID_HIGHRES_IMU
-		106: 138, // MSG_ID_OPTICAL_FLOW_RAD
-		107: 108, // MSG_ID_HIL_SENSOR
-		108: 32,  // MSG_ID_SIM_STATE
-		109: 185, // MSG_ID_RADIO_STATUS
-		110: 84,  // MSG_ID_FILE_TRANSFER_PROTOCOL
-		111: 34,  // MSG_ID_TIMESYNC
-		112: 174, // MSG_ID_CAMERA_TRIGGER
-		113: 124, // MSG_ID_HIL_GPS
-		114: 237, // MSG_ID_HIL_OPTICAL_FLOW
-		115: 4,   // MSG_ID_HIL_STATE_QUATERNION
-		116: 76,  // MSG_ID_SCALED_IMU2
-		117: 128, // MSG_ID_LOG_REQUEST_LIST
-		118: 56,  // MSG_ID_LOG_ENTRY
-		119: 116, // MSG_ID_LOG_REQUEST_DATA
-		120: 134, // MSG_ID_LOG_DATA
-		121: 237, // MSG_ID_LOG_ERASE
-		122: 203, // MSG_ID_LOG_REQUEST_END
-		123: 250, // MSG_ID_GPS_INJECT_DATA
-		124: 87,  // MSG_ID_GPS2_RAW
-		125: 203, // MSG_ID_POWER_STATUS
-		126: 220, // MSG_ID_SERIAL_CONTROL
-		127: 25,  // MSG_ID_GPS_RTK
-		128: 226, // MSG_ID_GPS2_RTK
-		129: 46,  // MSG_ID_SCALED_IMU3
-		130: 29,  // MSG_ID_DATA_TRANSMISSION_HANDSHAKE
-		131: 223, // MSG_ID_ENCAPSULATED_DATA
-		132: 85,  // MSG_ID_DISTANCE_SENSOR
-		133: 6,   // MSG_ID_TERRAIN_REQUEST
-		134: 229, // MSG_ID_TERRAIN_DATA
-		135: 203, // MSG_ID_TERRAIN_CHECK
-		136: 1,   // MSG_ID_TERRAIN_REPORT
-		137: 195, // MSG_ID_SCALED_PRESSURE2
-		138: 109, // MSG_ID_ATT_POS_MOCAP
-		139: 168, // MSG_ID_SET_ACTUATOR_CONTROL_TARGET
-		140: 181, // MSG_ID_ACTUATOR_CONTROL_TARGET
-		141: 47,  // MSG_ID_ALTITUDE
-		142: 72,  // MSG_ID_RESOURCE_REQUEST
-		143: 131, // MSG_ID_SCALED_PRESSURE3
-		144: 127, // MSG_ID_FOLLOW_TARGET
-		146: 103, // MSG_ID_CONTROL_SYSTEM_STATE
-		147: 154, // MSG_ID_BATTERY_STATUS
-		148: 178, // MSG_ID_AUTOPILOT_VERSION
-		149: 200, // MSG_ID_LANDING_TARGET
-		230: 163, // MSG_ID_ESTIMATOR_STATUS
-		231: 105, // MSG_ID_WIND_COV
-		232: 151, // MSG_ID_GPS_INPUT
-		233: 35,  // MSG_ID_GPS_RTCM_DATA
-		234: 150, // MSG_ID_HIGH_LATENCY
-		241: 90,  // MSG_ID_VIBRATION
-		242: 104, // MSG_ID_HOME_POSITION
-		243: 85,  // MSG_ID_SET_HOME_POSITION
-		244: 95,  // MSG_ID_MESSAGE_INTERVAL
-		245: 130, // MSG_ID_EXTENDED_SYS_STATE
-		246: 184, // MSG_ID_ADSB_VEHICLE
-		247: 81,  // MSG_ID_COLLISION
-		248: 8,   // MSG_ID_V2_EXTENSION
-		249: 204, // MSG_ID_MEMORY_VECT
-		250: 49,  // MSG_ID_DEBUG_VECT
-		251: 170, // MSG_ID_NAMED_VALUE_FLOAT
-		252: 44,  // MSG_ID_NAMED_VALUE_INT
-		253: 83,  // MSG_ID_STATUSTEXT
-		254: 46,  // MSG_ID_DEBUG
+		MSG_ID_HEARTBEAT:                               50,
+		MSG_ID_SYS_STATUS:                              124,
+		MSG_ID_SYSTEM_TIME:                             137,
+		MSG_ID_PING:                                    237,
+		MSG_ID_CHANGE_OPERATOR_CONTROL:                 217,
+		MSG_ID_CHANGE_OPERATOR_CONTROL_ACK:             104,
+		MSG_ID_AUTH_KEY:                                119,
+		MSG_ID_SET_MODE:                                89,
+		MSG_ID_PARAM_REQUEST_READ:                      214,
+		MSG_ID_PARAM_REQUEST_LIST:                      159,
+		MSG_ID_PARAM_VALUE:                             220,
+		MSG_ID_PARAM_SET:                               168,
+		MSG_ID_GPS_RAW_INT:                             24,
+		MSG_ID_GPS_STATUS:                              23,
+		MSG_ID_SCALED_IMU:                              170,
+		MSG_ID_RAW_IMU:                                 144,
+		MSG_ID_RAW_PRESSURE:                            67,
+		MSG_ID_SCALED_PRESSURE:                         115,
+		MSG_ID_ATTITUDE:                                39,
+		MSG_ID_ATTITUDE_QUATERNION:                     246,
+		MSG_ID_LOCAL_POSITION_NED:                      185,
+		MSG_ID_GLOBAL_POSITION_INT:                     104,
+		MSG_ID_RC_CHANNELS_SCALED:                      237,
+		MSG_ID_RC_CHANNELS_RAW:                         244,
+		MSG_ID_SERVO_OUTPUT_RAW:                        175,
+		MSG_ID_MISSION_REQUEST_PARTIAL_LIST:            4,
+		MSG_ID_MISSION_WRITE_PARTIAL_LIST:              168,
+		MSG_ID_MISSION_ITEM:                            95,
+		MSG_ID_MISSION_REQUEST:                         177,
+		MSG_ID_MISSION_SET_CURRENT:                     28,
+		MSG_ID_MISSION_CURRENT:                         28,
+		MSG_ID_MISSION_REQUEST_LIST:                    148,
+		MSG_ID_MISSION_COUNT:                           52,
+		MSG_ID_MISSION_CLEAR_ALL:                       25,
+		MSG_ID_MISSION_ITEM_REACHED:                    11,
+		MSG_ID_MISSION_ACK:                             146,
+		MSG_ID_SET_GPS_GLOBAL_ORIGIN:                   41,
+		MSG_ID_GPS_GLOBAL_ORIGIN:                       39,
+		MSG_ID_PARAM_MAP_RC:                            78,
+		MSG_ID_MISSION_REQUEST_INT:                     129,
+		MSG_ID_SAFETY_SET_ALLOWED_AREA:                 15,
+		MSG_ID_SAFETY_ALLOWED_AREA:                     3,
+		MSG_ID_ATTITUDE_QUATERNION_COV:                 167,
+		MSG_ID_NAV_CONTROLLER_OUTPUT:                   183,
+		MSG_ID_GLOBAL_POSITION_INT_COV:                 119,
+		MSG_ID_LOCAL_POSITION_NED_COV:                  191,
+		MSG_ID_RC_CHANNELS:                             118,
+		MSG_ID_REQUEST_DATA_STREAM:                     148,
+		MSG_ID_DATA_STREAM:                             21,
+		MSG_ID_MANUAL_CONTROL:                          243,
+		MSG_ID_RC_CHANNELS_OVERRIDE:                    124,
+		MSG_ID_MISSION_ITEM_INT:                        209,
+		MSG_ID_VFR_HUD:                                 20,
+		MSG_ID_COMMAND_INT:                             158,
+		MSG_ID_COMMAND_LONG:                            152,
+		MSG_ID_COMMAND_ACK:                             189,
+		MSG_ID_MANUAL_SETPOINT:                         106,
+		MSG_ID_SET_ATTITUDE_TARGET:                     49,
+		MSG_ID_ATTITUDE_TARGET:                         22,
+		MSG_ID_SET_POSITION_TARGET_LOCAL_NED:           143,
+		MSG_ID_POSITION_TARGET_LOCAL_NED:               140,
+		MSG_ID_SET_POSITION_TARGET_GLOBAL_INT:          5,
+		MSG_ID_POSITION_TARGET_GLOBAL_INT:              150,
+		MSG_ID_LOCAL_POSITION_NED_SYSTEM_GLOBAL_OFFSET: 231,
+		MSG_ID_HIL_STATE:                               183,
+		MSG_ID_HIL_CONTROLS:                            63,
+		MSG_ID_HIL_RC_INPUTS_RAW:                       54,
+		MSG_ID_HIL_ACTUATOR_CONTROLS:                   47,
+		MSG_ID_OPTICAL_FLOW:                            145,
+		MSG_ID_GLOBAL_VISION_POSITION_ESTIMATE:         102,
+		MSG_ID_VISION_POSITION_ESTIMATE:                158,
+		MSG_ID_VISION_SPEED_ESTIMATE:                   208,
+		MSG_ID_VICON_POSITION_ESTIMATE:                 56,
+		MSG_ID_HIGHRES_IMU:                             93,
+		MSG_ID_OPTICAL_FLOW_RAD:                        138,
+		MSG_ID_HIL_SENSOR:                              108,
+		MSG_ID_SIM_STATE:                               32,
+		MSG_ID_RADIO_STATUS:                            185,
+		MSG_ID_FILE_TRANSFER_PROTOCOL:                  84,
+		MSG_ID_TIMESYNC:                                34,
+		MSG_ID_CAMERA_TRIGGER:                          174,
+		MSG_ID_HIL_GPS:                                 124,
+		MSG_ID_HIL_OPTICAL_FLOW:                        237,
+		MSG_ID_HIL_STATE_QUATERNION:                    4,
+		MSG_ID_SCALED_IMU2:                             76,
+		MSG_ID_LOG_REQUEST_LIST:                        128,
+		MSG_ID_LOG_ENTRY:                               56,
+		MSG_ID_LOG_REQUEST_DATA:                        116,
+		MSG_ID_LOG_DATA:                                134,
+		MSG_ID_LOG_ERASE:                               237,
+		MSG_ID_LOG_REQUEST_END:                         203,
+		MSG_ID_GPS_INJECT_DATA:                         250,
+		MSG_ID_GPS2_RAW:                                87,
+		MSG_ID_POWER_STATUS:                            203,
+		MSG_ID_SERIAL_CONTROL:                          220,
+		MSG_ID_GPS_RTK:                                 25,
+		MSG_ID_GPS2_RTK:                                226,
+		MSG_ID_SCALED_IMU3:                             46,
+		MSG_ID_DATA_TRANSMISSION_HANDSHAKE:             29,
+		MSG_ID_ENCAPSULATED_DATA:                       223,
+		MSG_ID_DISTANCE_SENSOR:                         85,
+		MSG_ID_TERRAIN_REQUEST:                         6,
+		MSG_ID_TERRAIN_DATA:                            229,
+		MSG_ID_TERRAIN_CHECK:                           203,
+		MSG_ID_TERRAIN_REPORT:                          1,
+		MSG_ID_SCALED_PRESSURE2:                        195,
+		MSG_ID_ATT_POS_MOCAP:                           109,
+		MSG_ID_SET_ACTUATOR_CONTROL_TARGET:             168,
+		MSG_ID_ACTUATOR_CONTROL_TARGET:                 181,
+		MSG_ID_ALTITUDE:                                47,
+		MSG_ID_RESOURCE_REQUEST:                        72,
+		MSG_ID_SCALED_PRESSURE3:                        131,
+		MSG_ID_FOLLOW_TARGET:                           127,
+		MSG_ID_CONTROL_SYSTEM_STATE:                    103,
+		MSG_ID_BATTERY_STATUS:                          154,
+		MSG_ID_AUTOPILOT_VERSION:                       178,
+		MSG_ID_LANDING_TARGET:                          200,
+		MSG_ID_ESTIMATOR_STATUS:                        163,
+		MSG_ID_WIND_COV:                                105,
+		MSG_ID_GPS_INPUT:                               151,
+		MSG_ID_GPS_RTCM_DATA:                           35,
+		MSG_ID_HIGH_LATENCY:                            150,
+		MSG_ID_VIBRATION:                               90,
+		MSG_ID_HOME_POSITION:                           104,
+		MSG_ID_SET_HOME_POSITION:                       85,
+		MSG_ID_MESSAGE_INTERVAL:                        95,
+		MSG_ID_EXTENDED_SYS_STATE:                      130,
+		MSG_ID_ADSB_VEHICLE:                            184,
+		MSG_ID_COLLISION:                               81,
+		MSG_ID_V2_EXTENSION:                            8,
+		MSG_ID_MEMORY_VECT:                             204,
+		MSG_ID_DEBUG_VECT:                              49,
+		MSG_ID_NAMED_VALUE_FLOAT:                       170,
+		MSG_ID_NAMED_VALUE_INT:                         44,
+		MSG_ID_STATUSTEXT:                              83,
+		MSG_ID_DEBUG:                                   46,
+	},
+	messageConstructorByMsgId: map[uint8]func(*Packet) Message{
+		MSG_ID_HEARTBEAT: func(pkt *Packet) Message {
+			msg := new(Heartbeat)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SYS_STATUS: func(pkt *Packet) Message {
+			msg := new(SysStatus)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SYSTEM_TIME: func(pkt *Packet) Message {
+			msg := new(SystemTime)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_PING: func(pkt *Packet) Message {
+			msg := new(Ping)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_CHANGE_OPERATOR_CONTROL: func(pkt *Packet) Message {
+			msg := new(ChangeOperatorControl)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_CHANGE_OPERATOR_CONTROL_ACK: func(pkt *Packet) Message {
+			msg := new(ChangeOperatorControlAck)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_AUTH_KEY: func(pkt *Packet) Message {
+			msg := new(AuthKey)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SET_MODE: func(pkt *Packet) Message {
+			msg := new(SetMode)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_PARAM_REQUEST_READ: func(pkt *Packet) Message {
+			msg := new(ParamRequestRead)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_PARAM_REQUEST_LIST: func(pkt *Packet) Message {
+			msg := new(ParamRequestList)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_PARAM_VALUE: func(pkt *Packet) Message {
+			msg := new(ParamValue)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_PARAM_SET: func(pkt *Packet) Message {
+			msg := new(ParamSet)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_GPS_RAW_INT: func(pkt *Packet) Message {
+			msg := new(GpsRawInt)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_GPS_STATUS: func(pkt *Packet) Message {
+			msg := new(GpsStatus)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SCALED_IMU: func(pkt *Packet) Message {
+			msg := new(ScaledImu)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_RAW_IMU: func(pkt *Packet) Message {
+			msg := new(RawImu)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_RAW_PRESSURE: func(pkt *Packet) Message {
+			msg := new(RawPressure)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SCALED_PRESSURE: func(pkt *Packet) Message {
+			msg := new(ScaledPressure)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_ATTITUDE: func(pkt *Packet) Message {
+			msg := new(Attitude)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_ATTITUDE_QUATERNION: func(pkt *Packet) Message {
+			msg := new(AttitudeQuaternion)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_LOCAL_POSITION_NED: func(pkt *Packet) Message {
+			msg := new(LocalPositionNed)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_GLOBAL_POSITION_INT: func(pkt *Packet) Message {
+			msg := new(GlobalPositionInt)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_RC_CHANNELS_SCALED: func(pkt *Packet) Message {
+			msg := new(RcChannelsScaled)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_RC_CHANNELS_RAW: func(pkt *Packet) Message {
+			msg := new(RcChannelsRaw)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SERVO_OUTPUT_RAW: func(pkt *Packet) Message {
+			msg := new(ServoOutputRaw)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_MISSION_REQUEST_PARTIAL_LIST: func(pkt *Packet) Message {
+			msg := new(MissionRequestPartialList)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_MISSION_WRITE_PARTIAL_LIST: func(pkt *Packet) Message {
+			msg := new(MissionWritePartialList)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_MISSION_ITEM: func(pkt *Packet) Message {
+			msg := new(MissionItem)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_MISSION_REQUEST: func(pkt *Packet) Message {
+			msg := new(MissionRequest)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_MISSION_SET_CURRENT: func(pkt *Packet) Message {
+			msg := new(MissionSetCurrent)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_MISSION_CURRENT: func(pkt *Packet) Message {
+			msg := new(MissionCurrent)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_MISSION_REQUEST_LIST: func(pkt *Packet) Message {
+			msg := new(MissionRequestList)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_MISSION_COUNT: func(pkt *Packet) Message {
+			msg := new(MissionCount)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_MISSION_CLEAR_ALL: func(pkt *Packet) Message {
+			msg := new(MissionClearAll)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_MISSION_ITEM_REACHED: func(pkt *Packet) Message {
+			msg := new(MissionItemReached)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_MISSION_ACK: func(pkt *Packet) Message {
+			msg := new(MissionAck)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SET_GPS_GLOBAL_ORIGIN: func(pkt *Packet) Message {
+			msg := new(SetGpsGlobalOrigin)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_GPS_GLOBAL_ORIGIN: func(pkt *Packet) Message {
+			msg := new(GpsGlobalOrigin)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_PARAM_MAP_RC: func(pkt *Packet) Message {
+			msg := new(ParamMapRc)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_MISSION_REQUEST_INT: func(pkt *Packet) Message {
+			msg := new(MissionRequestInt)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SAFETY_SET_ALLOWED_AREA: func(pkt *Packet) Message {
+			msg := new(SafetySetAllowedArea)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SAFETY_ALLOWED_AREA: func(pkt *Packet) Message {
+			msg := new(SafetyAllowedArea)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_ATTITUDE_QUATERNION_COV: func(pkt *Packet) Message {
+			msg := new(AttitudeQuaternionCov)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_NAV_CONTROLLER_OUTPUT: func(pkt *Packet) Message {
+			msg := new(NavControllerOutput)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_GLOBAL_POSITION_INT_COV: func(pkt *Packet) Message {
+			msg := new(GlobalPositionIntCov)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_LOCAL_POSITION_NED_COV: func(pkt *Packet) Message {
+			msg := new(LocalPositionNedCov)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_RC_CHANNELS: func(pkt *Packet) Message {
+			msg := new(RcChannels)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_REQUEST_DATA_STREAM: func(pkt *Packet) Message {
+			msg := new(RequestDataStream)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_DATA_STREAM: func(pkt *Packet) Message {
+			msg := new(DataStream)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_MANUAL_CONTROL: func(pkt *Packet) Message {
+			msg := new(ManualControl)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_RC_CHANNELS_OVERRIDE: func(pkt *Packet) Message {
+			msg := new(RcChannelsOverride)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_MISSION_ITEM_INT: func(pkt *Packet) Message {
+			msg := new(MissionItemInt)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_VFR_HUD: func(pkt *Packet) Message {
+			msg := new(VfrHud)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_COMMAND_INT: func(pkt *Packet) Message {
+			msg := new(CommandInt)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_COMMAND_LONG: func(pkt *Packet) Message {
+			msg := new(CommandLong)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_COMMAND_ACK: func(pkt *Packet) Message {
+			msg := new(CommandAck)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_MANUAL_SETPOINT: func(pkt *Packet) Message {
+			msg := new(ManualSetpoint)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SET_ATTITUDE_TARGET: func(pkt *Packet) Message {
+			msg := new(SetAttitudeTarget)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_ATTITUDE_TARGET: func(pkt *Packet) Message {
+			msg := new(AttitudeTarget)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SET_POSITION_TARGET_LOCAL_NED: func(pkt *Packet) Message {
+			msg := new(SetPositionTargetLocalNed)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_POSITION_TARGET_LOCAL_NED: func(pkt *Packet) Message {
+			msg := new(PositionTargetLocalNed)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SET_POSITION_TARGET_GLOBAL_INT: func(pkt *Packet) Message {
+			msg := new(SetPositionTargetGlobalInt)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_POSITION_TARGET_GLOBAL_INT: func(pkt *Packet) Message {
+			msg := new(PositionTargetGlobalInt)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_LOCAL_POSITION_NED_SYSTEM_GLOBAL_OFFSET: func(pkt *Packet) Message {
+			msg := new(LocalPositionNedSystemGlobalOffset)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_HIL_STATE: func(pkt *Packet) Message {
+			msg := new(HilState)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_HIL_CONTROLS: func(pkt *Packet) Message {
+			msg := new(HilControls)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_HIL_RC_INPUTS_RAW: func(pkt *Packet) Message {
+			msg := new(HilRcInputsRaw)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_HIL_ACTUATOR_CONTROLS: func(pkt *Packet) Message {
+			msg := new(HilActuatorControls)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_OPTICAL_FLOW: func(pkt *Packet) Message {
+			msg := new(OpticalFlow)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_GLOBAL_VISION_POSITION_ESTIMATE: func(pkt *Packet) Message {
+			msg := new(GlobalVisionPositionEstimate)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_VISION_POSITION_ESTIMATE: func(pkt *Packet) Message {
+			msg := new(VisionPositionEstimate)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_VISION_SPEED_ESTIMATE: func(pkt *Packet) Message {
+			msg := new(VisionSpeedEstimate)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_VICON_POSITION_ESTIMATE: func(pkt *Packet) Message {
+			msg := new(ViconPositionEstimate)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_HIGHRES_IMU: func(pkt *Packet) Message {
+			msg := new(HighresImu)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_OPTICAL_FLOW_RAD: func(pkt *Packet) Message {
+			msg := new(OpticalFlowRad)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_HIL_SENSOR: func(pkt *Packet) Message {
+			msg := new(HilSensor)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SIM_STATE: func(pkt *Packet) Message {
+			msg := new(SimState)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_RADIO_STATUS: func(pkt *Packet) Message {
+			msg := new(RadioStatus)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_FILE_TRANSFER_PROTOCOL: func(pkt *Packet) Message {
+			msg := new(FileTransferProtocol)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_TIMESYNC: func(pkt *Packet) Message {
+			msg := new(Timesync)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_CAMERA_TRIGGER: func(pkt *Packet) Message {
+			msg := new(CameraTrigger)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_HIL_GPS: func(pkt *Packet) Message {
+			msg := new(HilGps)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_HIL_OPTICAL_FLOW: func(pkt *Packet) Message {
+			msg := new(HilOpticalFlow)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_HIL_STATE_QUATERNION: func(pkt *Packet) Message {
+			msg := new(HilStateQuaternion)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SCALED_IMU2: func(pkt *Packet) Message {
+			msg := new(ScaledImu2)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_LOG_REQUEST_LIST: func(pkt *Packet) Message {
+			msg := new(LogRequestList)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_LOG_ENTRY: func(pkt *Packet) Message {
+			msg := new(LogEntry)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_LOG_REQUEST_DATA: func(pkt *Packet) Message {
+			msg := new(LogRequestData)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_LOG_DATA: func(pkt *Packet) Message {
+			msg := new(LogData)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_LOG_ERASE: func(pkt *Packet) Message {
+			msg := new(LogErase)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_LOG_REQUEST_END: func(pkt *Packet) Message {
+			msg := new(LogRequestEnd)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_GPS_INJECT_DATA: func(pkt *Packet) Message {
+			msg := new(GpsInjectData)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_GPS2_RAW: func(pkt *Packet) Message {
+			msg := new(Gps2Raw)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_POWER_STATUS: func(pkt *Packet) Message {
+			msg := new(PowerStatus)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SERIAL_CONTROL: func(pkt *Packet) Message {
+			msg := new(SerialControl)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_GPS_RTK: func(pkt *Packet) Message {
+			msg := new(GpsRtk)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_GPS2_RTK: func(pkt *Packet) Message {
+			msg := new(Gps2Rtk)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SCALED_IMU3: func(pkt *Packet) Message {
+			msg := new(ScaledImu3)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_DATA_TRANSMISSION_HANDSHAKE: func(pkt *Packet) Message {
+			msg := new(DataTransmissionHandshake)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_ENCAPSULATED_DATA: func(pkt *Packet) Message {
+			msg := new(EncapsulatedData)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_DISTANCE_SENSOR: func(pkt *Packet) Message {
+			msg := new(DistanceSensor)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_TERRAIN_REQUEST: func(pkt *Packet) Message {
+			msg := new(TerrainRequest)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_TERRAIN_DATA: func(pkt *Packet) Message {
+			msg := new(TerrainData)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_TERRAIN_CHECK: func(pkt *Packet) Message {
+			msg := new(TerrainCheck)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_TERRAIN_REPORT: func(pkt *Packet) Message {
+			msg := new(TerrainReport)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SCALED_PRESSURE2: func(pkt *Packet) Message {
+			msg := new(ScaledPressure2)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_ATT_POS_MOCAP: func(pkt *Packet) Message {
+			msg := new(AttPosMocap)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SET_ACTUATOR_CONTROL_TARGET: func(pkt *Packet) Message {
+			msg := new(SetActuatorControlTarget)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_ACTUATOR_CONTROL_TARGET: func(pkt *Packet) Message {
+			msg := new(ActuatorControlTarget)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_ALTITUDE: func(pkt *Packet) Message {
+			msg := new(Altitude)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_RESOURCE_REQUEST: func(pkt *Packet) Message {
+			msg := new(ResourceRequest)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SCALED_PRESSURE3: func(pkt *Packet) Message {
+			msg := new(ScaledPressure3)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_FOLLOW_TARGET: func(pkt *Packet) Message {
+			msg := new(FollowTarget)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_CONTROL_SYSTEM_STATE: func(pkt *Packet) Message {
+			msg := new(ControlSystemState)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_BATTERY_STATUS: func(pkt *Packet) Message {
+			msg := new(BatteryStatus)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_AUTOPILOT_VERSION: func(pkt *Packet) Message {
+			msg := new(AutopilotVersion)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_LANDING_TARGET: func(pkt *Packet) Message {
+			msg := new(LandingTarget)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_ESTIMATOR_STATUS: func(pkt *Packet) Message {
+			msg := new(EstimatorStatus)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_WIND_COV: func(pkt *Packet) Message {
+			msg := new(WindCov)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_GPS_INPUT: func(pkt *Packet) Message {
+			msg := new(GpsInput)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_GPS_RTCM_DATA: func(pkt *Packet) Message {
+			msg := new(GpsRtcmData)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_HIGH_LATENCY: func(pkt *Packet) Message {
+			msg := new(HighLatency)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_VIBRATION: func(pkt *Packet) Message {
+			msg := new(Vibration)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_HOME_POSITION: func(pkt *Packet) Message {
+			msg := new(HomePosition)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SET_HOME_POSITION: func(pkt *Packet) Message {
+			msg := new(SetHomePosition)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_MESSAGE_INTERVAL: func(pkt *Packet) Message {
+			msg := new(MessageInterval)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_EXTENDED_SYS_STATE: func(pkt *Packet) Message {
+			msg := new(ExtendedSysState)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_ADSB_VEHICLE: func(pkt *Packet) Message {
+			msg := new(AdsbVehicle)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_COLLISION: func(pkt *Packet) Message {
+			msg := new(Collision)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_V2_EXTENSION: func(pkt *Packet) Message {
+			msg := new(V2Extension)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_MEMORY_VECT: func(pkt *Packet) Message {
+			msg := new(MemoryVect)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_DEBUG_VECT: func(pkt *Packet) Message {
+			msg := new(DebugVect)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_NAMED_VALUE_FLOAT: func(pkt *Packet) Message {
+			msg := new(NamedValueFloat)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_NAMED_VALUE_INT: func(pkt *Packet) Message {
+			msg := new(NamedValueInt)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_STATUSTEXT: func(pkt *Packet) Message {
+			msg := new(Statustext)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_DEBUG: func(pkt *Packet) Message {
+			msg := new(Debug)
+			msg.Unpack(pkt)
+			return msg
+		},
 	},
 }

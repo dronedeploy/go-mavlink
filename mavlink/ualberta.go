@@ -201,8 +201,25 @@ const (
 var DialectUalberta *Dialect = &Dialect{
 	Name: "ualberta",
 	crcExtras: map[uint8]uint8{
-		220: 34, // MSG_ID_NAV_FILTER_BIAS
-		221: 71, // MSG_ID_RADIO_CALIBRATION
-		222: 15, // MSG_ID_UALBERTA_SYS_STATUS
+		MSG_ID_NAV_FILTER_BIAS:     34,
+		MSG_ID_RADIO_CALIBRATION:   71,
+		MSG_ID_UALBERTA_SYS_STATUS: 15,
+	},
+	messageConstructorByMsgId: map[uint8]func(*Packet) Message{
+		MSG_ID_NAV_FILTER_BIAS: func(pkt *Packet) Message {
+			msg := new(NavFilterBias)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_RADIO_CALIBRATION: func(pkt *Packet) Message {
+			msg := new(RadioCalibration)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_UALBERTA_SYS_STATUS: func(pkt *Packet) Message {
+			msg := new(UalbertaSysStatus)
+			msg.Unpack(pkt)
+			return msg
+		},
 	},
 }

@@ -759,17 +759,79 @@ const (
 var DialectAsluav *Dialect = &Dialect{
 	Name: "ASLUAV",
 	crcExtras: map[uint8]uint8{
-		201: 218, // MSG_ID_SENS_POWER
-		202: 231, // MSG_ID_SENS_MPPT
-		203: 172, // MSG_ID_ASLCTRL_DATA
-		204: 251, // MSG_ID_ASLCTRL_DEBUG
-		205: 97,  // MSG_ID_ASLUAV_STATUS
-		206: 64,  // MSG_ID_EKF_EXT
-		207: 234, // MSG_ID_ASL_OBCTRL
-		208: 175, // MSG_ID_SENS_ATMOS
-		209: 62,  // MSG_ID_SENS_BATMON
-		210: 20,  // MSG_ID_FW_SOARING_DATA
-		211: 54,  // MSG_ID_SENSORPOD_STATUS
-		212: 242, // MSG_ID_SENS_POWER_BOARD
+		MSG_ID_SENS_POWER:       218,
+		MSG_ID_SENS_MPPT:        231,
+		MSG_ID_ASLCTRL_DATA:     172,
+		MSG_ID_ASLCTRL_DEBUG:    251,
+		MSG_ID_ASLUAV_STATUS:    97,
+		MSG_ID_EKF_EXT:          64,
+		MSG_ID_ASL_OBCTRL:       234,
+		MSG_ID_SENS_ATMOS:       175,
+		MSG_ID_SENS_BATMON:      62,
+		MSG_ID_FW_SOARING_DATA:  20,
+		MSG_ID_SENSORPOD_STATUS: 54,
+		MSG_ID_SENS_POWER_BOARD: 242,
+	},
+	messageConstructorByMsgId: map[uint8]func(*Packet) Message{
+		MSG_ID_SENS_POWER: func(pkt *Packet) Message {
+			msg := new(SensPower)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SENS_MPPT: func(pkt *Packet) Message {
+			msg := new(SensMppt)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_ASLCTRL_DATA: func(pkt *Packet) Message {
+			msg := new(AslctrlData)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_ASLCTRL_DEBUG: func(pkt *Packet) Message {
+			msg := new(AslctrlDebug)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_ASLUAV_STATUS: func(pkt *Packet) Message {
+			msg := new(AsluavStatus)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_EKF_EXT: func(pkt *Packet) Message {
+			msg := new(EkfExt)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_ASL_OBCTRL: func(pkt *Packet) Message {
+			msg := new(AslObctrl)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SENS_ATMOS: func(pkt *Packet) Message {
+			msg := new(SensAtmos)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SENS_BATMON: func(pkt *Packet) Message {
+			msg := new(SensBatmon)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_FW_SOARING_DATA: func(pkt *Packet) Message {
+			msg := new(FwSoaringData)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SENSORPOD_STATUS: func(pkt *Packet) Message {
+			msg := new(SensorpodStatus)
+			msg.Unpack(pkt)
+			return msg
+		},
+		MSG_ID_SENS_POWER_BOARD: func(pkt *Packet) Message {
+			msg := new(SensPowerBoard)
+			msg.Unpack(pkt)
+			return msg
+		},
 	},
 }
