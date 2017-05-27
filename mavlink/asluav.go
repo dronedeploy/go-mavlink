@@ -15,8 +15,8 @@ import (
 
 // MavCmd:
 const (
-	MAV_CMD_RESET_MPPT      = 0 // Mission command to reset Maximum Power Point Tracker (MPPT)
-	MAV_CMD_PAYLOAD_CONTROL = 1 // Mission command to perform a power cycle on payload
+	MAV_CMD_RESET_MPPT      = 40001 // Mission command to reset Maximum Power Point Tracker (MPPT)
+	MAV_CMD_PAYLOAD_CONTROL = 40002 // Mission command to perform a power cycle on payload
 )
 
 // Voltage and current sensor data
