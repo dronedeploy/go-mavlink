@@ -25,23 +25,23 @@ const (
 
 // MavCmd:
 const (
-	MAV_CMD_DO_GRIPPER                      = 211 // Mission command to operate EPM gripper
-	MAV_CMD_DO_AUTOTUNE_ENABLE              = 212 // Enable/disable autotune
-	MAV_CMD_NAV_ALTITUDE_WAIT               = 83  // Mission command to wait for an altitude or downwards vertical speed. This is meant for high altitude balloon launches, allowing the aircraft to be idle until either an altitude is reached or a negative vertical speed is reached (indicating early balloon burst). The wiggle time is how often to wiggle the control surfaces to prevent them seizing up.
-	MAV_CMD_POWER_OFF_INITIATED             = 3   // A system wide power-off event has been initiated.
-	MAV_CMD_SOLO_BTN_FLY_CLICK              = 4   // FLY button has been clicked.
-	MAV_CMD_SOLO_BTN_FLY_HOLD               = 5   // FLY button has been held for 1.5 seconds.
-	MAV_CMD_SOLO_BTN_PAUSE_CLICK            = 6   // PAUSE button has been clicked.
-	MAV_CMD_DO_START_MAG_CAL                = 7   // Initiate a magnetometer calibration
-	MAV_CMD_DO_ACCEPT_MAG_CAL               = 8   // Initiate a magnetometer calibration
-	MAV_CMD_DO_CANCEL_MAG_CAL               = 9   // Cancel a running magnetometer calibration
-	MAV_CMD_ACCELCAL_VEHICLE_POS            = 10  // Used when doing accelerometer calibration. When sent to the GCS tells it what position to put the vehicle in. When sent to the vehicle says what position the vehicle is in.
-	MAV_CMD_DO_SEND_BANNER                  = 11  // Reply with the version banner
-	MAV_CMD_GIMBAL_RESET                    = 12  // Causes the gimbal to reset and boot as if it was just powered on
-	MAV_CMD_SET_FACTORY_TEST_MODE           = 13  // Command autopilot to get into factory test/diagnostic mode
-	MAV_CMD_GIMBAL_AXIS_CALIBRATION_STATUS  = 14  // Reports progress and success or failure of gimbal axis calibration procedure
-	MAV_CMD_GIMBAL_REQUEST_AXIS_CALIBRATION = 15  // Starts commutation calibration on the gimbal
-	MAV_CMD_GIMBAL_FULL_RESET               = 16  // Erases gimbal application and parameters
+	MAV_CMD_DO_GRIPPER                      = 211   // Mission command to operate EPM gripper
+	MAV_CMD_DO_AUTOTUNE_ENABLE              = 212   // Enable/disable autotune
+	MAV_CMD_NAV_ALTITUDE_WAIT               = 83    // Mission command to wait for an altitude or downwards vertical speed. This is meant for high altitude balloon launches, allowing the aircraft to be idle until either an altitude is reached or a negative vertical speed is reached (indicating early balloon burst). The wiggle time is how often to wiggle the control surfaces to prevent them seizing up.
+	MAV_CMD_POWER_OFF_INITIATED             = 42000 // A system wide power-off event has been initiated.
+	MAV_CMD_SOLO_BTN_FLY_CLICK              = 42001 // FLY button has been clicked.
+	MAV_CMD_SOLO_BTN_FLY_HOLD               = 42002 // FLY button has been held for 1.5 seconds.
+	MAV_CMD_SOLO_BTN_PAUSE_CLICK            = 42003 // PAUSE button has been clicked.
+	MAV_CMD_DO_START_MAG_CAL                = 42424 // Initiate a magnetometer calibration
+	MAV_CMD_DO_ACCEPT_MAG_CAL               = 42425 // Initiate a magnetometer calibration
+	MAV_CMD_DO_CANCEL_MAG_CAL               = 42426 // Cancel a running magnetometer calibration
+	MAV_CMD_ACCELCAL_VEHICLE_POS            = 42429 // Used when doing accelerometer calibration. When sent to the GCS tells it what position to put the vehicle in. When sent to the vehicle says what position the vehicle is in.
+	MAV_CMD_DO_SEND_BANNER                  = 42428 // Reply with the version banner
+	MAV_CMD_GIMBAL_RESET                    = 42501 // Causes the gimbal to reset and boot as if it was just powered on
+	MAV_CMD_SET_FACTORY_TEST_MODE           = 42427 // Command autopilot to get into factory test/diagnostic mode
+	MAV_CMD_GIMBAL_AXIS_CALIBRATION_STATUS  = 42502 // Reports progress and success or failure of gimbal axis calibration procedure
+	MAV_CMD_GIMBAL_REQUEST_AXIS_CALIBRATION = 42503 // Starts commutation calibration on the gimbal
+	MAV_CMD_GIMBAL_FULL_RESET               = 42505 // Erases gimbal application and parameters
 )
 
 // LimitsState:
@@ -342,8 +342,8 @@ const (
 	EKF_POS_VERT_ABS       = 32  // set if EKF's vertical position (absolute) estimate is good
 	EKF_POS_VERT_AGL       = 64  // set if EKF's vertical position (above ground) estimate is good
 	EKF_CONST_POS_MODE     = 128 // EKF is in constant position mode and does not know it's absolute or relative position
-	EKF_PRED_POS_HORIZ_REL = 8   // set if EKF's predicted horizontal position (relative) estimate is good
-	EKF_PRED_POS_HORIZ_ABS = 9   // set if EKF's predicted horizontal position (absolute) estimate is good
+	EKF_PRED_POS_HORIZ_REL = 256 // set if EKF's predicted horizontal position (relative) estimate is good
+	EKF_PRED_POS_HORIZ_ABS = 512 // set if EKF's predicted horizontal position (absolute) estimate is good
 )
 
 // PidTuningAxis:
@@ -368,8 +368,8 @@ const (
 
 // MavRemoteLogDataBlockCommands: Special ACK block numbers control activation of dataflash log streaming
 const (
-	MAV_REMOTE_LOG_DATA_BLOCK_STOP  = 0 // UAV to stop sending DataFlash blocks
-	MAV_REMOTE_LOG_DATA_BLOCK_START = 1 // UAV to start sending DataFlash blocks
+	MAV_REMOTE_LOG_DATA_BLOCK_STOP  = 2147483645 // UAV to stop sending DataFlash blocks
+	MAV_REMOTE_LOG_DATA_BLOCK_START = 2147483646 // UAV to start sending DataFlash blocks
 )
 
 // MavRemoteLogDataBlockStatuses: Possible remote log data block statuses
