@@ -34,7 +34,7 @@ type Enum struct {
 }
 
 type EnumEntry struct {
-	Value       uint8             `xml:"value,attr"`
+	Value       uint32            `xml:"value,attr"`
 	Name        string            `xml:"name,attr"`
 	Description string            `xml:"description"`
 	Params      []*EnumEntryParam `xml:"param"`
@@ -386,7 +386,7 @@ const ({{range .Entries}}
 		e.Name = UpperCamelCase(e.Name)
 		for i, ee := range e.Entries {
 			if ee.Value == 0 {
-				ee.Value = uint8(i)
+				ee.Value = uint32(i)
 			}
 			ee.Description = strings.Replace(ee.Description, "\n", " ", -1)
 		}
