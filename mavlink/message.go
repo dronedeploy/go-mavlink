@@ -26,13 +26,15 @@ var (
 	ErrCrcFail      = errors.New("checksum did not match")
 )
 
+type MessageID uint8
+
 // basic type for encoding/decoding mavlink messages.
 // use the Pack() and Unpack() routines on specific message
 // types to convert them to/from the Packet type.
 type Message interface {
 	Pack(*Packet) error
 	Unpack(*Packet) error
-	MsgID() uint8
+	MsgID() MessageID
 	MsgName() string
 }
 
@@ -40,10 +42,10 @@ type Message interface {
 // use the ToPacket() and FromPacket() routines on specific message
 // types to convert them to/from the Message type.
 type Packet struct {
-	SeqID    uint8 // Sequence of packet
-	SysID    uint8 // ID of message sender system/aircraft
-	CompID   uint8 // ID of the message sender component
-	MsgID    uint8 // ID of message in payload
+	SeqID    uint8     // Sequence of packet
+	SysID    uint8     // ID of message sender system/aircraft
+	CompID   uint8     // ID of the message sender component
+	MsgID    MessageID // ID of message in payload
 	Payload  []byte
 	Checksum uint16
 }
@@ -98,7 +100,7 @@ func newPacketFromBytes(b []byte) (*Packet, int) {
 		SeqID:  b[1],
 		SysID:  b[2],
 		CompID: b[3],
-		MsgID:  b[4],
+		MsgID:  MessageID(b[4]),
 	}, int(b[0])
 }
 
@@ -245,7 +247,7 @@ func (enc *Encoder) EncodePacket(p *Packet) error {
 	crc := x25.New()
 
 	// header
-	hdr := []byte{startByte, byte(len(p.Payload)), enc.CurrSeqID, p.SysID, p.CompID, p.MsgID}
+	hdr := []byte{startByte, byte(len(p.Payload)), enc.CurrSeqID, p.SysID, p.CompID, uint8(p.MsgID)}
 	if err := enc.writeAndCheck(hdr); err != nil {
 		return err
 	}

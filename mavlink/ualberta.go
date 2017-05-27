@@ -48,8 +48,8 @@ type NavFilterBias struct {
 	Gyro2  float32 // b_f[2]
 }
 
-func (self *NavFilterBias) MsgID() uint8 {
-	return 220
+func (self *NavFilterBias) MsgID() MessageID {
+	return MSG_ID_NAV_FILTER_BIAS
 }
 
 func (self *NavFilterBias) MsgName() string {
@@ -95,8 +95,8 @@ type RadioCalibration struct {
 	Throttle [5]uint16 // Throttle curve setpoints (every 25%)
 }
 
-func (self *RadioCalibration) MsgID() uint8 {
-	return 221
+func (self *RadioCalibration) MsgID() MessageID {
+	return MSG_ID_RADIO_CALIBRATION
 }
 
 func (self *RadioCalibration) MsgName() string {
@@ -161,8 +161,8 @@ type UalbertaSysStatus struct {
 	Pilot   uint8 // Pilot mode, see UALBERTA_PILOT_MODE
 }
 
-func (self *UalbertaSysStatus) MsgID() uint8 {
-	return 222
+func (self *UalbertaSysStatus) MsgID() MessageID {
+	return MSG_ID_UALBERTA_SYS_STATUS
 }
 
 func (self *UalbertaSysStatus) MsgName() string {
@@ -192,20 +192,20 @@ func (self *UalbertaSysStatus) Unpack(p *Packet) error {
 
 // Message IDs
 const (
-	MSG_ID_NAV_FILTER_BIAS     = 220
-	MSG_ID_RADIO_CALIBRATION   = 221
-	MSG_ID_UALBERTA_SYS_STATUS = 222
+	MSG_ID_NAV_FILTER_BIAS     MessageID = 220
+	MSG_ID_RADIO_CALIBRATION   MessageID = 221
+	MSG_ID_UALBERTA_SYS_STATUS MessageID = 222
 )
 
 // DialectUalberta is the dialect represented by ualberta.xml
 var DialectUalberta *Dialect = &Dialect{
 	Name: "ualberta",
-	crcExtras: map[uint8]uint8{
+	crcExtras: map[MessageID]uint8{
 		MSG_ID_NAV_FILTER_BIAS:     34,
 		MSG_ID_RADIO_CALIBRATION:   71,
 		MSG_ID_UALBERTA_SYS_STATUS: 15,
 	},
-	messageConstructorByMsgId: map[uint8]func(*Packet) Message{
+	messageConstructorByMsgId: map[MessageID]func(*Packet) Message{
 		MSG_ID_NAV_FILTER_BIAS: func(pkt *Packet) Message {
 			msg := new(NavFilterBias)
 			msg.Unpack(pkt)

@@ -753,8 +753,8 @@ type Heartbeat struct {
 	MavlinkVersion uint8  // MAVLink version, not writable by user, gets added by protocol because of magic data type: uint8_t_mavlink_version
 }
 
-func (self *Heartbeat) MsgID() uint8 {
-	return 0
+func (self *Heartbeat) MsgID() MessageID {
+	return MSG_ID_HEARTBEAT
 }
 
 func (self *Heartbeat) MsgName() string {
@@ -805,8 +805,8 @@ type SysStatus struct {
 	BatteryRemaining             int8   // Remaining battery energy: (0%: 0, 100%: 100), -1: autopilot estimate the remaining battery
 }
 
-func (self *SysStatus) MsgID() uint8 {
-	return 1
+func (self *SysStatus) MsgID() MessageID {
+	return MSG_ID_SYS_STATUS
 }
 
 func (self *SysStatus) MsgName() string {
@@ -860,8 +860,8 @@ type SystemTime struct {
 	TimeBootMs   uint32 // Timestamp of the component clock since boot time in milliseconds.
 }
 
-func (self *SystemTime) MsgID() uint8 {
-	return 2
+func (self *SystemTime) MsgID() MessageID {
+	return MSG_ID_SYSTEM_TIME
 }
 
 func (self *SystemTime) MsgName() string {
@@ -895,8 +895,8 @@ type Ping struct {
 	TargetComponent uint8  // 0: request ping from all receiving components, if greater than 0: message is a ping response and number is the system id of the requesting system
 }
 
-func (self *Ping) MsgID() uint8 {
-	return 4
+func (self *Ping) MsgID() MessageID {
+	return MSG_ID_PING
 }
 
 func (self *Ping) MsgName() string {
@@ -934,8 +934,8 @@ type ChangeOperatorControl struct {
 	Passkey        [25]byte // Password / Key, depending on version plaintext or encrypted. 25 or less characters, NULL terminated. The characters may involve A-Z, a-z, 0-9, and "!?,.-"
 }
 
-func (self *ChangeOperatorControl) MsgID() uint8 {
-	return 5
+func (self *ChangeOperatorControl) MsgID() MessageID {
+	return MSG_ID_CHANGE_OPERATOR_CONTROL
 }
 
 func (self *ChangeOperatorControl) MsgName() string {
@@ -972,8 +972,8 @@ type ChangeOperatorControlAck struct {
 	Ack            uint8 // 0: ACK, 1: NACK: Wrong passkey, 2: NACK: Unsupported passkey encryption method, 3: NACK: Already under control
 }
 
-func (self *ChangeOperatorControlAck) MsgID() uint8 {
-	return 6
+func (self *ChangeOperatorControlAck) MsgID() MessageID {
+	return MSG_ID_CHANGE_OPERATOR_CONTROL_ACK
 }
 
 func (self *ChangeOperatorControlAck) MsgName() string {
@@ -1006,8 +1006,8 @@ type AuthKey struct {
 	Key [32]byte // key
 }
 
-func (self *AuthKey) MsgID() uint8 {
-	return 7
+func (self *AuthKey) MsgID() MessageID {
+	return MSG_ID_AUTH_KEY
 }
 
 func (self *AuthKey) MsgName() string {
@@ -1038,8 +1038,8 @@ type SetMode struct {
 	BaseMode     uint8  // The new base mode
 }
 
-func (self *SetMode) MsgID() uint8 {
-	return 11
+func (self *SetMode) MsgID() MessageID {
+	return MSG_ID_SET_MODE
 }
 
 func (self *SetMode) MsgName() string {
@@ -1075,8 +1075,8 @@ type ParamRequestRead struct {
 	ParamId         [16]byte // Onboard parameter id, terminated by NULL if the length is less than 16 human-readable chars and WITHOUT null termination (NULL) byte if the length is exactly 16 chars - applications have to provide 16+1 bytes storage if the ID is stored as string
 }
 
-func (self *ParamRequestRead) MsgID() uint8 {
-	return 20
+func (self *ParamRequestRead) MsgID() MessageID {
+	return MSG_ID_PARAM_REQUEST_READ
 }
 
 func (self *ParamRequestRead) MsgName() string {
@@ -1112,8 +1112,8 @@ type ParamRequestList struct {
 	TargetComponent uint8 // Component ID
 }
 
-func (self *ParamRequestList) MsgID() uint8 {
-	return 21
+func (self *ParamRequestList) MsgID() MessageID {
+	return MSG_ID_PARAM_REQUEST_LIST
 }
 
 func (self *ParamRequestList) MsgName() string {
@@ -1148,8 +1148,8 @@ type ParamValue struct {
 	ParamType  uint8    // Onboard parameter type: see the MAV_PARAM_TYPE enum for supported data types.
 }
 
-func (self *ParamValue) MsgID() uint8 {
-	return 22
+func (self *ParamValue) MsgID() MessageID {
+	return MSG_ID_PARAM_VALUE
 }
 
 func (self *ParamValue) MsgName() string {
@@ -1190,8 +1190,8 @@ type ParamSet struct {
 	ParamType       uint8    // Onboard parameter type: see the MAV_PARAM_TYPE enum for supported data types.
 }
 
-func (self *ParamSet) MsgID() uint8 {
-	return 23
+func (self *ParamSet) MsgID() MessageID {
+	return MSG_ID_PARAM_SET
 }
 
 func (self *ParamSet) MsgName() string {
@@ -1238,8 +1238,8 @@ type GpsRawInt struct {
 	SatellitesVisible uint8  // Number of satellites visible. If unknown, set to 255
 }
 
-func (self *GpsRawInt) MsgID() uint8 {
-	return 24
+func (self *GpsRawInt) MsgID() MessageID {
+	return MSG_ID_GPS_RAW_INT
 }
 
 func (self *GpsRawInt) MsgName() string {
@@ -1291,8 +1291,8 @@ type GpsStatus struct {
 	SatelliteSnr       [20]uint8 // Signal to noise ratio of satellite
 }
 
-func (self *GpsStatus) MsgID() uint8 {
-	return 25
+func (self *GpsStatus) MsgID() MessageID {
+	return MSG_ID_GPS_STATUS
 }
 
 func (self *GpsStatus) MsgName() string {
@@ -1340,8 +1340,8 @@ type ScaledImu struct {
 	Zmag       int16  // Z Magnetic field (milli tesla)
 }
 
-func (self *ScaledImu) MsgID() uint8 {
-	return 26
+func (self *ScaledImu) MsgID() MessageID {
+	return MSG_ID_SCALED_IMU
 }
 
 func (self *ScaledImu) MsgName() string {
@@ -1397,8 +1397,8 @@ type RawImu struct {
 	Zmag     int16  // Z Magnetic field (raw)
 }
 
-func (self *RawImu) MsgID() uint8 {
-	return 27
+func (self *RawImu) MsgID() MessageID {
+	return MSG_ID_RAW_IMU
 }
 
 func (self *RawImu) MsgName() string {
@@ -1449,8 +1449,8 @@ type RawPressure struct {
 	Temperature int16  // Raw Temperature measurement (raw)
 }
 
-func (self *RawPressure) MsgID() uint8 {
-	return 28
+func (self *RawPressure) MsgID() MessageID {
+	return MSG_ID_RAW_PRESSURE
 }
 
 func (self *RawPressure) MsgName() string {
@@ -1490,8 +1490,8 @@ type ScaledPressure struct {
 	Temperature int16   // Temperature measurement (0.01 degrees celsius)
 }
 
-func (self *ScaledPressure) MsgID() uint8 {
-	return 29
+func (self *ScaledPressure) MsgID() MessageID {
+	return MSG_ID_SCALED_PRESSURE
 }
 
 func (self *ScaledPressure) MsgName() string {
@@ -1532,8 +1532,8 @@ type Attitude struct {
 	Yawspeed   float32 // Yaw angular speed (rad/s)
 }
 
-func (self *Attitude) MsgID() uint8 {
-	return 30
+func (self *Attitude) MsgID() MessageID {
+	return MSG_ID_ATTITUDE
 }
 
 func (self *Attitude) MsgName() string {
@@ -1581,8 +1581,8 @@ type AttitudeQuaternion struct {
 	Yawspeed   float32 // Yaw angular speed (rad/s)
 }
 
-func (self *AttitudeQuaternion) MsgID() uint8 {
-	return 31
+func (self *AttitudeQuaternion) MsgID() MessageID {
+	return MSG_ID_ATTITUDE_QUATERNION
 }
 
 func (self *AttitudeQuaternion) MsgName() string {
@@ -1631,8 +1631,8 @@ type LocalPositionNed struct {
 	Vz         float32 // Z Speed
 }
 
-func (self *LocalPositionNed) MsgID() uint8 {
-	return 32
+func (self *LocalPositionNed) MsgID() MessageID {
+	return MSG_ID_LOCAL_POSITION_NED
 }
 
 func (self *LocalPositionNed) MsgName() string {
@@ -1682,8 +1682,8 @@ type GlobalPositionInt struct {
 	Hdg         uint16 // Vehicle heading (yaw angle) in degrees * 100, 0.0..359.99 degrees. If unknown, set to: UINT16_MAX
 }
 
-func (self *GlobalPositionInt) MsgID() uint8 {
-	return 33
+func (self *GlobalPositionInt) MsgID() MessageID {
+	return MSG_ID_GLOBAL_POSITION_INT
 }
 
 func (self *GlobalPositionInt) MsgName() string {
@@ -1738,8 +1738,8 @@ type RcChannelsScaled struct {
 	Rssi        uint8  // Receive signal strength indicator, 0: 0%, 100: 100%, 255: invalid/unknown.
 }
 
-func (self *RcChannelsScaled) MsgID() uint8 {
-	return 34
+func (self *RcChannelsScaled) MsgID() MessageID {
+	return MSG_ID_RC_CHANNELS_SCALED
 }
 
 func (self *RcChannelsScaled) MsgName() string {
@@ -1798,8 +1798,8 @@ type RcChannelsRaw struct {
 	Rssi       uint8  // Receive signal strength indicator, 0: 0%, 100: 100%, 255: invalid/unknown.
 }
 
-func (self *RcChannelsRaw) MsgID() uint8 {
-	return 35
+func (self *RcChannelsRaw) MsgID() MessageID {
+	return MSG_ID_RC_CHANNELS_RAW
 }
 
 func (self *RcChannelsRaw) MsgName() string {
@@ -1865,8 +1865,8 @@ type ServoOutputRaw struct {
 	Port       uint8  // Servo output port (set of 8 outputs = 1 port). Most MAVs will just use one, but this allows to encode more than 8 servos.
 }
 
-func (self *ServoOutputRaw) MsgID() uint8 {
-	return 36
+func (self *ServoOutputRaw) MsgID() MessageID {
+	return MSG_ID_SERVO_OUTPUT_RAW
 }
 
 func (self *ServoOutputRaw) MsgName() string {
@@ -1933,8 +1933,8 @@ type MissionRequestPartialList struct {
 	MissionType     uint8 // Mission type, see MAV_MISSION_TYPE
 }
 
-func (self *MissionRequestPartialList) MsgID() uint8 {
-	return 37
+func (self *MissionRequestPartialList) MsgID() MessageID {
+	return MSG_ID_MISSION_REQUEST_PARTIAL_LIST
 }
 
 func (self *MissionRequestPartialList) MsgName() string {
@@ -1975,8 +1975,8 @@ type MissionWritePartialList struct {
 	MissionType     uint8 // Mission type, see MAV_MISSION_TYPE
 }
 
-func (self *MissionWritePartialList) MsgID() uint8 {
-	return 38
+func (self *MissionWritePartialList) MsgID() MessageID {
+	return MSG_ID_MISSION_WRITE_PARTIAL_LIST
 }
 
 func (self *MissionWritePartialList) MsgName() string {
@@ -2028,8 +2028,8 @@ type MissionItem struct {
 	MissionType     uint8   // Mission type, see MAV_MISSION_TYPE
 }
 
-func (self *MissionItem) MsgID() uint8 {
-	return 39
+func (self *MissionItem) MsgID() MessageID {
+	return MSG_ID_MISSION_ITEM
 }
 
 func (self *MissionItem) MsgName() string {
@@ -2089,8 +2089,8 @@ type MissionRequest struct {
 	MissionType     uint8  // Mission type, see MAV_MISSION_TYPE
 }
 
-func (self *MissionRequest) MsgID() uint8 {
-	return 40
+func (self *MissionRequest) MsgID() MessageID {
+	return MSG_ID_MISSION_REQUEST
 }
 
 func (self *MissionRequest) MsgName() string {
@@ -2127,8 +2127,8 @@ type MissionSetCurrent struct {
 	TargetComponent uint8  // Component ID
 }
 
-func (self *MissionSetCurrent) MsgID() uint8 {
-	return 41
+func (self *MissionSetCurrent) MsgID() MessageID {
+	return MSG_ID_MISSION_SET_CURRENT
 }
 
 func (self *MissionSetCurrent) MsgName() string {
@@ -2161,8 +2161,8 @@ type MissionCurrent struct {
 	Seq uint16 // Sequence
 }
 
-func (self *MissionCurrent) MsgID() uint8 {
-	return 42
+func (self *MissionCurrent) MsgID() MessageID {
+	return MSG_ID_MISSION_CURRENT
 }
 
 func (self *MissionCurrent) MsgName() string {
@@ -2193,8 +2193,8 @@ type MissionRequestList struct {
 	MissionType     uint8 // Mission type, see MAV_MISSION_TYPE
 }
 
-func (self *MissionRequestList) MsgID() uint8 {
-	return 43
+func (self *MissionRequestList) MsgID() MessageID {
+	return MSG_ID_MISSION_REQUEST_LIST
 }
 
 func (self *MissionRequestList) MsgName() string {
@@ -2230,8 +2230,8 @@ type MissionCount struct {
 	MissionType     uint8  // Mission type, see MAV_MISSION_TYPE
 }
 
-func (self *MissionCount) MsgID() uint8 {
-	return 44
+func (self *MissionCount) MsgID() MessageID {
+	return MSG_ID_MISSION_COUNT
 }
 
 func (self *MissionCount) MsgName() string {
@@ -2268,8 +2268,8 @@ type MissionClearAll struct {
 	MissionType     uint8 // Mission type, see MAV_MISSION_TYPE
 }
 
-func (self *MissionClearAll) MsgID() uint8 {
-	return 45
+func (self *MissionClearAll) MsgID() MessageID {
+	return MSG_ID_MISSION_CLEAR_ALL
 }
 
 func (self *MissionClearAll) MsgName() string {
@@ -2302,8 +2302,8 @@ type MissionItemReached struct {
 	Seq uint16 // Sequence
 }
 
-func (self *MissionItemReached) MsgID() uint8 {
-	return 46
+func (self *MissionItemReached) MsgID() MessageID {
+	return MSG_ID_MISSION_ITEM_REACHED
 }
 
 func (self *MissionItemReached) MsgName() string {
@@ -2335,8 +2335,8 @@ type MissionAck struct {
 	MissionType     uint8 // Mission type, see MAV_MISSION_TYPE
 }
 
-func (self *MissionAck) MsgID() uint8 {
-	return 47
+func (self *MissionAck) MsgID() MessageID {
+	return MSG_ID_MISSION_ACK
 }
 
 func (self *MissionAck) MsgName() string {
@@ -2374,8 +2374,8 @@ type SetGpsGlobalOrigin struct {
 	TargetSystem uint8 // System ID
 }
 
-func (self *SetGpsGlobalOrigin) MsgID() uint8 {
-	return 48
+func (self *SetGpsGlobalOrigin) MsgID() MessageID {
+	return MSG_ID_SET_GPS_GLOBAL_ORIGIN
 }
 
 func (self *SetGpsGlobalOrigin) MsgName() string {
@@ -2412,8 +2412,8 @@ type GpsGlobalOrigin struct {
 	Altitude  int32 // Altitude (AMSL), in meters * 1000 (positive for up)
 }
 
-func (self *GpsGlobalOrigin) MsgID() uint8 {
-	return 49
+func (self *GpsGlobalOrigin) MsgID() MessageID {
+	return MSG_ID_GPS_GLOBAL_ORIGIN
 }
 
 func (self *GpsGlobalOrigin) MsgName() string {
@@ -2454,8 +2454,8 @@ type ParamMapRc struct {
 	ParameterRcChannelIndex uint8    // Index of parameter RC channel. Not equal to the RC channel id. Typically correpsonds to a potentiometer-knob on the RC.
 }
 
-func (self *ParamMapRc) MsgID() uint8 {
-	return 50
+func (self *ParamMapRc) MsgID() MessageID {
+	return MSG_ID_PARAM_MAP_RC
 }
 
 func (self *ParamMapRc) MsgName() string {
@@ -2503,8 +2503,8 @@ type MissionRequestInt struct {
 	MissionType     uint8  // Mission type, see MAV_MISSION_TYPE
 }
 
-func (self *MissionRequestInt) MsgID() uint8 {
-	return 51
+func (self *MissionRequestInt) MsgID() MessageID {
+	return MSG_ID_MISSION_REQUEST_INT
 }
 
 func (self *MissionRequestInt) MsgName() string {
@@ -2547,8 +2547,8 @@ type SafetySetAllowedArea struct {
 	Frame           uint8   // Coordinate frame, as defined by MAV_FRAME enum in mavlink_types.h. Can be either global, GPS, right-handed with Z axis up or local, right handed, Z axis down.
 }
 
-func (self *SafetySetAllowedArea) MsgID() uint8 {
-	return 54
+func (self *SafetySetAllowedArea) MsgID() MessageID {
+	return MSG_ID_SAFETY_SET_ALLOWED_AREA
 }
 
 func (self *SafetySetAllowedArea) MsgName() string {
@@ -2599,8 +2599,8 @@ type SafetyAllowedArea struct {
 	Frame uint8   // Coordinate frame, as defined by MAV_FRAME enum in mavlink_types.h. Can be either global, GPS, right-handed with Z axis up or local, right handed, Z axis down.
 }
 
-func (self *SafetyAllowedArea) MsgID() uint8 {
-	return 55
+func (self *SafetyAllowedArea) MsgID() MessageID {
+	return MSG_ID_SAFETY_ALLOWED_AREA
 }
 
 func (self *SafetyAllowedArea) MsgName() string {
@@ -2646,8 +2646,8 @@ type AttitudeQuaternionCov struct {
 	Covariance [9]float32 // Attitude covariance
 }
 
-func (self *AttitudeQuaternionCov) MsgID() uint8 {
-	return 61
+func (self *AttitudeQuaternionCov) MsgID() MessageID {
+	return MSG_ID_ATTITUDE_QUATERNION_COV
 }
 
 func (self *AttitudeQuaternionCov) MsgName() string {
@@ -2701,8 +2701,8 @@ type NavControllerOutput struct {
 	WpDist        uint16  // Distance to active MISSION in meters
 }
 
-func (self *NavControllerOutput) MsgID() uint8 {
-	return 62
+func (self *NavControllerOutput) MsgID() MessageID {
+	return MSG_ID_NAV_CONTROLLER_OUTPUT
 }
 
 func (self *NavControllerOutput) MsgName() string {
@@ -2754,8 +2754,8 @@ type GlobalPositionIntCov struct {
 	EstimatorType uint8       // Class id of the estimator this estimate originated from.
 }
 
-func (self *GlobalPositionIntCov) MsgID() uint8 {
-	return 63
+func (self *GlobalPositionIntCov) MsgID() MessageID {
+	return MSG_ID_GLOBAL_POSITION_INT_COV
 }
 
 func (self *GlobalPositionIntCov) MsgName() string {
@@ -2817,8 +2817,8 @@ type LocalPositionNedCov struct {
 	EstimatorType uint8       // Class id of the estimator this estimate originated from.
 }
 
-func (self *LocalPositionNedCov) MsgID() uint8 {
-	return 64
+func (self *LocalPositionNedCov) MsgID() MessageID {
+	return MSG_ID_LOCAL_POSITION_NED_COV
 }
 
 func (self *LocalPositionNedCov) MsgName() string {
@@ -2893,8 +2893,8 @@ type RcChannels struct {
 	Rssi       uint8  // Receive signal strength indicator, 0: 0%, 100: 100%, 255: invalid/unknown.
 }
 
-func (self *RcChannels) MsgID() uint8 {
-	return 65
+func (self *RcChannels) MsgID() MessageID {
+	return MSG_ID_RC_CHANNELS
 }
 
 func (self *RcChannels) MsgName() string {
@@ -2967,8 +2967,8 @@ type RequestDataStream struct {
 	StartStop       uint8  // 1 to start sending, 0 to stop sending.
 }
 
-func (self *RequestDataStream) MsgID() uint8 {
-	return 66
+func (self *RequestDataStream) MsgID() MessageID {
+	return MSG_ID_REQUEST_DATA_STREAM
 }
 
 func (self *RequestDataStream) MsgName() string {
@@ -3007,8 +3007,8 @@ type DataStream struct {
 	OnOff       uint8  // 1 stream is enabled, 0 stream is stopped.
 }
 
-func (self *DataStream) MsgID() uint8 {
-	return 67
+func (self *DataStream) MsgID() MessageID {
+	return MSG_ID_DATA_STREAM
 }
 
 func (self *DataStream) MsgName() string {
@@ -3046,8 +3046,8 @@ type ManualControl struct {
 	Target  uint8  // The system to be controlled.
 }
 
-func (self *ManualControl) MsgID() uint8 {
-	return 69
+func (self *ManualControl) MsgID() MessageID {
+	return MSG_ID_MANUAL_CONTROL
 }
 
 func (self *ManualControl) MsgName() string {
@@ -3095,8 +3095,8 @@ type RcChannelsOverride struct {
 	TargetComponent uint8  // Component ID
 }
 
-func (self *RcChannelsOverride) MsgID() uint8 {
-	return 70
+func (self *RcChannelsOverride) MsgID() MessageID {
+	return MSG_ID_RC_CHANNELS_OVERRIDE
 }
 
 func (self *RcChannelsOverride) MsgName() string {
@@ -3158,8 +3158,8 @@ type MissionItemInt struct {
 	MissionType     uint8   // Mission type, see MAV_MISSION_TYPE
 }
 
-func (self *MissionItemInt) MsgID() uint8 {
-	return 73
+func (self *MissionItemInt) MsgID() MessageID {
+	return MSG_ID_MISSION_ITEM_INT
 }
 
 func (self *MissionItemInt) MsgName() string {
@@ -3221,8 +3221,8 @@ type VfrHud struct {
 	Throttle    uint16  // Current throttle setting in integer percent, 0 to 100
 }
 
-func (self *VfrHud) MsgID() uint8 {
-	return 74
+func (self *VfrHud) MsgID() MessageID {
+	return MSG_ID_VFR_HUD
 }
 
 func (self *VfrHud) MsgName() string {
@@ -3273,8 +3273,8 @@ type CommandInt struct {
 	Autocontinue    uint8   // autocontinue to next wp
 }
 
-func (self *CommandInt) MsgID() uint8 {
-	return 75
+func (self *CommandInt) MsgID() MessageID {
+	return MSG_ID_COMMAND_INT
 }
 
 func (self *CommandInt) MsgName() string {
@@ -3337,8 +3337,8 @@ type CommandLong struct {
 	Confirmation    uint8   // 0: First transmission of this command. 1-255: Confirmation transmissions (e.g. for kill command)
 }
 
-func (self *CommandLong) MsgID() uint8 {
-	return 76
+func (self *CommandLong) MsgID() MessageID {
+	return MSG_ID_COMMAND_LONG
 }
 
 func (self *CommandLong) MsgName() string {
@@ -3389,8 +3389,8 @@ type CommandAck struct {
 	Progress uint8  // WIP: Needs to be set when MAV_RESULT is MAV_RESULT_IN_PROGRESS, values from 0 to 100 for progress percentage, 255 for unknown progress.
 }
 
-func (self *CommandAck) MsgID() uint8 {
-	return 77
+func (self *CommandAck) MsgID() MessageID {
+	return MSG_ID_COMMAND_ACK
 }
 
 func (self *CommandAck) MsgName() string {
@@ -3429,8 +3429,8 @@ type ManualSetpoint struct {
 	ManualOverrideSwitch uint8   // Override mode switch position, 0.. 255
 }
 
-func (self *ManualSetpoint) MsgID() uint8 {
-	return 81
+func (self *ManualSetpoint) MsgID() MessageID {
+	return MSG_ID_MANUAL_SETPOINT
 }
 
 func (self *ManualSetpoint) MsgName() string {
@@ -3479,8 +3479,8 @@ type SetAttitudeTarget struct {
 	TypeMask        uint8      // Mappings: If any of these bits are set, the corresponding input should be ignored: bit 1: body roll rate, bit 2: body pitch rate, bit 3: body yaw rate. bit 4-bit 6: reserved, bit 7: throttle, bit 8: attitude
 }
 
-func (self *SetAttitudeTarget) MsgID() uint8 {
-	return 82
+func (self *SetAttitudeTarget) MsgID() MessageID {
+	return MSG_ID_SET_ATTITUDE_TARGET
 }
 
 func (self *SetAttitudeTarget) MsgName() string {
@@ -3535,8 +3535,8 @@ type AttitudeTarget struct {
 	TypeMask      uint8      // Mappings: If any of these bits are set, the corresponding input should be ignored: bit 1: body roll rate, bit 2: body pitch rate, bit 3: body yaw rate. bit 4-bit 7: reserved, bit 8: attitude
 }
 
-func (self *AttitudeTarget) MsgID() uint8 {
-	return 83
+func (self *AttitudeTarget) MsgID() MessageID {
+	return MSG_ID_ATTITUDE_TARGET
 }
 
 func (self *AttitudeTarget) MsgName() string {
@@ -3596,8 +3596,8 @@ type SetPositionTargetLocalNed struct {
 	CoordinateFrame uint8   // Valid options are: MAV_FRAME_LOCAL_NED = 1, MAV_FRAME_LOCAL_OFFSET_NED = 7, MAV_FRAME_BODY_NED = 8, MAV_FRAME_BODY_OFFSET_NED = 9
 }
 
-func (self *SetPositionTargetLocalNed) MsgID() uint8 {
-	return 84
+func (self *SetPositionTargetLocalNed) MsgID() MessageID {
+	return MSG_ID_SET_POSITION_TARGET_LOCAL_NED
 }
 
 func (self *SetPositionTargetLocalNed) MsgName() string {
@@ -3669,8 +3669,8 @@ type PositionTargetLocalNed struct {
 	CoordinateFrame uint8   // Valid options are: MAV_FRAME_LOCAL_NED = 1, MAV_FRAME_LOCAL_OFFSET_NED = 7, MAV_FRAME_BODY_NED = 8, MAV_FRAME_BODY_OFFSET_NED = 9
 }
 
-func (self *PositionTargetLocalNed) MsgID() uint8 {
-	return 85
+func (self *PositionTargetLocalNed) MsgID() MessageID {
+	return MSG_ID_POSITION_TARGET_LOCAL_NED
 }
 
 func (self *PositionTargetLocalNed) MsgName() string {
@@ -3740,8 +3740,8 @@ type SetPositionTargetGlobalInt struct {
 	CoordinateFrame uint8   // Valid options are: MAV_FRAME_GLOBAL_INT = 5, MAV_FRAME_GLOBAL_RELATIVE_ALT_INT = 6, MAV_FRAME_GLOBAL_TERRAIN_ALT_INT = 11
 }
 
-func (self *SetPositionTargetGlobalInt) MsgID() uint8 {
-	return 86
+func (self *SetPositionTargetGlobalInt) MsgID() MessageID {
+	return MSG_ID_SET_POSITION_TARGET_GLOBAL_INT
 }
 
 func (self *SetPositionTargetGlobalInt) MsgName() string {
@@ -3813,8 +3813,8 @@ type PositionTargetGlobalInt struct {
 	CoordinateFrame uint8   // Valid options are: MAV_FRAME_GLOBAL_INT = 5, MAV_FRAME_GLOBAL_RELATIVE_ALT_INT = 6, MAV_FRAME_GLOBAL_TERRAIN_ALT_INT = 11
 }
 
-func (self *PositionTargetGlobalInt) MsgID() uint8 {
-	return 87
+func (self *PositionTargetGlobalInt) MsgID() MessageID {
+	return MSG_ID_POSITION_TARGET_GLOBAL_INT
 }
 
 func (self *PositionTargetGlobalInt) MsgName() string {
@@ -3875,8 +3875,8 @@ type LocalPositionNedSystemGlobalOffset struct {
 	Yaw        float32 // Yaw
 }
 
-func (self *LocalPositionNedSystemGlobalOffset) MsgID() uint8 {
-	return 89
+func (self *LocalPositionNedSystemGlobalOffset) MsgID() MessageID {
+	return MSG_ID_LOCAL_POSITION_NED_SYSTEM_GLOBAL_OFFSET
 }
 
 func (self *LocalPositionNedSystemGlobalOffset) MsgName() string {
@@ -3932,8 +3932,8 @@ type HilState struct {
 	Zacc       int16   // Z acceleration (mg)
 }
 
-func (self *HilState) MsgID() uint8 {
-	return 90
+func (self *HilState) MsgID() MessageID {
+	return MSG_ID_HIL_STATE
 }
 
 func (self *HilState) MsgName() string {
@@ -4002,8 +4002,8 @@ type HilControls struct {
 	NavMode       uint8   // Navigation mode (MAV_NAV_MODE)
 }
 
-func (self *HilControls) MsgID() uint8 {
-	return 91
+func (self *HilControls) MsgID() MessageID {
+	return MSG_ID_HIL_CONTROLS
 }
 
 func (self *HilControls) MsgName() string {
@@ -4065,8 +4065,8 @@ type HilRcInputsRaw struct {
 	Rssi      uint8  // Receive signal strength indicator, 0: 0%, 255: 100%
 }
 
-func (self *HilRcInputsRaw) MsgID() uint8 {
-	return 92
+func (self *HilRcInputsRaw) MsgID() MessageID {
+	return MSG_ID_HIL_RC_INPUTS_RAW
 }
 
 func (self *HilRcInputsRaw) MsgName() string {
@@ -4124,8 +4124,8 @@ type HilActuatorControls struct {
 	Mode     uint8       // System mode (MAV_MODE), includes arming state.
 }
 
-func (self *HilActuatorControls) MsgID() uint8 {
-	return 93
+func (self *HilActuatorControls) MsgID() MessageID {
+	return MSG_ID_HIL_ACTUATOR_CONTROLS
 }
 
 func (self *HilActuatorControls) MsgName() string {
@@ -4173,8 +4173,8 @@ type OpticalFlow struct {
 	Quality        uint8   // Optical flow quality / confidence. 0: bad, 255: maximum quality
 }
 
-func (self *OpticalFlow) MsgID() uint8 {
-	return 100
+func (self *OpticalFlow) MsgID() MessageID {
+	return MSG_ID_OPTICAL_FLOW
 }
 
 func (self *OpticalFlow) MsgName() string {
@@ -4227,8 +4227,8 @@ type GlobalVisionPositionEstimate struct {
 	Yaw   float32 // Yaw angle in rad
 }
 
-func (self *GlobalVisionPositionEstimate) MsgID() uint8 {
-	return 101
+func (self *GlobalVisionPositionEstimate) MsgID() MessageID {
+	return MSG_ID_GLOBAL_VISION_POSITION_ESTIMATE
 }
 
 func (self *GlobalVisionPositionEstimate) MsgName() string {
@@ -4275,8 +4275,8 @@ type VisionPositionEstimate struct {
 	Yaw   float32 // Yaw angle in rad
 }
 
-func (self *VisionPositionEstimate) MsgID() uint8 {
-	return 102
+func (self *VisionPositionEstimate) MsgID() MessageID {
+	return MSG_ID_VISION_POSITION_ESTIMATE
 }
 
 func (self *VisionPositionEstimate) MsgName() string {
@@ -4320,8 +4320,8 @@ type VisionSpeedEstimate struct {
 	Z    float32 // Global Z speed
 }
 
-func (self *VisionSpeedEstimate) MsgID() uint8 {
-	return 103
+func (self *VisionSpeedEstimate) MsgID() MessageID {
+	return MSG_ID_VISION_SPEED_ESTIMATE
 }
 
 func (self *VisionSpeedEstimate) MsgName() string {
@@ -4362,8 +4362,8 @@ type ViconPositionEstimate struct {
 	Yaw   float32 // Yaw angle in rad
 }
 
-func (self *ViconPositionEstimate) MsgID() uint8 {
-	return 104
+func (self *ViconPositionEstimate) MsgID() MessageID {
+	return MSG_ID_VICON_POSITION_ESTIMATE
 }
 
 func (self *ViconPositionEstimate) MsgName() string {
@@ -4418,8 +4418,8 @@ type HighresImu struct {
 	FieldsUpdated uint16  // Bitmask for fields that have updated since last message, bit 0 = xacc, bit 12: temperature
 }
 
-func (self *HighresImu) MsgID() uint8 {
-	return 105
+func (self *HighresImu) MsgID() MessageID {
+	return MSG_ID_HIGHRES_IMU
 }
 
 func (self *HighresImu) MsgName() string {
@@ -4487,8 +4487,8 @@ type OpticalFlowRad struct {
 	Quality             uint8   // Optical flow quality / confidence. 0: no valid flow, 255: maximum quality
 }
 
-func (self *OpticalFlowRad) MsgID() uint8 {
-	return 106
+func (self *OpticalFlowRad) MsgID() MessageID {
+	return MSG_ID_OPTICAL_FLOW_RAD
 }
 
 func (self *OpticalFlowRad) MsgName() string {
@@ -4553,8 +4553,8 @@ type HilSensor struct {
 	FieldsUpdated uint32  // Bitmask for fields that have updated since last message, bit 0 = xacc, bit 12: temperature, bit 31: full reset of attitude/position/velocities/etc was performed in sim.
 }
 
-func (self *HilSensor) MsgID() uint8 {
-	return 107
+func (self *HilSensor) MsgID() MessageID {
+	return MSG_ID_HIL_SENSOR
 }
 
 func (self *HilSensor) MsgName() string {
@@ -4631,8 +4631,8 @@ type SimState struct {
 	Vd         float32 // True velocity in m/s in DOWN direction in earth-fixed NED frame
 }
 
-func (self *SimState) MsgID() uint8 {
-	return 108
+func (self *SimState) MsgID() MessageID {
+	return MSG_ID_SIM_STATE
 }
 
 func (self *SimState) MsgName() string {
@@ -4707,8 +4707,8 @@ type RadioStatus struct {
 	Remnoise uint8  // Remote background noise level
 }
 
-func (self *RadioStatus) MsgID() uint8 {
-	return 109
+func (self *RadioStatus) MsgID() MessageID {
+	return MSG_ID_RADIO_STATUS
 }
 
 func (self *RadioStatus) MsgName() string {
@@ -4752,8 +4752,8 @@ type FileTransferProtocol struct {
 	Payload         [251]uint8 // Variable length payload. The length is defined by the remaining message length when subtracting the header and other fields.  The entire content of this block is opaque unless you understand any the encoding message_type.  The particular encoding used can be extension specific and might not always be documented as part of the mavlink specification.
 }
 
-func (self *FileTransferProtocol) MsgID() uint8 {
-	return 110
+func (self *FileTransferProtocol) MsgID() MessageID {
+	return MSG_ID_FILE_TRANSFER_PROTOCOL
 }
 
 func (self *FileTransferProtocol) MsgName() string {
@@ -4789,8 +4789,8 @@ type Timesync struct {
 	Ts1 int64 // Time sync timestamp 2
 }
 
-func (self *Timesync) MsgID() uint8 {
-	return 111
+func (self *Timesync) MsgID() MessageID {
+	return MSG_ID_TIMESYNC
 }
 
 func (self *Timesync) MsgName() string {
@@ -4822,8 +4822,8 @@ type CameraTrigger struct {
 	Seq      uint32 // Image frame sequence
 }
 
-func (self *CameraTrigger) MsgID() uint8 {
-	return 112
+func (self *CameraTrigger) MsgID() MessageID {
+	return MSG_ID_CAMERA_TRIGGER
 }
 
 func (self *CameraTrigger) MsgName() string {
@@ -4867,8 +4867,8 @@ type HilGps struct {
 	SatellitesVisible uint8  // Number of satellites visible. If unknown, set to 255
 }
 
-func (self *HilGps) MsgID() uint8 {
-	return 113
+func (self *HilGps) MsgID() MessageID {
+	return MSG_ID_HIL_GPS
 }
 
 func (self *HilGps) MsgName() string {
@@ -4932,8 +4932,8 @@ type HilOpticalFlow struct {
 	Quality             uint8   // Optical flow quality / confidence. 0: no valid flow, 255: maximum quality
 }
 
-func (self *HilOpticalFlow) MsgID() uint8 {
-	return 114
+func (self *HilOpticalFlow) MsgID() MessageID {
+	return MSG_ID_HIL_OPTICAL_FLOW
 }
 
 func (self *HilOpticalFlow) MsgName() string {
@@ -4999,8 +4999,8 @@ type HilStateQuaternion struct {
 	Zacc               int16      // Z acceleration (mg)
 }
 
-func (self *HilStateQuaternion) MsgID() uint8 {
-	return 115
+func (self *HilStateQuaternion) MsgID() MessageID {
+	return MSG_ID_HIL_STATE_QUATERNION
 }
 
 func (self *HilStateQuaternion) MsgName() string {
@@ -5072,8 +5072,8 @@ type ScaledImu2 struct {
 	Zmag       int16  // Z Magnetic field (milli tesla)
 }
 
-func (self *ScaledImu2) MsgID() uint8 {
-	return 116
+func (self *ScaledImu2) MsgID() MessageID {
+	return MSG_ID_SCALED_IMU2
 }
 
 func (self *ScaledImu2) MsgName() string {
@@ -5123,8 +5123,8 @@ type LogRequestList struct {
 	TargetComponent uint8  // Component ID
 }
 
-func (self *LogRequestList) MsgID() uint8 {
-	return 117
+func (self *LogRequestList) MsgID() MessageID {
+	return MSG_ID_LOG_REQUEST_LIST
 }
 
 func (self *LogRequestList) MsgName() string {
@@ -5163,8 +5163,8 @@ type LogEntry struct {
 	LastLogNum uint16 // High log number
 }
 
-func (self *LogEntry) MsgID() uint8 {
-	return 118
+func (self *LogEntry) MsgID() MessageID {
+	return MSG_ID_LOG_ENTRY
 }
 
 func (self *LogEntry) MsgName() string {
@@ -5205,8 +5205,8 @@ type LogRequestData struct {
 	TargetComponent uint8  // Component ID
 }
 
-func (self *LogRequestData) MsgID() uint8 {
-	return 119
+func (self *LogRequestData) MsgID() MessageID {
+	return MSG_ID_LOG_REQUEST_DATA
 }
 
 func (self *LogRequestData) MsgName() string {
@@ -5246,8 +5246,8 @@ type LogData struct {
 	Data  [90]uint8 // log data
 }
 
-func (self *LogData) MsgID() uint8 {
-	return 120
+func (self *LogData) MsgID() MessageID {
+	return MSG_ID_LOG_DATA
 }
 
 func (self *LogData) MsgName() string {
@@ -5283,8 +5283,8 @@ type LogErase struct {
 	TargetComponent uint8 // Component ID
 }
 
-func (self *LogErase) MsgID() uint8 {
-	return 121
+func (self *LogErase) MsgID() MessageID {
+	return MSG_ID_LOG_ERASE
 }
 
 func (self *LogErase) MsgName() string {
@@ -5316,8 +5316,8 @@ type LogRequestEnd struct {
 	TargetComponent uint8 // Component ID
 }
 
-func (self *LogRequestEnd) MsgID() uint8 {
-	return 122
+func (self *LogRequestEnd) MsgID() MessageID {
+	return MSG_ID_LOG_REQUEST_END
 }
 
 func (self *LogRequestEnd) MsgName() string {
@@ -5351,8 +5351,8 @@ type GpsInjectData struct {
 	Data            [110]uint8 // raw data (110 is enough for 12 satellites of RTCMv2)
 }
 
-func (self *GpsInjectData) MsgID() uint8 {
-	return 123
+func (self *GpsInjectData) MsgID() MessageID {
+	return MSG_ID_GPS_INJECT_DATA
 }
 
 func (self *GpsInjectData) MsgName() string {
@@ -5398,8 +5398,8 @@ type Gps2Raw struct {
 	DgpsNumch         uint8  // Number of DGPS satellites
 }
 
-func (self *Gps2Raw) MsgID() uint8 {
-	return 124
+func (self *Gps2Raw) MsgID() MessageID {
+	return MSG_ID_GPS2_RAW
 }
 
 func (self *Gps2Raw) MsgName() string {
@@ -5452,8 +5452,8 @@ type PowerStatus struct {
 	Flags  uint16 // power supply status flags (see MAV_POWER_STATUS enum)
 }
 
-func (self *PowerStatus) MsgID() uint8 {
-	return 125
+func (self *PowerStatus) MsgID() MessageID {
+	return MSG_ID_POWER_STATUS
 }
 
 func (self *PowerStatus) MsgName() string {
@@ -5491,8 +5491,8 @@ type SerialControl struct {
 	Data     [70]uint8 // serial data
 }
 
-func (self *SerialControl) MsgID() uint8 {
-	return 126
+func (self *SerialControl) MsgID() MessageID {
+	return MSG_ID_SERIAL_CONTROL
 }
 
 func (self *SerialControl) MsgName() string {
@@ -5543,8 +5543,8 @@ type GpsRtk struct {
 	BaselineCoordsType uint8  // Coordinate system of baseline. 0 == ECEF, 1 == NED
 }
 
-func (self *GpsRtk) MsgID() uint8 {
-	return 127
+func (self *GpsRtk) MsgID() MessageID {
+	return MSG_ID_GPS_RTK
 }
 
 func (self *GpsRtk) MsgName() string {
@@ -5609,8 +5609,8 @@ type Gps2Rtk struct {
 	BaselineCoordsType uint8  // Coordinate system of baseline. 0 == ECEF, 1 == NED
 }
 
-func (self *Gps2Rtk) MsgID() uint8 {
-	return 128
+func (self *Gps2Rtk) MsgID() MessageID {
+	return MSG_ID_GPS2_RTK
 }
 
 func (self *Gps2Rtk) MsgName() string {
@@ -5672,8 +5672,8 @@ type ScaledImu3 struct {
 	Zmag       int16  // Z Magnetic field (milli tesla)
 }
 
-func (self *ScaledImu3) MsgID() uint8 {
-	return 129
+func (self *ScaledImu3) MsgID() MessageID {
+	return MSG_ID_SCALED_IMU3
 }
 
 func (self *ScaledImu3) MsgName() string {
@@ -5726,8 +5726,8 @@ type DataTransmissionHandshake struct {
 	JpgQuality uint8  // JPEG quality out of [1,100]
 }
 
-func (self *DataTransmissionHandshake) MsgID() uint8 {
-	return 130
+func (self *DataTransmissionHandshake) MsgID() MessageID {
+	return MSG_ID_DATA_TRANSMISSION_HANDSHAKE
 }
 
 func (self *DataTransmissionHandshake) MsgName() string {
@@ -5769,8 +5769,8 @@ type EncapsulatedData struct {
 	Data  [253]uint8 // image data bytes
 }
 
-func (self *EncapsulatedData) MsgID() uint8 {
-	return 131
+func (self *EncapsulatedData) MsgID() MessageID {
+	return MSG_ID_ENCAPSULATED_DATA
 }
 
 func (self *EncapsulatedData) MsgName() string {
@@ -5808,8 +5808,8 @@ type DistanceSensor struct {
 	Covariance      uint8  // Measurement covariance in centimeters, 0 for unknown / invalid readings
 }
 
-func (self *DistanceSensor) MsgID() uint8 {
-	return 132
+func (self *DistanceSensor) MsgID() MessageID {
+	return MSG_ID_DISTANCE_SENSOR
 }
 
 func (self *DistanceSensor) MsgName() string {
@@ -5855,8 +5855,8 @@ type TerrainRequest struct {
 	GridSpacing uint16 // Grid spacing in meters
 }
 
-func (self *TerrainRequest) MsgID() uint8 {
-	return 133
+func (self *TerrainRequest) MsgID() MessageID {
+	return MSG_ID_TERRAIN_REQUEST
 }
 
 func (self *TerrainRequest) MsgName() string {
@@ -5895,8 +5895,8 @@ type TerrainData struct {
 	Gridbit     uint8     // bit within the terrain request mask
 }
 
-func (self *TerrainData) MsgID() uint8 {
-	return 134
+func (self *TerrainData) MsgID() MessageID {
+	return MSG_ID_TERRAIN_DATA
 }
 
 func (self *TerrainData) MsgName() string {
@@ -5938,8 +5938,8 @@ type TerrainCheck struct {
 	Lon int32 // Longitude (degrees *10^7)
 }
 
-func (self *TerrainCheck) MsgID() uint8 {
-	return 135
+func (self *TerrainCheck) MsgID() MessageID {
+	return MSG_ID_TERRAIN_CHECK
 }
 
 func (self *TerrainCheck) MsgName() string {
@@ -5976,8 +5976,8 @@ type TerrainReport struct {
 	Loaded        uint16  // Number of 4x4 terrain blocks in memory
 }
 
-func (self *TerrainReport) MsgID() uint8 {
-	return 136
+func (self *TerrainReport) MsgID() MessageID {
+	return MSG_ID_TERRAIN_REPORT
 }
 
 func (self *TerrainReport) MsgName() string {
@@ -6021,8 +6021,8 @@ type ScaledPressure2 struct {
 	Temperature int16   // Temperature measurement (0.01 degrees celsius)
 }
 
-func (self *ScaledPressure2) MsgID() uint8 {
-	return 137
+func (self *ScaledPressure2) MsgID() MessageID {
+	return MSG_ID_SCALED_PRESSURE2
 }
 
 func (self *ScaledPressure2) MsgName() string {
@@ -6061,8 +6061,8 @@ type AttPosMocap struct {
 	Z        float32    // Z position in meters (NED)
 }
 
-func (self *AttPosMocap) MsgID() uint8 {
-	return 138
+func (self *AttPosMocap) MsgID() MessageID {
+	return MSG_ID_ATT_POS_MOCAP
 }
 
 func (self *AttPosMocap) MsgName() string {
@@ -6107,8 +6107,8 @@ type SetActuatorControlTarget struct {
 	TargetComponent uint8      // Component ID
 }
 
-func (self *SetActuatorControlTarget) MsgID() uint8 {
-	return 139
+func (self *SetActuatorControlTarget) MsgID() MessageID {
+	return MSG_ID_SET_ACTUATOR_CONTROL_TARGET
 }
 
 func (self *SetActuatorControlTarget) MsgName() string {
@@ -6151,8 +6151,8 @@ type ActuatorControlTarget struct {
 	GroupMlx uint8      // Actuator group. The "_mlx" indicates this is a multi-instance message and a MAVLink parser should use this field to difference between instances.
 }
 
-func (self *ActuatorControlTarget) MsgID() uint8 {
-	return 140
+func (self *ActuatorControlTarget) MsgID() MessageID {
+	return MSG_ID_ACTUATOR_CONTROL_TARGET
 }
 
 func (self *ActuatorControlTarget) MsgName() string {
@@ -6195,8 +6195,8 @@ type Altitude struct {
 	BottomClearance   float32 // This is not the altitude, but the clear space below the system according to the fused clearance estimate. It generally should max out at the maximum range of e.g. the laser altimeter. It is generally a moving target. A negative value indicates no measurement available.
 }
 
-func (self *Altitude) MsgID() uint8 {
-	return 141
+func (self *Altitude) MsgID() MessageID {
+	return MSG_ID_ALTITUDE
 }
 
 func (self *Altitude) MsgName() string {
@@ -6241,8 +6241,8 @@ type ResourceRequest struct {
 	Storage      [120]uint8 // The storage path the autopilot wants the URI to be stored in. Will only be valid if the transfer_type has a storage associated (e.g. MAVLink FTP).
 }
 
-func (self *ResourceRequest) MsgID() uint8 {
-	return 142
+func (self *ResourceRequest) MsgID() MessageID {
+	return MSG_ID_RESOURCE_REQUEST
 }
 
 func (self *ResourceRequest) MsgName() string {
@@ -6282,8 +6282,8 @@ type ScaledPressure3 struct {
 	Temperature int16   // Temperature measurement (0.01 degrees celsius)
 }
 
-func (self *ScaledPressure3) MsgID() uint8 {
-	return 143
+func (self *ScaledPressure3) MsgID() MessageID {
+	return MSG_ID_SCALED_PRESSURE3
 }
 
 func (self *ScaledPressure3) MsgName() string {
@@ -6328,8 +6328,8 @@ type FollowTarget struct {
 	EstCapabilities uint8      // bit positions for tracker reporting capabilities (POS = 0, VEL = 1, ACCEL = 2, ATT + RATES = 3)
 }
 
-func (self *FollowTarget) MsgID() uint8 {
-	return 144
+func (self *FollowTarget) MsgID() MessageID {
+	return MSG_ID_FOLLOW_TARGET
 }
 
 func (self *FollowTarget) MsgName() string {
@@ -6414,8 +6414,8 @@ type ControlSystemState struct {
 	YawRate     float32    // Angular rate in yaw axis
 }
 
-func (self *ControlSystemState) MsgID() uint8 {
-	return 146
+func (self *ControlSystemState) MsgID() MessageID {
+	return MSG_ID_CONTROL_SYSTEM_STATE
 }
 
 func (self *ControlSystemState) MsgName() string {
@@ -6496,8 +6496,8 @@ type BatteryStatus struct {
 	BatteryRemaining int8       // Remaining battery energy: (0%: 0, 100%: 100), -1: autopilot does not estimate the remaining battery
 }
 
-func (self *BatteryStatus) MsgID() uint8 {
-	return 147
+func (self *BatteryStatus) MsgID() MessageID {
+	return MSG_ID_BATTERY_STATUS
 }
 
 func (self *BatteryStatus) MsgName() string {
@@ -6556,8 +6556,8 @@ type AutopilotVersion struct {
 	OsCustomVersion         [8]uint8 // Custom version field, commonly the first 8 bytes of the git hash. This is not an unique identifier, but should allow to identify the commit using the main version number even for very large code bases.
 }
 
-func (self *AutopilotVersion) MsgID() uint8 {
-	return 148
+func (self *AutopilotVersion) MsgID() MessageID {
+	return MSG_ID_AUTOPILOT_VERSION
 }
 
 func (self *AutopilotVersion) MsgName() string {
@@ -6613,8 +6613,8 @@ type LandingTarget struct {
 	Frame     uint8   // MAV_FRAME enum specifying the whether the following feilds are earth-frame, body-frame, etc.
 }
 
-func (self *LandingTarget) MsgID() uint8 {
-	return 149
+func (self *LandingTarget) MsgID() MessageID {
+	return MSG_ID_LANDING_TARGET
 }
 
 func (self *LandingTarget) MsgName() string {
@@ -6666,8 +6666,8 @@ type EstimatorStatus struct {
 	Flags            uint16  // Integer bitmask indicating which EKF outputs are valid. See definition for ESTIMATOR_STATUS_FLAGS.
 }
 
-func (self *EstimatorStatus) MsgID() uint8 {
-	return 230
+func (self *EstimatorStatus) MsgID() MessageID {
+	return MSG_ID_ESTIMATOR_STATUS
 }
 
 func (self *EstimatorStatus) MsgName() string {
@@ -6722,8 +6722,8 @@ type WindCov struct {
 	VertAccuracy  float32 // Vertical speed 1-STD accuracy
 }
 
-func (self *WindCov) MsgID() uint8 {
-	return 231
+func (self *WindCov) MsgID() MessageID {
+	return MSG_ID_WIND_COV
 }
 
 func (self *WindCov) MsgName() string {
@@ -6785,8 +6785,8 @@ type GpsInput struct {
 	SatellitesVisible uint8   // Number of satellites visible.
 }
 
-func (self *GpsInput) MsgID() uint8 {
-	return 232
+func (self *GpsInput) MsgID() MessageID {
+	return MSG_ID_GPS_INPUT
 }
 
 func (self *GpsInput) MsgName() string {
@@ -6851,8 +6851,8 @@ type GpsRtcmData struct {
 	Data  [180]uint8 // RTCM message (may be fragmented)
 }
 
-func (self *GpsRtcmData) MsgID() uint8 {
-	return 233
+func (self *GpsRtcmData) MsgID() MessageID {
+	return MSG_ID_GPS_RTCM_DATA
 }
 
 func (self *GpsRtcmData) MsgName() string {
@@ -6908,8 +6908,8 @@ type HighLatency struct {
 	WpNum            uint8  // current waypoint number
 }
 
-func (self *HighLatency) MsgID() uint8 {
-	return 234
+func (self *HighLatency) MsgID() MessageID {
+	return MSG_ID_HIGH_LATENCY
 }
 
 func (self *HighLatency) MsgName() string {
@@ -6990,8 +6990,8 @@ type Vibration struct {
 	Clipping2  uint32  // third accelerometer clipping count
 }
 
-func (self *Vibration) MsgID() uint8 {
-	return 241
+func (self *Vibration) MsgID() MessageID {
+	return MSG_ID_VIBRATION
 }
 
 func (self *Vibration) MsgName() string {
@@ -7041,8 +7041,8 @@ type HomePosition struct {
 	ApproachZ float32    // Local Z position of the end of the approach vector. Multicopters should set this position based on their takeoff path. Grass-landing fixed wing aircraft should set it the same way as multicopters. Runway-landing fixed wing aircraft should set it to the opposite direction of the takeoff, assuming the takeoff happened from the threshold / touchdown zone.
 }
 
-func (self *HomePosition) MsgID() uint8 {
-	return 242
+func (self *HomePosition) MsgID() MessageID {
+	return MSG_ID_HOME_POSITION
 }
 
 func (self *HomePosition) MsgName() string {
@@ -7103,8 +7103,8 @@ type SetHomePosition struct {
 	TargetSystem uint8      // System ID.
 }
 
-func (self *SetHomePosition) MsgID() uint8 {
-	return 243
+func (self *SetHomePosition) MsgID() MessageID {
+	return MSG_ID_SET_HOME_POSITION
 }
 
 func (self *SetHomePosition) MsgName() string {
@@ -7158,8 +7158,8 @@ type MessageInterval struct {
 	MessageId  uint16 // The ID of the requested MAVLink message. v1.0 is limited to 254 messages.
 }
 
-func (self *MessageInterval) MsgID() uint8 {
-	return 244
+func (self *MessageInterval) MsgID() MessageID {
+	return MSG_ID_MESSAGE_INTERVAL
 }
 
 func (self *MessageInterval) MsgName() string {
@@ -7191,8 +7191,8 @@ type ExtendedSysState struct {
 	LandedState uint8 // The landed state. Is set to MAV_LANDED_STATE_UNDEFINED if landed state is unknown.
 }
 
-func (self *ExtendedSysState) MsgID() uint8 {
-	return 245
+func (self *ExtendedSysState) MsgID() MessageID {
+	return MSG_ID_EXTENDED_SYS_STATE
 }
 
 func (self *ExtendedSysState) MsgName() string {
@@ -7235,8 +7235,8 @@ type AdsbVehicle struct {
 	Tslc         uint8   // Time since last communication in seconds
 }
 
-func (self *AdsbVehicle) MsgID() uint8 {
-	return 246
+func (self *AdsbVehicle) MsgID() MessageID {
+	return MSG_ID_ADSB_VEHICLE
 }
 
 func (self *AdsbVehicle) MsgName() string {
@@ -7295,8 +7295,8 @@ type Collision struct {
 	ThreatLevel            uint8   // How concerned the aircraft is about this collision
 }
 
-func (self *Collision) MsgID() uint8 {
-	return 247
+func (self *Collision) MsgID() MessageID {
+	return MSG_ID_COLLISION
 }
 
 func (self *Collision) MsgName() string {
@@ -7341,8 +7341,8 @@ type V2Extension struct {
 	Payload         [249]uint8 // Variable length payload. The length is defined by the remaining message length when subtracting the header and other fields.  The entire content of this block is opaque unless you understand any the encoding message_type.  The particular encoding used can be extension specific and might not always be documented as part of the mavlink specification.
 }
 
-func (self *V2Extension) MsgID() uint8 {
-	return 248
+func (self *V2Extension) MsgID() MessageID {
+	return MSG_ID_V2_EXTENSION
 }
 
 func (self *V2Extension) MsgName() string {
@@ -7382,8 +7382,8 @@ type MemoryVect struct {
 	Value   [32]int8 // Memory contents at specified address
 }
 
-func (self *MemoryVect) MsgID() uint8 {
-	return 249
+func (self *MemoryVect) MsgID() MessageID {
+	return MSG_ID_MEMORY_VECT
 }
 
 func (self *MemoryVect) MsgName() string {
@@ -7426,8 +7426,8 @@ type DebugVect struct {
 	Name     [10]byte // Name
 }
 
-func (self *DebugVect) MsgID() uint8 {
-	return 250
+func (self *DebugVect) MsgID() MessageID {
+	return MSG_ID_DEBUG_VECT
 }
 
 func (self *DebugVect) MsgName() string {
@@ -7466,8 +7466,8 @@ type NamedValueFloat struct {
 	Name       [10]byte // Name of the debug variable
 }
 
-func (self *NamedValueFloat) MsgID() uint8 {
-	return 251
+func (self *NamedValueFloat) MsgID() MessageID {
+	return MSG_ID_NAMED_VALUE_FLOAT
 }
 
 func (self *NamedValueFloat) MsgName() string {
@@ -7502,8 +7502,8 @@ type NamedValueInt struct {
 	Name       [10]byte // Name of the debug variable
 }
 
-func (self *NamedValueInt) MsgID() uint8 {
-	return 252
+func (self *NamedValueInt) MsgID() MessageID {
+	return MSG_ID_NAMED_VALUE_INT
 }
 
 func (self *NamedValueInt) MsgName() string {
@@ -7537,8 +7537,8 @@ type Statustext struct {
 	Text     [50]byte // Status text message, without null termination character
 }
 
-func (self *Statustext) MsgID() uint8 {
-	return 253
+func (self *Statustext) MsgID() MessageID {
+	return MSG_ID_STATUSTEXT
 }
 
 func (self *Statustext) MsgName() string {
@@ -7571,8 +7571,8 @@ type Debug struct {
 	Ind        uint8   // index of debug variable
 }
 
-func (self *Debug) MsgID() uint8 {
-	return 254
+func (self *Debug) MsgID() MessageID {
+	return MSG_ID_DEBUG
 }
 
 func (self *Debug) MsgName() string {
@@ -7602,148 +7602,148 @@ func (self *Debug) Unpack(p *Packet) error {
 
 // Message IDs
 const (
-	MSG_ID_HEARTBEAT                               = 0
-	MSG_ID_SYS_STATUS                              = 1
-	MSG_ID_SYSTEM_TIME                             = 2
-	MSG_ID_PING                                    = 4
-	MSG_ID_CHANGE_OPERATOR_CONTROL                 = 5
-	MSG_ID_CHANGE_OPERATOR_CONTROL_ACK             = 6
-	MSG_ID_AUTH_KEY                                = 7
-	MSG_ID_SET_MODE                                = 11
-	MSG_ID_PARAM_REQUEST_READ                      = 20
-	MSG_ID_PARAM_REQUEST_LIST                      = 21
-	MSG_ID_PARAM_VALUE                             = 22
-	MSG_ID_PARAM_SET                               = 23
-	MSG_ID_GPS_RAW_INT                             = 24
-	MSG_ID_GPS_STATUS                              = 25
-	MSG_ID_SCALED_IMU                              = 26
-	MSG_ID_RAW_IMU                                 = 27
-	MSG_ID_RAW_PRESSURE                            = 28
-	MSG_ID_SCALED_PRESSURE                         = 29
-	MSG_ID_ATTITUDE                                = 30
-	MSG_ID_ATTITUDE_QUATERNION                     = 31
-	MSG_ID_LOCAL_POSITION_NED                      = 32
-	MSG_ID_GLOBAL_POSITION_INT                     = 33
-	MSG_ID_RC_CHANNELS_SCALED                      = 34
-	MSG_ID_RC_CHANNELS_RAW                         = 35
-	MSG_ID_SERVO_OUTPUT_RAW                        = 36
-	MSG_ID_MISSION_REQUEST_PARTIAL_LIST            = 37
-	MSG_ID_MISSION_WRITE_PARTIAL_LIST              = 38
-	MSG_ID_MISSION_ITEM                            = 39
-	MSG_ID_MISSION_REQUEST                         = 40
-	MSG_ID_MISSION_SET_CURRENT                     = 41
-	MSG_ID_MISSION_CURRENT                         = 42
-	MSG_ID_MISSION_REQUEST_LIST                    = 43
-	MSG_ID_MISSION_COUNT                           = 44
-	MSG_ID_MISSION_CLEAR_ALL                       = 45
-	MSG_ID_MISSION_ITEM_REACHED                    = 46
-	MSG_ID_MISSION_ACK                             = 47
-	MSG_ID_SET_GPS_GLOBAL_ORIGIN                   = 48
-	MSG_ID_GPS_GLOBAL_ORIGIN                       = 49
-	MSG_ID_PARAM_MAP_RC                            = 50
-	MSG_ID_MISSION_REQUEST_INT                     = 51
-	MSG_ID_SAFETY_SET_ALLOWED_AREA                 = 54
-	MSG_ID_SAFETY_ALLOWED_AREA                     = 55
-	MSG_ID_ATTITUDE_QUATERNION_COV                 = 61
-	MSG_ID_NAV_CONTROLLER_OUTPUT                   = 62
-	MSG_ID_GLOBAL_POSITION_INT_COV                 = 63
-	MSG_ID_LOCAL_POSITION_NED_COV                  = 64
-	MSG_ID_RC_CHANNELS                             = 65
-	MSG_ID_REQUEST_DATA_STREAM                     = 66
-	MSG_ID_DATA_STREAM                             = 67
-	MSG_ID_MANUAL_CONTROL                          = 69
-	MSG_ID_RC_CHANNELS_OVERRIDE                    = 70
-	MSG_ID_MISSION_ITEM_INT                        = 73
-	MSG_ID_VFR_HUD                                 = 74
-	MSG_ID_COMMAND_INT                             = 75
-	MSG_ID_COMMAND_LONG                            = 76
-	MSG_ID_COMMAND_ACK                             = 77
-	MSG_ID_MANUAL_SETPOINT                         = 81
-	MSG_ID_SET_ATTITUDE_TARGET                     = 82
-	MSG_ID_ATTITUDE_TARGET                         = 83
-	MSG_ID_SET_POSITION_TARGET_LOCAL_NED           = 84
-	MSG_ID_POSITION_TARGET_LOCAL_NED               = 85
-	MSG_ID_SET_POSITION_TARGET_GLOBAL_INT          = 86
-	MSG_ID_POSITION_TARGET_GLOBAL_INT              = 87
-	MSG_ID_LOCAL_POSITION_NED_SYSTEM_GLOBAL_OFFSET = 89
-	MSG_ID_HIL_STATE                               = 90
-	MSG_ID_HIL_CONTROLS                            = 91
-	MSG_ID_HIL_RC_INPUTS_RAW                       = 92
-	MSG_ID_HIL_ACTUATOR_CONTROLS                   = 93
-	MSG_ID_OPTICAL_FLOW                            = 100
-	MSG_ID_GLOBAL_VISION_POSITION_ESTIMATE         = 101
-	MSG_ID_VISION_POSITION_ESTIMATE                = 102
-	MSG_ID_VISION_SPEED_ESTIMATE                   = 103
-	MSG_ID_VICON_POSITION_ESTIMATE                 = 104
-	MSG_ID_HIGHRES_IMU                             = 105
-	MSG_ID_OPTICAL_FLOW_RAD                        = 106
-	MSG_ID_HIL_SENSOR                              = 107
-	MSG_ID_SIM_STATE                               = 108
-	MSG_ID_RADIO_STATUS                            = 109
-	MSG_ID_FILE_TRANSFER_PROTOCOL                  = 110
-	MSG_ID_TIMESYNC                                = 111
-	MSG_ID_CAMERA_TRIGGER                          = 112
-	MSG_ID_HIL_GPS                                 = 113
-	MSG_ID_HIL_OPTICAL_FLOW                        = 114
-	MSG_ID_HIL_STATE_QUATERNION                    = 115
-	MSG_ID_SCALED_IMU2                             = 116
-	MSG_ID_LOG_REQUEST_LIST                        = 117
-	MSG_ID_LOG_ENTRY                               = 118
-	MSG_ID_LOG_REQUEST_DATA                        = 119
-	MSG_ID_LOG_DATA                                = 120
-	MSG_ID_LOG_ERASE                               = 121
-	MSG_ID_LOG_REQUEST_END                         = 122
-	MSG_ID_GPS_INJECT_DATA                         = 123
-	MSG_ID_GPS2_RAW                                = 124
-	MSG_ID_POWER_STATUS                            = 125
-	MSG_ID_SERIAL_CONTROL                          = 126
-	MSG_ID_GPS_RTK                                 = 127
-	MSG_ID_GPS2_RTK                                = 128
-	MSG_ID_SCALED_IMU3                             = 129
-	MSG_ID_DATA_TRANSMISSION_HANDSHAKE             = 130
-	MSG_ID_ENCAPSULATED_DATA                       = 131
-	MSG_ID_DISTANCE_SENSOR                         = 132
-	MSG_ID_TERRAIN_REQUEST                         = 133
-	MSG_ID_TERRAIN_DATA                            = 134
-	MSG_ID_TERRAIN_CHECK                           = 135
-	MSG_ID_TERRAIN_REPORT                          = 136
-	MSG_ID_SCALED_PRESSURE2                        = 137
-	MSG_ID_ATT_POS_MOCAP                           = 138
-	MSG_ID_SET_ACTUATOR_CONTROL_TARGET             = 139
-	MSG_ID_ACTUATOR_CONTROL_TARGET                 = 140
-	MSG_ID_ALTITUDE                                = 141
-	MSG_ID_RESOURCE_REQUEST                        = 142
-	MSG_ID_SCALED_PRESSURE3                        = 143
-	MSG_ID_FOLLOW_TARGET                           = 144
-	MSG_ID_CONTROL_SYSTEM_STATE                    = 146
-	MSG_ID_BATTERY_STATUS                          = 147
-	MSG_ID_AUTOPILOT_VERSION                       = 148
-	MSG_ID_LANDING_TARGET                          = 149
-	MSG_ID_ESTIMATOR_STATUS                        = 230
-	MSG_ID_WIND_COV                                = 231
-	MSG_ID_GPS_INPUT                               = 232
-	MSG_ID_GPS_RTCM_DATA                           = 233
-	MSG_ID_HIGH_LATENCY                            = 234
-	MSG_ID_VIBRATION                               = 241
-	MSG_ID_HOME_POSITION                           = 242
-	MSG_ID_SET_HOME_POSITION                       = 243
-	MSG_ID_MESSAGE_INTERVAL                        = 244
-	MSG_ID_EXTENDED_SYS_STATE                      = 245
-	MSG_ID_ADSB_VEHICLE                            = 246
-	MSG_ID_COLLISION                               = 247
-	MSG_ID_V2_EXTENSION                            = 248
-	MSG_ID_MEMORY_VECT                             = 249
-	MSG_ID_DEBUG_VECT                              = 250
-	MSG_ID_NAMED_VALUE_FLOAT                       = 251
-	MSG_ID_NAMED_VALUE_INT                         = 252
-	MSG_ID_STATUSTEXT                              = 253
-	MSG_ID_DEBUG                                   = 254
+	MSG_ID_HEARTBEAT                               MessageID = 0
+	MSG_ID_SYS_STATUS                              MessageID = 1
+	MSG_ID_SYSTEM_TIME                             MessageID = 2
+	MSG_ID_PING                                    MessageID = 4
+	MSG_ID_CHANGE_OPERATOR_CONTROL                 MessageID = 5
+	MSG_ID_CHANGE_OPERATOR_CONTROL_ACK             MessageID = 6
+	MSG_ID_AUTH_KEY                                MessageID = 7
+	MSG_ID_SET_MODE                                MessageID = 11
+	MSG_ID_PARAM_REQUEST_READ                      MessageID = 20
+	MSG_ID_PARAM_REQUEST_LIST                      MessageID = 21
+	MSG_ID_PARAM_VALUE                             MessageID = 22
+	MSG_ID_PARAM_SET                               MessageID = 23
+	MSG_ID_GPS_RAW_INT                             MessageID = 24
+	MSG_ID_GPS_STATUS                              MessageID = 25
+	MSG_ID_SCALED_IMU                              MessageID = 26
+	MSG_ID_RAW_IMU                                 MessageID = 27
+	MSG_ID_RAW_PRESSURE                            MessageID = 28
+	MSG_ID_SCALED_PRESSURE                         MessageID = 29
+	MSG_ID_ATTITUDE                                MessageID = 30
+	MSG_ID_ATTITUDE_QUATERNION                     MessageID = 31
+	MSG_ID_LOCAL_POSITION_NED                      MessageID = 32
+	MSG_ID_GLOBAL_POSITION_INT                     MessageID = 33
+	MSG_ID_RC_CHANNELS_SCALED                      MessageID = 34
+	MSG_ID_RC_CHANNELS_RAW                         MessageID = 35
+	MSG_ID_SERVO_OUTPUT_RAW                        MessageID = 36
+	MSG_ID_MISSION_REQUEST_PARTIAL_LIST            MessageID = 37
+	MSG_ID_MISSION_WRITE_PARTIAL_LIST              MessageID = 38
+	MSG_ID_MISSION_ITEM                            MessageID = 39
+	MSG_ID_MISSION_REQUEST                         MessageID = 40
+	MSG_ID_MISSION_SET_CURRENT                     MessageID = 41
+	MSG_ID_MISSION_CURRENT                         MessageID = 42
+	MSG_ID_MISSION_REQUEST_LIST                    MessageID = 43
+	MSG_ID_MISSION_COUNT                           MessageID = 44
+	MSG_ID_MISSION_CLEAR_ALL                       MessageID = 45
+	MSG_ID_MISSION_ITEM_REACHED                    MessageID = 46
+	MSG_ID_MISSION_ACK                             MessageID = 47
+	MSG_ID_SET_GPS_GLOBAL_ORIGIN                   MessageID = 48
+	MSG_ID_GPS_GLOBAL_ORIGIN                       MessageID = 49
+	MSG_ID_PARAM_MAP_RC                            MessageID = 50
+	MSG_ID_MISSION_REQUEST_INT                     MessageID = 51
+	MSG_ID_SAFETY_SET_ALLOWED_AREA                 MessageID = 54
+	MSG_ID_SAFETY_ALLOWED_AREA                     MessageID = 55
+	MSG_ID_ATTITUDE_QUATERNION_COV                 MessageID = 61
+	MSG_ID_NAV_CONTROLLER_OUTPUT                   MessageID = 62
+	MSG_ID_GLOBAL_POSITION_INT_COV                 MessageID = 63
+	MSG_ID_LOCAL_POSITION_NED_COV                  MessageID = 64
+	MSG_ID_RC_CHANNELS                             MessageID = 65
+	MSG_ID_REQUEST_DATA_STREAM                     MessageID = 66
+	MSG_ID_DATA_STREAM                             MessageID = 67
+	MSG_ID_MANUAL_CONTROL                          MessageID = 69
+	MSG_ID_RC_CHANNELS_OVERRIDE                    MessageID = 70
+	MSG_ID_MISSION_ITEM_INT                        MessageID = 73
+	MSG_ID_VFR_HUD                                 MessageID = 74
+	MSG_ID_COMMAND_INT                             MessageID = 75
+	MSG_ID_COMMAND_LONG                            MessageID = 76
+	MSG_ID_COMMAND_ACK                             MessageID = 77
+	MSG_ID_MANUAL_SETPOINT                         MessageID = 81
+	MSG_ID_SET_ATTITUDE_TARGET                     MessageID = 82
+	MSG_ID_ATTITUDE_TARGET                         MessageID = 83
+	MSG_ID_SET_POSITION_TARGET_LOCAL_NED           MessageID = 84
+	MSG_ID_POSITION_TARGET_LOCAL_NED               MessageID = 85
+	MSG_ID_SET_POSITION_TARGET_GLOBAL_INT          MessageID = 86
+	MSG_ID_POSITION_TARGET_GLOBAL_INT              MessageID = 87
+	MSG_ID_LOCAL_POSITION_NED_SYSTEM_GLOBAL_OFFSET MessageID = 89
+	MSG_ID_HIL_STATE                               MessageID = 90
+	MSG_ID_HIL_CONTROLS                            MessageID = 91
+	MSG_ID_HIL_RC_INPUTS_RAW                       MessageID = 92
+	MSG_ID_HIL_ACTUATOR_CONTROLS                   MessageID = 93
+	MSG_ID_OPTICAL_FLOW                            MessageID = 100
+	MSG_ID_GLOBAL_VISION_POSITION_ESTIMATE         MessageID = 101
+	MSG_ID_VISION_POSITION_ESTIMATE                MessageID = 102
+	MSG_ID_VISION_SPEED_ESTIMATE                   MessageID = 103
+	MSG_ID_VICON_POSITION_ESTIMATE                 MessageID = 104
+	MSG_ID_HIGHRES_IMU                             MessageID = 105
+	MSG_ID_OPTICAL_FLOW_RAD                        MessageID = 106
+	MSG_ID_HIL_SENSOR                              MessageID = 107
+	MSG_ID_SIM_STATE                               MessageID = 108
+	MSG_ID_RADIO_STATUS                            MessageID = 109
+	MSG_ID_FILE_TRANSFER_PROTOCOL                  MessageID = 110
+	MSG_ID_TIMESYNC                                MessageID = 111
+	MSG_ID_CAMERA_TRIGGER                          MessageID = 112
+	MSG_ID_HIL_GPS                                 MessageID = 113
+	MSG_ID_HIL_OPTICAL_FLOW                        MessageID = 114
+	MSG_ID_HIL_STATE_QUATERNION                    MessageID = 115
+	MSG_ID_SCALED_IMU2                             MessageID = 116
+	MSG_ID_LOG_REQUEST_LIST                        MessageID = 117
+	MSG_ID_LOG_ENTRY                               MessageID = 118
+	MSG_ID_LOG_REQUEST_DATA                        MessageID = 119
+	MSG_ID_LOG_DATA                                MessageID = 120
+	MSG_ID_LOG_ERASE                               MessageID = 121
+	MSG_ID_LOG_REQUEST_END                         MessageID = 122
+	MSG_ID_GPS_INJECT_DATA                         MessageID = 123
+	MSG_ID_GPS2_RAW                                MessageID = 124
+	MSG_ID_POWER_STATUS                            MessageID = 125
+	MSG_ID_SERIAL_CONTROL                          MessageID = 126
+	MSG_ID_GPS_RTK                                 MessageID = 127
+	MSG_ID_GPS2_RTK                                MessageID = 128
+	MSG_ID_SCALED_IMU3                             MessageID = 129
+	MSG_ID_DATA_TRANSMISSION_HANDSHAKE             MessageID = 130
+	MSG_ID_ENCAPSULATED_DATA                       MessageID = 131
+	MSG_ID_DISTANCE_SENSOR                         MessageID = 132
+	MSG_ID_TERRAIN_REQUEST                         MessageID = 133
+	MSG_ID_TERRAIN_DATA                            MessageID = 134
+	MSG_ID_TERRAIN_CHECK                           MessageID = 135
+	MSG_ID_TERRAIN_REPORT                          MessageID = 136
+	MSG_ID_SCALED_PRESSURE2                        MessageID = 137
+	MSG_ID_ATT_POS_MOCAP                           MessageID = 138
+	MSG_ID_SET_ACTUATOR_CONTROL_TARGET             MessageID = 139
+	MSG_ID_ACTUATOR_CONTROL_TARGET                 MessageID = 140
+	MSG_ID_ALTITUDE                                MessageID = 141
+	MSG_ID_RESOURCE_REQUEST                        MessageID = 142
+	MSG_ID_SCALED_PRESSURE3                        MessageID = 143
+	MSG_ID_FOLLOW_TARGET                           MessageID = 144
+	MSG_ID_CONTROL_SYSTEM_STATE                    MessageID = 146
+	MSG_ID_BATTERY_STATUS                          MessageID = 147
+	MSG_ID_AUTOPILOT_VERSION                       MessageID = 148
+	MSG_ID_LANDING_TARGET                          MessageID = 149
+	MSG_ID_ESTIMATOR_STATUS                        MessageID = 230
+	MSG_ID_WIND_COV                                MessageID = 231
+	MSG_ID_GPS_INPUT                               MessageID = 232
+	MSG_ID_GPS_RTCM_DATA                           MessageID = 233
+	MSG_ID_HIGH_LATENCY                            MessageID = 234
+	MSG_ID_VIBRATION                               MessageID = 241
+	MSG_ID_HOME_POSITION                           MessageID = 242
+	MSG_ID_SET_HOME_POSITION                       MessageID = 243
+	MSG_ID_MESSAGE_INTERVAL                        MessageID = 244
+	MSG_ID_EXTENDED_SYS_STATE                      MessageID = 245
+	MSG_ID_ADSB_VEHICLE                            MessageID = 246
+	MSG_ID_COLLISION                               MessageID = 247
+	MSG_ID_V2_EXTENSION                            MessageID = 248
+	MSG_ID_MEMORY_VECT                             MessageID = 249
+	MSG_ID_DEBUG_VECT                              MessageID = 250
+	MSG_ID_NAMED_VALUE_FLOAT                       MessageID = 251
+	MSG_ID_NAMED_VALUE_INT                         MessageID = 252
+	MSG_ID_STATUSTEXT                              MessageID = 253
+	MSG_ID_DEBUG                                   MessageID = 254
 )
 
 // DialectCommon is the dialect represented by common.xml
 var DialectCommon *Dialect = &Dialect{
 	Name: "common",
-	crcExtras: map[uint8]uint8{
+	crcExtras: map[MessageID]uint8{
 		MSG_ID_HEARTBEAT:                               50,
 		MSG_ID_SYS_STATUS:                              124,
 		MSG_ID_SYSTEM_TIME:                             137,
@@ -7881,7 +7881,7 @@ var DialectCommon *Dialect = &Dialect{
 		MSG_ID_STATUSTEXT:                              83,
 		MSG_ID_DEBUG:                                   46,
 	},
-	messageConstructorByMsgId: map[uint8]func(*Packet) Message{
+	messageConstructorByMsgId: map[MessageID]func(*Packet) Message{
 		MSG_ID_HEARTBEAT: func(pkt *Packet) Message {
 			msg := new(Heartbeat)
 			msg.Unpack(pkt)

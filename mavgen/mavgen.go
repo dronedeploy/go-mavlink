@@ -399,16 +399,16 @@ func (d *Dialect) generateMsgIds(w io.Writer) error {
 	msgIdTmpl := `
 // Message IDs
 const ({{range .Messages}}
-	MSG_ID_{{.Name}} = {{.ID}}{{end}}
+	MSG_ID_{{.Name}} MessageID = {{.ID}}{{end}}
 )
 
 // Dialect{{.Name | UpperCamelCase}} is the dialect represented by {{.Name}}.xml
 var Dialect{{.Name | UpperCamelCase}} *Dialect = &Dialect{
 	Name: "{{.Name}}",
-	crcExtras: map[uint8]uint8{ {{range .Messages}}
+	crcExtras: map[MessageID]uint8{ {{range .Messages}}
 		MSG_ID_{{.Name}}: {{.CRCExtra}},{{end}}
 	},
-	messageConstructorByMsgId: map[uint8]func(*Packet) Message{ {{range .Messages}}
+	messageConstructorByMsgId: map[MessageID]func(*Packet) Message{ {{range .Messages}}
 		MSG_ID_{{.Name}}: func(pkt *Packet) Message {
 			msg := new({{.Name | UpperCamelCase}})
 			msg.Unpack(pkt)
@@ -433,8 +433,8 @@ type {{$name}} struct { {{range .Fields}}
   {{.Name | UpperCamelCase}} {{.GoType}} // {{.Description}}{{end}}
 }
 
-func (self *{{$name}}) MsgID() uint8 {
-	return {{.ID}}
+func (self *{{$name}}) MsgID() MessageID {
+	return MSG_ID_{{.Name}}
 }
 
 func (self *{{$name}}) MsgName() string {
