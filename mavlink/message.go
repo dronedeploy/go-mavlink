@@ -9,11 +9,11 @@ import (
 	"github.com/cnord/go-mavlink/x25"
 )
 
-//go:generate mavgen -f definitions/common.xml
-//go:generate mavgen -f definitions/ardupilotmega.xml
-//go:generate mavgen -f definitions/ASLUAV.xml
-//go:generate mavgen -f definitions/matrixpilot.xml
-//go:generate mavgen -f definitions/ualberta.xml
+//go:generate mavgen -f ../mavlink-upstream/message_definitions/v1.0/common.xml
+//go:generate mavgen -f ../mavlink-upstream/message_definitions/v1.0/ardupilotmega.xml
+//go:generate mavgen -f ../mavlink-upstream/message_definitions/v1.0/ASLUAV.xml
+//go:generate mavgen -f ../mavlink-upstream/message_definitions/v1.0/matrixpilot.xml
+//go:generate mavgen -f ../mavlink-upstream/message_definitions/v1.0/ualberta.xml
 
 const (
 	startByte        = 0xfe
