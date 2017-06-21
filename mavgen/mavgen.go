@@ -17,8 +17,7 @@ import (
 )
 
 type Dialect struct {
-	Name        string
-	StringSizes map[int]bool
+	Name string
 
 	XMLName  xml.Name   `xml:"mavlink"`
 	Version  string     `xml:"version"`
