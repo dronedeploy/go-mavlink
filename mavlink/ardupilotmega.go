@@ -13,6 +13,16 @@ import (
 //
 //////////////////////////////////////////////////
 
+// AccelcalVehiclePos:
+const (
+	ACCELCAL_VEHICLE_POS_LEVEL    = 1 //
+	ACCELCAL_VEHICLE_POS_LEFT     = 2 //
+	ACCELCAL_VEHICLE_POS_RIGHT    = 3 //
+	ACCELCAL_VEHICLE_POS_NOSEDOWN = 4 //
+	ACCELCAL_VEHICLE_POS_NOSEUP   = 5 //
+	ACCELCAL_VEHICLE_POS_BACK     = 6 //
+)
+
 // MavCmd:
 const (
 	MAV_CMD_DO_GRIPPER                      = 211   // Mission command to operate EPM gripper
@@ -25,6 +35,7 @@ const (
 	MAV_CMD_DO_START_MAG_CAL                = 42424 // Initiate a magnetometer calibration
 	MAV_CMD_DO_ACCEPT_MAG_CAL               = 42425 // Initiate a magnetometer calibration
 	MAV_CMD_DO_CANCEL_MAG_CAL               = 42426 // Cancel a running magnetometer calibration
+	MAV_CMD_ACCELCAL_VEHICLE_POS            = 42429 // Used when doing accelerometer calibration. When sent to the GCS tells it what position to put the vehicle in. When sent to the vehicle says what position the vehicle is in.
 	MAV_CMD_DO_SEND_BANNER                  = 42428 // Reply with the version banner
 	MAV_CMD_GIMBAL_RESET                    = 42501 // Causes the gimbal to reset and boot as if it was just powered on
 	MAV_CMD_SET_FACTORY_TEST_MODE           = 42427 // Command autopilot to get into factory test/diagnostic mode
@@ -337,11 +348,12 @@ const (
 
 // PidTuningAxis:
 const (
-	PID_TUNING_ROLL  = 1 //
-	PID_TUNING_PITCH = 2 //
-	PID_TUNING_YAW   = 3 //
-	PID_TUNING_ACCZ  = 4 //
-	PID_TUNING_STEER = 5 //
+	PID_TUNING_ROLL    = 1 //
+	PID_TUNING_PITCH   = 2 //
+	PID_TUNING_YAW     = 3 //
+	PID_TUNING_ACCZ    = 4 //
+	PID_TUNING_STEER   = 5 //
+	PID_TUNING_LANDING = 6 //
 )
 
 // MagCalStatus:
@@ -364,6 +376,12 @@ const (
 const (
 	MAV_REMOTE_LOG_DATA_BLOCK_NACK = 0 // This block has NOT been received
 	MAV_REMOTE_LOG_DATA_BLOCK_ACK  = 1 // This block has been received
+)
+
+// DeviceOpBustype: Bus types for device operations
+const (
+	DEVICE_OP_BUSTYPE_I2C = 0 // I2C Device operation
+	DEVICE_OP_BUSTYPE_SPI = 1 // SPI Device operation
 )
 
 // Offsets and calibrations values for hardware sensors. This makes it easier to debug the calibration process.
@@ -473,9 +491,8 @@ func (self *SetMagOffsets) Unpack(p *Packet) error {
 
 // state of APM memory
 type Meminfo struct {
-	Freemem32 uint32 // free memory (32 bit)
-	Brkval    uint16 // heap top
-	Freemem   uint16 // free memory
+	Brkval  uint16 // heap top
+	Freemem uint16 // free memory
 }
 
 func (self *Meminfo) MsgID() MessageID {
@@ -487,10 +504,9 @@ func (self *Meminfo) MsgName() string {
 }
 
 func (self *Meminfo) Pack(p *Packet) error {
-	payload := make([]byte, 8)
-	binary.LittleEndian.PutUint32(payload[0:], uint32(self.Freemem32))
-	binary.LittleEndian.PutUint16(payload[4:], uint16(self.Brkval))
-	binary.LittleEndian.PutUint16(payload[6:], uint16(self.Freemem))
+	payload := make([]byte, 4)
+	binary.LittleEndian.PutUint16(payload[0:], uint16(self.Brkval))
+	binary.LittleEndian.PutUint16(payload[2:], uint16(self.Freemem))
 
 	p.MsgID = self.MsgID()
 	p.Payload = payload
@@ -498,12 +514,11 @@ func (self *Meminfo) Pack(p *Packet) error {
 }
 
 func (self *Meminfo) Unpack(p *Packet) error {
-	if len(p.Payload) < 8 {
+	if len(p.Payload) < 4 {
 		return fmt.Errorf("payload too small")
 	}
-	self.Freemem32 = uint32(binary.LittleEndian.Uint32(p.Payload[0:]))
-	self.Brkval = uint16(binary.LittleEndian.Uint16(p.Payload[4:]))
-	self.Freemem = uint16(binary.LittleEndian.Uint16(p.Payload[6:]))
+	self.Brkval = uint16(binary.LittleEndian.Uint16(p.Payload[0:]))
+	self.Freemem = uint16(binary.LittleEndian.Uint16(p.Payload[2:]))
 	return nil
 }
 
@@ -721,7 +736,7 @@ type MountControl struct {
 	InputC          int32 // yaw(deg*100) or alt (in cm) depending on mount mode
 	TargetSystem    uint8 // System ID
 	TargetComponent uint8 // Component ID
-	SavePosition    uint8 // if &quot;1&quot; it will save current trimmed position on EEPROM (just valid for NEUTRAL and LANDING)
+	SavePosition    uint8 // if "1" it will save current trimmed position on EEPROM (just valid for NEUTRAL and LANDING)
 }
 
 func (self *MountControl) MsgID() MessageID {
@@ -1535,7 +1550,7 @@ func (self *RallyFetchPoint) Unpack(p *Packet) error {
 
 // Status of compassmot calibration
 type CompassmotStatus struct {
-	Current       float32 // current (amps)
+	Current       float32 // current (Ampere)
 	Compensationx float32 // Motor Compensation X
 	Compensationy float32 // Motor Compensation Y
 	Compensationz float32 // Motor Compensation Z
@@ -2624,7 +2639,7 @@ var DialectArdupilotmega *Dialect = &Dialect{
 	crcExtras: map[MessageID]uint8{
 		MSG_ID_SENSOR_OFFSETS:            134,
 		MSG_ID_SET_MAG_OFFSETS:           219,
-		MSG_ID_MEMINFO:                   112,
+		MSG_ID_MEMINFO:                   208,
 		MSG_ID_AP_ADC:                    188,
 		MSG_ID_DIGICAM_CONFIGURE:         84,
 		MSG_ID_DIGICAM_CONTROL:           22,
