@@ -1,6 +1,9 @@
 package main
 
 import (
+	"fmt"
+	"reflect"
+	"strings"
 	"testing"
 )
 
@@ -61,4 +64,146 @@ func TestNameConversion(t *testing.T) {
 			t.Errorf("Upper Camel Conversion for %q, got %q, want %q", c.in, got, c.want)
 		}
 	}
+}
+
+type dialect struct {
+	version  string
+	enums    []*Enum
+	messages []*Message
+}
+
+func dialectExtractMeaninful(d *Dialect) *dialect {
+	enums := []*Enum{}
+	if len(d.Enums) != 0 {
+		enums = d.Enums
+	}
+
+	messages := []*Message{}
+	if len(d.Messages) != 0 {
+		messages = d.Messages
+	}
+
+	return &dialect{
+		d.Version, enums, messages,
+	}
+}
+
+func checkDialect(d1 *Dialect, d2 *Dialect) bool {
+	return reflect.DeepEqual(*dialectExtractMeaninful(d1), *dialectExtractMeaninful(d2))
+}
+
+func TestParseDialect(t *testing.T) {
+
+	enums := []*Enum{
+		&Enum{"MAV_AUTOPILOT", "descr1", []*EnumEntry{
+			&EnumEntry{0, "MAV_AUTOPILOT_GENERIC", "", []*EnumEntryParam(nil)},
+			&EnumEntry{1, "MAV_AUTOPILOT_RESERVED", "", []*EnumEntryParam(nil)},
+		}},
+	}
+
+	messages := []*Message{
+		&Message{1, "MSG1", "descr1", []*MessageField{
+			&MessageField{"uint32_t", "f1", "", "descr1", "", 0, 0, 0},
+			&MessageField{"uint8_t", "f2", "", "descr2", "", 0, 0, 0},
+		}},
+		&Message{2, "MSG2", "descr2", []*MessageField{
+			&MessageField{"uint8_t[10]", "f1", "", "descr1", "", 0, 0, 0},
+		}},
+	}
+
+	cases := []struct {
+		name    string
+		xml     string
+		dialect *Dialect
+		err     error
+	}{
+		{
+			"empty",
+			`<?xml version='1.0'?>
+<mavlink>
+    <version>3</version>
+    <dialect>0</dialect>
+</mavlink>`,
+			&Dialect{Version: "3", Enums: []*Enum{}, Messages: []*Message{}},
+			nil,
+		},
+
+		{
+			"simple",
+			`<?xml version='1.0'?>
+<mavlink>
+    <version>3</version>
+    <dialect>0</dialect>
+    <enums>
+         <enum name="MAV_AUTOPILOT">
+             <description>descr1</description>
+	     <entry value="0" name="MAV_AUTOPILOT_GENERIC"></entry>
+	     <entry value="1" name="MAV_AUTOPILOT_RESERVED"></entry>
+         </enum>
+    </enums>
+
+    <messages>
+        <message id="1" name="MSG1">
+            <description>descr1</description>
+            <field type="uint32_t" name="f1">descr1</field>
+            <field type="uint8_t" name="f2">descr2</field>
+        </message>
+        <message id="2" name="MSG2">
+            <description>descr2</description>
+            <field type="uint8_t[10]" name="f1">descr1</field>
+        </message>
+    </messages>
+</mavlink>`,
+			&Dialect{Version: "3", Enums: enums, Messages: messages},
+			nil,
+		},
+
+		{
+			"mavlink-v2-message",
+			`<?xml version='1.0'?>
+<mavlink>
+    <version>3</version>
+    <dialect>0</dialect>
+    <enums>
+         <enum name="MAV_AUTOPILOT">
+             <description>descr1</description>
+	     <entry value="0" name="MAV_AUTOPILOT_GENERIC"></entry>
+	     <entry value="1" name="MAV_AUTOPILOT_RESERVED"></entry>
+         </enum>
+    </enums>
+
+    <messages>
+        <message id="1" name="MSG1">
+            <description>descr1</description>
+            <field type="uint32_t" name="f1">descr1</field>
+            <field type="uint8_t" name="f2">descr2</field>
+        </message>
+        <message id="2" name="MSG2">
+            <description>descr2</description>
+            <field type="uint8_t[10]" name="f1">descr1</field>
+        </message>
+        <message id="256" name="MSG1">
+            <description>descr1</description>
+            <field type="uint32_t" name="f1">descr1</field>
+        </message>
+    </messages>
+</mavlink>`,
+			&Dialect{Version: "3", Enums: enums, Messages: messages},
+			nil,
+		},
+	}
+
+	for ind, c := range cases {
+		t.Run(fmt.Sprintf("%v.%v", ind, c.name), func(t *testing.T) {
+			r := strings.NewReader(c.xml)
+			d, err := ParseDialect(r, c.name)
+			if err != c.err {
+				t.Fatalf("expected err to be %+v, got %+v", c.err, err)
+			}
+			if !checkDialect(d, c.dialect) {
+				t.Fatalf("expected to get dialect %+v, got %+v", c.dialect, d)
+			}
+		})
+	}
+
 }
