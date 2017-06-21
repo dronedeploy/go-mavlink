@@ -105,10 +105,10 @@ func TestParseDialect(t *testing.T) {
 		&Message{1, "MSG1", "descr1", []*MessageField{
 			&MessageField{"uint32_t", "f1", "", "descr1", "", 0, 0, 0},
 			&MessageField{"uint8_t", "f2", "", "descr2", "", 0, 0, 0},
-		}},
+		}, ""},
 		&Message{2, "MSG2", "descr2", []*MessageField{
 			&MessageField{"uint8_t[10]", "f1", "", "descr1", "", 0, 0, 0},
-		}},
+		}, ""},
 	}
 
 	cases := []struct {
@@ -189,6 +189,76 @@ func TestParseDialect(t *testing.T) {
     </messages>
 </mavlink>`,
 			&Dialect{Version: "3", Enums: enums, Messages: messages},
+			nil,
+		},
+
+		{
+			"v2-fields",
+			`<?xml version='1.0'?>
+<mavlink>
+    <version>3</version>
+    <dialect>0</dialect>
+    <enums>
+         <enum name="MAV_AUTOPILOT">
+             <description>descr1</description>
+	     <entry value="0" name="MAV_AUTOPILOT_GENERIC"></entry>
+	     <entry value="1" name="MAV_AUTOPILOT_RESERVED"></entry>
+         </enum>
+    </enums>
+
+    <messages>
+        <message id="1" name="MSG1">
+            <description>descr1</description>
+            <field type="uint32_t" name="f1">descr1</field>
+            <field type="uint8_t" name="f2">descr2</field>
+            <extensions/>
+            <field type="uint8_t" name="f3">descr3</field>
+        </message>
+        <message id="2" name="MSG2">
+            <description>descr2</description>
+            <field type="uint8_t[10]" name="f1">descr1</field>
+            <extensions/>
+        </message>
+    </messages>
+</mavlink>`,
+			&Dialect{Version: "3", Enums: enums, Messages: messages},
+			nil,
+		},
+
+		{
+			"v2-fields-only",
+			`<?xml version='1.0'?>
+<mavlink>
+    <version>3</version>
+    <dialect>0</dialect>
+    <enums>
+         <enum name="MAV_AUTOPILOT">
+             <description>descr1</description>
+	     <entry value="0" name="MAV_AUTOPILOT_GENERIC"></entry>
+	     <entry value="1" name="MAV_AUTOPILOT_RESERVED"></entry>
+         </enum>
+    </enums>
+
+    <messages>
+        <message id="1" name="MSG1">
+            <extensions/>
+            <description>descr1</description>
+            <field type="uint32_t" name="f1">descr1</field>
+            <field type="uint8_t" name="f2">descr2</field>
+        </message>
+        <message id="2" name="MSG2">
+            <description>descr2</description>
+            <extensions/>
+        </message>
+    </messages>
+</mavlink>`,
+			&Dialect{
+				Version: "3", Enums: enums,
+				Messages: []*Message{
+					&Message{1, "MSG1", "descr1", []*MessageField{}, ""},
+					&Message{2, "MSG2", "descr2", []*MessageField(nil), ""},
+				},
+			},
 			nil,
 		},
 	}
