@@ -361,10 +361,8 @@ const (
 	MAV_CMD_SET_GUIDED_SUBMODE_STANDARD        = 4000  // This command sets the submode to standard guided when vehicle is in guided mode. The vehicle holds position and altitude and the user can input the desired velocites along all three axes.
 	MAV_CMD_SET_GUIDED_SUBMODE_CIRCLE          = 4001  // This command sets submode circle when vehicle is in guided mode. Vehicle flies along a circle facing the center of the circle. The user can input the velocity along the circle and change the radius. If no input is given the vehicle will hold position.
 	MAV_CMD_NAV_FENCE_RETURN_POINT             = 5000  // Fence return point. There can only be one fence return point.
-	MAV_CMD_NAV_FENCE_POLYGON_VERTEX_INCLUSION = 5001  // Fence vertex for an inclusion polygon (the polygon must not be self-intersecting). The vehicle must stay within this area. Minimum of 3 vertices required.
-	MAV_CMD_NAV_FENCE_POLYGON_VERTEX_EXCLUSION = 5002  // Fence vertex for an exclusion polygon (the polygon must not be self-intersecting). The vehicle must stay outside this area. Minimum of 3 vertices required.
-	MAV_CMD_NAV_FENCE_CIRCLE_INCLUSION         = 5003  // Circular fence area. The vehicle must stay inside this area.
-	MAV_CMD_NAV_FENCE_CIRCLE_EXCLUSION         = 5004  // Circular fence area. The vehicle must stay outside this area.
+	MAV_CMD_NAV_FENCE_POLYGON_VERTEX_INCLUSION = 5001  // Fence vertex for an inclusion polygon. The vehicle must stay within this area. Minimum of 3 vertices required.
+	MAV_CMD_NAV_FENCE_POLYGON_VERTEX_EXCLUSION = 5002  // Fence vertex for an exclusion polygon. The vehicle must stay outside this area. Minimum of 3 vertices required.
 	MAV_CMD_NAV_RALLY_POINT                    = 5100  // Rally point. You can have multiple rally points defined.
 	MAV_CMD_PAYLOAD_PREPARE_DEPLOY             = 30001 // Deploy payload on a Lat / Lon / Alt position. This includes the navigation to reach the required release position and velocity.
 	MAV_CMD_PAYLOAD_CONTROL_DEPLOY             = 30002 // Control the payload deployment.
@@ -1845,24 +1843,16 @@ func (self *RcChannelsRaw) Unpack(p *Packet) error {
 
 // The RAW values of the servo outputs (for RC input from the remote, use the RC_CHANNELS messages). The standard PPM modulation is as follows: 1000 microseconds: 0%, 2000 microseconds: 100%.
 type ServoOutputRaw struct {
-	TimeUsec   uint32 // Timestamp (microseconds since system boot)
-	Servo1Raw  uint16 // Servo output 1 value, in microseconds
-	Servo2Raw  uint16 // Servo output 2 value, in microseconds
-	Servo3Raw  uint16 // Servo output 3 value, in microseconds
-	Servo4Raw  uint16 // Servo output 4 value, in microseconds
-	Servo5Raw  uint16 // Servo output 5 value, in microseconds
-	Servo6Raw  uint16 // Servo output 6 value, in microseconds
-	Servo7Raw  uint16 // Servo output 7 value, in microseconds
-	Servo8Raw  uint16 // Servo output 8 value, in microseconds
-	Servo9Raw  uint16 // Servo output 9 value, in microseconds
-	Servo10Raw uint16 // Servo output 10 value, in microseconds
-	Servo11Raw uint16 // Servo output 11 value, in microseconds
-	Servo12Raw uint16 // Servo output 12 value, in microseconds
-	Servo13Raw uint16 // Servo output 13 value, in microseconds
-	Servo14Raw uint16 // Servo output 14 value, in microseconds
-	Servo15Raw uint16 // Servo output 15 value, in microseconds
-	Servo16Raw uint16 // Servo output 16 value, in microseconds
-	Port       uint8  // Servo output port (set of 8 outputs = 1 port). Most MAVs will just use one, but this allows to encode more than 8 servos.
+	TimeUsec  uint32 // Timestamp (microseconds since system boot)
+	Servo1Raw uint16 // Servo output 1 value, in microseconds
+	Servo2Raw uint16 // Servo output 2 value, in microseconds
+	Servo3Raw uint16 // Servo output 3 value, in microseconds
+	Servo4Raw uint16 // Servo output 4 value, in microseconds
+	Servo5Raw uint16 // Servo output 5 value, in microseconds
+	Servo6Raw uint16 // Servo output 6 value, in microseconds
+	Servo7Raw uint16 // Servo output 7 value, in microseconds
+	Servo8Raw uint16 // Servo output 8 value, in microseconds
+	Port      uint8  // Servo output port (set of 8 outputs = 1 port). Most MAVs will just use one, but this allows to encode more than 8 servos.
 }
 
 func (self *ServoOutputRaw) MsgID() MessageID {
@@ -1874,7 +1864,7 @@ func (self *ServoOutputRaw) MsgName() string {
 }
 
 func (self *ServoOutputRaw) Pack(p *Packet) error {
-	payload := make([]byte, 37)
+	payload := make([]byte, 21)
 	binary.LittleEndian.PutUint32(payload[0:], uint32(self.TimeUsec))
 	binary.LittleEndian.PutUint16(payload[4:], uint16(self.Servo1Raw))
 	binary.LittleEndian.PutUint16(payload[6:], uint16(self.Servo2Raw))
@@ -1884,15 +1874,7 @@ func (self *ServoOutputRaw) Pack(p *Packet) error {
 	binary.LittleEndian.PutUint16(payload[14:], uint16(self.Servo6Raw))
 	binary.LittleEndian.PutUint16(payload[16:], uint16(self.Servo7Raw))
 	binary.LittleEndian.PutUint16(payload[18:], uint16(self.Servo8Raw))
-	binary.LittleEndian.PutUint16(payload[20:], uint16(self.Servo9Raw))
-	binary.LittleEndian.PutUint16(payload[22:], uint16(self.Servo10Raw))
-	binary.LittleEndian.PutUint16(payload[24:], uint16(self.Servo11Raw))
-	binary.LittleEndian.PutUint16(payload[26:], uint16(self.Servo12Raw))
-	binary.LittleEndian.PutUint16(payload[28:], uint16(self.Servo13Raw))
-	binary.LittleEndian.PutUint16(payload[30:], uint16(self.Servo14Raw))
-	binary.LittleEndian.PutUint16(payload[32:], uint16(self.Servo15Raw))
-	binary.LittleEndian.PutUint16(payload[34:], uint16(self.Servo16Raw))
-	payload[36] = byte(self.Port)
+	payload[20] = byte(self.Port)
 
 	p.MsgID = self.MsgID()
 	p.Payload = payload
@@ -1900,7 +1882,7 @@ func (self *ServoOutputRaw) Pack(p *Packet) error {
 }
 
 func (self *ServoOutputRaw) Unpack(p *Packet) error {
-	if len(p.Payload) < 37 {
+	if len(p.Payload) < 21 {
 		return fmt.Errorf("payload too small")
 	}
 	self.TimeUsec = uint32(binary.LittleEndian.Uint32(p.Payload[0:]))
@@ -1912,15 +1894,7 @@ func (self *ServoOutputRaw) Unpack(p *Packet) error {
 	self.Servo6Raw = uint16(binary.LittleEndian.Uint16(p.Payload[14:]))
 	self.Servo7Raw = uint16(binary.LittleEndian.Uint16(p.Payload[16:]))
 	self.Servo8Raw = uint16(binary.LittleEndian.Uint16(p.Payload[18:]))
-	self.Servo9Raw = uint16(binary.LittleEndian.Uint16(p.Payload[20:]))
-	self.Servo10Raw = uint16(binary.LittleEndian.Uint16(p.Payload[22:]))
-	self.Servo11Raw = uint16(binary.LittleEndian.Uint16(p.Payload[24:]))
-	self.Servo12Raw = uint16(binary.LittleEndian.Uint16(p.Payload[26:]))
-	self.Servo13Raw = uint16(binary.LittleEndian.Uint16(p.Payload[28:]))
-	self.Servo14Raw = uint16(binary.LittleEndian.Uint16(p.Payload[30:]))
-	self.Servo15Raw = uint16(binary.LittleEndian.Uint16(p.Payload[32:]))
-	self.Servo16Raw = uint16(binary.LittleEndian.Uint16(p.Payload[34:]))
-	self.Port = uint8(p.Payload[36])
+	self.Port = uint8(p.Payload[20])
 	return nil
 }
 
@@ -1930,7 +1904,6 @@ type MissionRequestPartialList struct {
 	EndIndex        int16 // End index, -1 by default (-1: send list to end). Else a valid index of the list
 	TargetSystem    uint8 // System ID
 	TargetComponent uint8 // Component ID
-	MissionType     uint8 // Mission type, see MAV_MISSION_TYPE
 }
 
 func (self *MissionRequestPartialList) MsgID() MessageID {
@@ -1942,12 +1915,11 @@ func (self *MissionRequestPartialList) MsgName() string {
 }
 
 func (self *MissionRequestPartialList) Pack(p *Packet) error {
-	payload := make([]byte, 7)
+	payload := make([]byte, 6)
 	binary.LittleEndian.PutUint16(payload[0:], uint16(self.StartIndex))
 	binary.LittleEndian.PutUint16(payload[2:], uint16(self.EndIndex))
 	payload[4] = byte(self.TargetSystem)
 	payload[5] = byte(self.TargetComponent)
-	payload[6] = byte(self.MissionType)
 
 	p.MsgID = self.MsgID()
 	p.Payload = payload
@@ -1955,14 +1927,13 @@ func (self *MissionRequestPartialList) Pack(p *Packet) error {
 }
 
 func (self *MissionRequestPartialList) Unpack(p *Packet) error {
-	if len(p.Payload) < 7 {
+	if len(p.Payload) < 6 {
 		return fmt.Errorf("payload too small")
 	}
 	self.StartIndex = int16(binary.LittleEndian.Uint16(p.Payload[0:]))
 	self.EndIndex = int16(binary.LittleEndian.Uint16(p.Payload[2:]))
 	self.TargetSystem = uint8(p.Payload[4])
 	self.TargetComponent = uint8(p.Payload[5])
-	self.MissionType = uint8(p.Payload[6])
 	return nil
 }
 
@@ -1972,7 +1943,6 @@ type MissionWritePartialList struct {
 	EndIndex        int16 // End index, equal or greater than start index.
 	TargetSystem    uint8 // System ID
 	TargetComponent uint8 // Component ID
-	MissionType     uint8 // Mission type, see MAV_MISSION_TYPE
 }
 
 func (self *MissionWritePartialList) MsgID() MessageID {
@@ -1984,12 +1954,11 @@ func (self *MissionWritePartialList) MsgName() string {
 }
 
 func (self *MissionWritePartialList) Pack(p *Packet) error {
-	payload := make([]byte, 7)
+	payload := make([]byte, 6)
 	binary.LittleEndian.PutUint16(payload[0:], uint16(self.StartIndex))
 	binary.LittleEndian.PutUint16(payload[2:], uint16(self.EndIndex))
 	payload[4] = byte(self.TargetSystem)
 	payload[5] = byte(self.TargetComponent)
-	payload[6] = byte(self.MissionType)
 
 	p.MsgID = self.MsgID()
 	p.Payload = payload
@@ -1997,14 +1966,13 @@ func (self *MissionWritePartialList) Pack(p *Packet) error {
 }
 
 func (self *MissionWritePartialList) Unpack(p *Packet) error {
-	if len(p.Payload) < 7 {
+	if len(p.Payload) < 6 {
 		return fmt.Errorf("payload too small")
 	}
 	self.StartIndex = int16(binary.LittleEndian.Uint16(p.Payload[0:]))
 	self.EndIndex = int16(binary.LittleEndian.Uint16(p.Payload[2:]))
 	self.TargetSystem = uint8(p.Payload[4])
 	self.TargetComponent = uint8(p.Payload[5])
-	self.MissionType = uint8(p.Payload[6])
 	return nil
 }
 
@@ -2025,7 +1993,6 @@ type MissionItem struct {
 	Frame           uint8   // The coordinate system of the MISSION. see MAV_FRAME in mavlink_types.h
 	Current         uint8   // false:0, true:1
 	Autocontinue    uint8   // autocontinue to next wp
-	MissionType     uint8   // Mission type, see MAV_MISSION_TYPE
 }
 
 func (self *MissionItem) MsgID() MessageID {
@@ -2037,7 +2004,7 @@ func (self *MissionItem) MsgName() string {
 }
 
 func (self *MissionItem) Pack(p *Packet) error {
-	payload := make([]byte, 38)
+	payload := make([]byte, 37)
 	binary.LittleEndian.PutUint32(payload[0:], math.Float32bits(self.Param1))
 	binary.LittleEndian.PutUint32(payload[4:], math.Float32bits(self.Param2))
 	binary.LittleEndian.PutUint32(payload[8:], math.Float32bits(self.Param3))
@@ -2052,7 +2019,6 @@ func (self *MissionItem) Pack(p *Packet) error {
 	payload[34] = byte(self.Frame)
 	payload[35] = byte(self.Current)
 	payload[36] = byte(self.Autocontinue)
-	payload[37] = byte(self.MissionType)
 
 	p.MsgID = self.MsgID()
 	p.Payload = payload
@@ -2060,7 +2026,7 @@ func (self *MissionItem) Pack(p *Packet) error {
 }
 
 func (self *MissionItem) Unpack(p *Packet) error {
-	if len(p.Payload) < 38 {
+	if len(p.Payload) < 37 {
 		return fmt.Errorf("payload too small")
 	}
 	self.Param1 = math.Float32frombits(binary.LittleEndian.Uint32(p.Payload[0:]))
@@ -2077,7 +2043,6 @@ func (self *MissionItem) Unpack(p *Packet) error {
 	self.Frame = uint8(p.Payload[34])
 	self.Current = uint8(p.Payload[35])
 	self.Autocontinue = uint8(p.Payload[36])
-	self.MissionType = uint8(p.Payload[37])
 	return nil
 }
 
@@ -2086,7 +2051,6 @@ type MissionRequest struct {
 	Seq             uint16 // Sequence
 	TargetSystem    uint8  // System ID
 	TargetComponent uint8  // Component ID
-	MissionType     uint8  // Mission type, see MAV_MISSION_TYPE
 }
 
 func (self *MissionRequest) MsgID() MessageID {
@@ -2098,11 +2062,10 @@ func (self *MissionRequest) MsgName() string {
 }
 
 func (self *MissionRequest) Pack(p *Packet) error {
-	payload := make([]byte, 5)
+	payload := make([]byte, 4)
 	binary.LittleEndian.PutUint16(payload[0:], uint16(self.Seq))
 	payload[2] = byte(self.TargetSystem)
 	payload[3] = byte(self.TargetComponent)
-	payload[4] = byte(self.MissionType)
 
 	p.MsgID = self.MsgID()
 	p.Payload = payload
@@ -2110,13 +2073,12 @@ func (self *MissionRequest) Pack(p *Packet) error {
 }
 
 func (self *MissionRequest) Unpack(p *Packet) error {
-	if len(p.Payload) < 5 {
+	if len(p.Payload) < 4 {
 		return fmt.Errorf("payload too small")
 	}
 	self.Seq = uint16(binary.LittleEndian.Uint16(p.Payload[0:]))
 	self.TargetSystem = uint8(p.Payload[2])
 	self.TargetComponent = uint8(p.Payload[3])
-	self.MissionType = uint8(p.Payload[4])
 	return nil
 }
 
@@ -2190,7 +2152,6 @@ func (self *MissionCurrent) Unpack(p *Packet) error {
 type MissionRequestList struct {
 	TargetSystem    uint8 // System ID
 	TargetComponent uint8 // Component ID
-	MissionType     uint8 // Mission type, see MAV_MISSION_TYPE
 }
 
 func (self *MissionRequestList) MsgID() MessageID {
@@ -2202,10 +2163,9 @@ func (self *MissionRequestList) MsgName() string {
 }
 
 func (self *MissionRequestList) Pack(p *Packet) error {
-	payload := make([]byte, 3)
+	payload := make([]byte, 2)
 	payload[0] = byte(self.TargetSystem)
 	payload[1] = byte(self.TargetComponent)
-	payload[2] = byte(self.MissionType)
 
 	p.MsgID = self.MsgID()
 	p.Payload = payload
@@ -2213,12 +2173,11 @@ func (self *MissionRequestList) Pack(p *Packet) error {
 }
 
 func (self *MissionRequestList) Unpack(p *Packet) error {
-	if len(p.Payload) < 3 {
+	if len(p.Payload) < 2 {
 		return fmt.Errorf("payload too small")
 	}
 	self.TargetSystem = uint8(p.Payload[0])
 	self.TargetComponent = uint8(p.Payload[1])
-	self.MissionType = uint8(p.Payload[2])
 	return nil
 }
 
@@ -2227,7 +2186,6 @@ type MissionCount struct {
 	Count           uint16 // Number of mission items in the sequence
 	TargetSystem    uint8  // System ID
 	TargetComponent uint8  // Component ID
-	MissionType     uint8  // Mission type, see MAV_MISSION_TYPE
 }
 
 func (self *MissionCount) MsgID() MessageID {
@@ -2239,11 +2197,10 @@ func (self *MissionCount) MsgName() string {
 }
 
 func (self *MissionCount) Pack(p *Packet) error {
-	payload := make([]byte, 5)
+	payload := make([]byte, 4)
 	binary.LittleEndian.PutUint16(payload[0:], uint16(self.Count))
 	payload[2] = byte(self.TargetSystem)
 	payload[3] = byte(self.TargetComponent)
-	payload[4] = byte(self.MissionType)
 
 	p.MsgID = self.MsgID()
 	p.Payload = payload
@@ -2251,13 +2208,12 @@ func (self *MissionCount) Pack(p *Packet) error {
 }
 
 func (self *MissionCount) Unpack(p *Packet) error {
-	if len(p.Payload) < 5 {
+	if len(p.Payload) < 4 {
 		return fmt.Errorf("payload too small")
 	}
 	self.Count = uint16(binary.LittleEndian.Uint16(p.Payload[0:]))
 	self.TargetSystem = uint8(p.Payload[2])
 	self.TargetComponent = uint8(p.Payload[3])
-	self.MissionType = uint8(p.Payload[4])
 	return nil
 }
 
@@ -2265,7 +2221,6 @@ func (self *MissionCount) Unpack(p *Packet) error {
 type MissionClearAll struct {
 	TargetSystem    uint8 // System ID
 	TargetComponent uint8 // Component ID
-	MissionType     uint8 // Mission type, see MAV_MISSION_TYPE
 }
 
 func (self *MissionClearAll) MsgID() MessageID {
@@ -2277,10 +2232,9 @@ func (self *MissionClearAll) MsgName() string {
 }
 
 func (self *MissionClearAll) Pack(p *Packet) error {
-	payload := make([]byte, 3)
+	payload := make([]byte, 2)
 	payload[0] = byte(self.TargetSystem)
 	payload[1] = byte(self.TargetComponent)
-	payload[2] = byte(self.MissionType)
 
 	p.MsgID = self.MsgID()
 	p.Payload = payload
@@ -2288,12 +2242,11 @@ func (self *MissionClearAll) Pack(p *Packet) error {
 }
 
 func (self *MissionClearAll) Unpack(p *Packet) error {
-	if len(p.Payload) < 3 {
+	if len(p.Payload) < 2 {
 		return fmt.Errorf("payload too small")
 	}
 	self.TargetSystem = uint8(p.Payload[0])
 	self.TargetComponent = uint8(p.Payload[1])
-	self.MissionType = uint8(p.Payload[2])
 	return nil
 }
 
@@ -2332,7 +2285,6 @@ type MissionAck struct {
 	TargetSystem    uint8 // System ID
 	TargetComponent uint8 // Component ID
 	Type            uint8 // See MAV_MISSION_RESULT enum
-	MissionType     uint8 // Mission type, see MAV_MISSION_TYPE
 }
 
 func (self *MissionAck) MsgID() MessageID {
@@ -2344,11 +2296,10 @@ func (self *MissionAck) MsgName() string {
 }
 
 func (self *MissionAck) Pack(p *Packet) error {
-	payload := make([]byte, 4)
+	payload := make([]byte, 3)
 	payload[0] = byte(self.TargetSystem)
 	payload[1] = byte(self.TargetComponent)
 	payload[2] = byte(self.Type)
-	payload[3] = byte(self.MissionType)
 
 	p.MsgID = self.MsgID()
 	p.Payload = payload
@@ -2356,13 +2307,12 @@ func (self *MissionAck) Pack(p *Packet) error {
 }
 
 func (self *MissionAck) Unpack(p *Packet) error {
-	if len(p.Payload) < 4 {
+	if len(p.Payload) < 3 {
 		return fmt.Errorf("payload too small")
 	}
 	self.TargetSystem = uint8(p.Payload[0])
 	self.TargetComponent = uint8(p.Payload[1])
 	self.Type = uint8(p.Payload[2])
-	self.MissionType = uint8(p.Payload[3])
 	return nil
 }
 
@@ -2500,7 +2450,6 @@ type MissionRequestInt struct {
 	Seq             uint16 // Sequence
 	TargetSystem    uint8  // System ID
 	TargetComponent uint8  // Component ID
-	MissionType     uint8  // Mission type, see MAV_MISSION_TYPE
 }
 
 func (self *MissionRequestInt) MsgID() MessageID {
@@ -2512,11 +2461,10 @@ func (self *MissionRequestInt) MsgName() string {
 }
 
 func (self *MissionRequestInt) Pack(p *Packet) error {
-	payload := make([]byte, 5)
+	payload := make([]byte, 4)
 	binary.LittleEndian.PutUint16(payload[0:], uint16(self.Seq))
 	payload[2] = byte(self.TargetSystem)
 	payload[3] = byte(self.TargetComponent)
-	payload[4] = byte(self.MissionType)
 
 	p.MsgID = self.MsgID()
 	p.Payload = payload
@@ -2524,13 +2472,12 @@ func (self *MissionRequestInt) Pack(p *Packet) error {
 }
 
 func (self *MissionRequestInt) Unpack(p *Packet) error {
-	if len(p.Payload) < 5 {
+	if len(p.Payload) < 4 {
 		return fmt.Errorf("payload too small")
 	}
 	self.Seq = uint16(binary.LittleEndian.Uint16(p.Payload[0:]))
 	self.TargetSystem = uint8(p.Payload[2])
 	self.TargetComponent = uint8(p.Payload[3])
-	self.MissionType = uint8(p.Payload[4])
 	return nil
 }
 
@@ -3155,7 +3102,6 @@ type MissionItemInt struct {
 	Frame           uint8   // The coordinate system of the MISSION. see MAV_FRAME in mavlink_types.h
 	Current         uint8   // false:0, true:1
 	Autocontinue    uint8   // autocontinue to next wp
-	MissionType     uint8   // Mission type, see MAV_MISSION_TYPE
 }
 
 func (self *MissionItemInt) MsgID() MessageID {
@@ -3167,7 +3113,7 @@ func (self *MissionItemInt) MsgName() string {
 }
 
 func (self *MissionItemInt) Pack(p *Packet) error {
-	payload := make([]byte, 38)
+	payload := make([]byte, 37)
 	binary.LittleEndian.PutUint32(payload[0:], math.Float32bits(self.Param1))
 	binary.LittleEndian.PutUint32(payload[4:], math.Float32bits(self.Param2))
 	binary.LittleEndian.PutUint32(payload[8:], math.Float32bits(self.Param3))
@@ -3182,7 +3128,6 @@ func (self *MissionItemInt) Pack(p *Packet) error {
 	payload[34] = byte(self.Frame)
 	payload[35] = byte(self.Current)
 	payload[36] = byte(self.Autocontinue)
-	payload[37] = byte(self.MissionType)
 
 	p.MsgID = self.MsgID()
 	p.Payload = payload
@@ -3190,7 +3135,7 @@ func (self *MissionItemInt) Pack(p *Packet) error {
 }
 
 func (self *MissionItemInt) Unpack(p *Packet) error {
-	if len(p.Payload) < 38 {
+	if len(p.Payload) < 37 {
 		return fmt.Errorf("payload too small")
 	}
 	self.Param1 = math.Float32frombits(binary.LittleEndian.Uint32(p.Payload[0:]))
@@ -3207,7 +3152,6 @@ func (self *MissionItemInt) Unpack(p *Packet) error {
 	self.Frame = uint8(p.Payload[34])
 	self.Current = uint8(p.Payload[35])
 	self.Autocontinue = uint8(p.Payload[36])
-	self.MissionType = uint8(p.Payload[37])
 	return nil
 }
 
@@ -3384,9 +3328,8 @@ func (self *CommandLong) Unpack(p *Packet) error {
 
 // Report status of a command. Includes feedback wether the command was executed.
 type CommandAck struct {
-	Command  uint16 // Command ID, as defined by MAV_CMD enum.
-	Result   uint8  // See MAV_RESULT enum
-	Progress uint8  // WIP: Needs to be set when MAV_RESULT is MAV_RESULT_IN_PROGRESS, values from 0 to 100 for progress percentage, 255 for unknown progress.
+	Command uint16 // Command ID, as defined by MAV_CMD enum.
+	Result  uint8  // See MAV_RESULT enum
 }
 
 func (self *CommandAck) MsgID() MessageID {
@@ -3398,10 +3341,9 @@ func (self *CommandAck) MsgName() string {
 }
 
 func (self *CommandAck) Pack(p *Packet) error {
-	payload := make([]byte, 4)
+	payload := make([]byte, 3)
 	binary.LittleEndian.PutUint16(payload[0:], uint16(self.Command))
 	payload[2] = byte(self.Result)
-	payload[3] = byte(self.Progress)
 
 	p.MsgID = self.MsgID()
 	p.Payload = payload
@@ -3409,12 +3351,11 @@ func (self *CommandAck) Pack(p *Packet) error {
 }
 
 func (self *CommandAck) Unpack(p *Packet) error {
-	if len(p.Payload) < 4 {
+	if len(p.Payload) < 3 {
 		return fmt.Errorf("payload too small")
 	}
 	self.Command = uint16(binary.LittleEndian.Uint16(p.Payload[0:]))
 	self.Result = uint8(p.Payload[2])
-	self.Progress = uint8(p.Payload[3])
 	return nil
 }
 
@@ -4165,8 +4106,6 @@ type OpticalFlow struct {
 	FlowCompMX     float32 // Flow in meters in x-sensor direction, angular-speed compensated
 	FlowCompMY     float32 // Flow in meters in y-sensor direction, angular-speed compensated
 	GroundDistance float32 // Ground distance in meters. Positive value: distance known. Negative value: Unknown distance
-	FlowRateX      float32 // Flow rate in radians/second about X axis
-	FlowRateY      float32 // Flow rate in radians/second about Y axis
 	FlowX          int16   // Flow in pixels * 10 in x-sensor direction (dezi-pixels)
 	FlowY          int16   // Flow in pixels * 10 in y-sensor direction (dezi-pixels)
 	SensorId       uint8   // Sensor ID
@@ -4182,17 +4121,15 @@ func (self *OpticalFlow) MsgName() string {
 }
 
 func (self *OpticalFlow) Pack(p *Packet) error {
-	payload := make([]byte, 34)
+	payload := make([]byte, 26)
 	binary.LittleEndian.PutUint64(payload[0:], uint64(self.TimeUsec))
 	binary.LittleEndian.PutUint32(payload[8:], math.Float32bits(self.FlowCompMX))
 	binary.LittleEndian.PutUint32(payload[12:], math.Float32bits(self.FlowCompMY))
 	binary.LittleEndian.PutUint32(payload[16:], math.Float32bits(self.GroundDistance))
-	binary.LittleEndian.PutUint32(payload[20:], math.Float32bits(self.FlowRateX))
-	binary.LittleEndian.PutUint32(payload[24:], math.Float32bits(self.FlowRateY))
-	binary.LittleEndian.PutUint16(payload[28:], uint16(self.FlowX))
-	binary.LittleEndian.PutUint16(payload[30:], uint16(self.FlowY))
-	payload[32] = byte(self.SensorId)
-	payload[33] = byte(self.Quality)
+	binary.LittleEndian.PutUint16(payload[20:], uint16(self.FlowX))
+	binary.LittleEndian.PutUint16(payload[22:], uint16(self.FlowY))
+	payload[24] = byte(self.SensorId)
+	payload[25] = byte(self.Quality)
 
 	p.MsgID = self.MsgID()
 	p.Payload = payload
@@ -4200,19 +4137,17 @@ func (self *OpticalFlow) Pack(p *Packet) error {
 }
 
 func (self *OpticalFlow) Unpack(p *Packet) error {
-	if len(p.Payload) < 34 {
+	if len(p.Payload) < 26 {
 		return fmt.Errorf("payload too small")
 	}
 	self.TimeUsec = uint64(binary.LittleEndian.Uint64(p.Payload[0:]))
 	self.FlowCompMX = math.Float32frombits(binary.LittleEndian.Uint32(p.Payload[8:]))
 	self.FlowCompMY = math.Float32frombits(binary.LittleEndian.Uint32(p.Payload[12:]))
 	self.GroundDistance = math.Float32frombits(binary.LittleEndian.Uint32(p.Payload[16:]))
-	self.FlowRateX = math.Float32frombits(binary.LittleEndian.Uint32(p.Payload[20:]))
-	self.FlowRateY = math.Float32frombits(binary.LittleEndian.Uint32(p.Payload[24:]))
-	self.FlowX = int16(binary.LittleEndian.Uint16(p.Payload[28:]))
-	self.FlowY = int16(binary.LittleEndian.Uint16(p.Payload[30:]))
-	self.SensorId = uint8(p.Payload[32])
-	self.Quality = uint8(p.Payload[33])
+	self.FlowX = int16(binary.LittleEndian.Uint16(p.Payload[20:]))
+	self.FlowY = int16(binary.LittleEndian.Uint16(p.Payload[22:]))
+	self.SensorId = uint8(p.Payload[24])
+	self.Quality = uint8(p.Payload[25])
 	return nil
 }
 
@@ -7768,22 +7703,22 @@ var DialectCommon *Dialect = &Dialect{
 		MSG_ID_GLOBAL_POSITION_INT:                     104,
 		MSG_ID_RC_CHANNELS_SCALED:                      237,
 		MSG_ID_RC_CHANNELS_RAW:                         244,
-		MSG_ID_SERVO_OUTPUT_RAW:                        175,
-		MSG_ID_MISSION_REQUEST_PARTIAL_LIST:            4,
-		MSG_ID_MISSION_WRITE_PARTIAL_LIST:              168,
-		MSG_ID_MISSION_ITEM:                            95,
-		MSG_ID_MISSION_REQUEST:                         177,
+		MSG_ID_SERVO_OUTPUT_RAW:                        222,
+		MSG_ID_MISSION_REQUEST_PARTIAL_LIST:            212,
+		MSG_ID_MISSION_WRITE_PARTIAL_LIST:              9,
+		MSG_ID_MISSION_ITEM:                            254,
+		MSG_ID_MISSION_REQUEST:                         230,
 		MSG_ID_MISSION_SET_CURRENT:                     28,
 		MSG_ID_MISSION_CURRENT:                         28,
-		MSG_ID_MISSION_REQUEST_LIST:                    148,
-		MSG_ID_MISSION_COUNT:                           52,
-		MSG_ID_MISSION_CLEAR_ALL:                       25,
+		MSG_ID_MISSION_REQUEST_LIST:                    132,
+		MSG_ID_MISSION_COUNT:                           221,
+		MSG_ID_MISSION_CLEAR_ALL:                       232,
 		MSG_ID_MISSION_ITEM_REACHED:                    11,
-		MSG_ID_MISSION_ACK:                             146,
+		MSG_ID_MISSION_ACK:                             153,
 		MSG_ID_SET_GPS_GLOBAL_ORIGIN:                   41,
 		MSG_ID_GPS_GLOBAL_ORIGIN:                       39,
 		MSG_ID_PARAM_MAP_RC:                            78,
-		MSG_ID_MISSION_REQUEST_INT:                     129,
+		MSG_ID_MISSION_REQUEST_INT:                     196,
 		MSG_ID_SAFETY_SET_ALLOWED_AREA:                 15,
 		MSG_ID_SAFETY_ALLOWED_AREA:                     3,
 		MSG_ID_ATTITUDE_QUATERNION_COV:                 167,
@@ -7795,11 +7730,11 @@ var DialectCommon *Dialect = &Dialect{
 		MSG_ID_DATA_STREAM:                             21,
 		MSG_ID_MANUAL_CONTROL:                          243,
 		MSG_ID_RC_CHANNELS_OVERRIDE:                    124,
-		MSG_ID_MISSION_ITEM_INT:                        209,
+		MSG_ID_MISSION_ITEM_INT:                        38,
 		MSG_ID_VFR_HUD:                                 20,
 		MSG_ID_COMMAND_INT:                             158,
 		MSG_ID_COMMAND_LONG:                            152,
-		MSG_ID_COMMAND_ACK:                             189,
+		MSG_ID_COMMAND_ACK:                             143,
 		MSG_ID_MANUAL_SETPOINT:                         106,
 		MSG_ID_SET_ATTITUDE_TARGET:                     49,
 		MSG_ID_ATTITUDE_TARGET:                         22,
@@ -7812,7 +7747,7 @@ var DialectCommon *Dialect = &Dialect{
 		MSG_ID_HIL_CONTROLS:                            63,
 		MSG_ID_HIL_RC_INPUTS_RAW:                       54,
 		MSG_ID_HIL_ACTUATOR_CONTROLS:                   47,
-		MSG_ID_OPTICAL_FLOW:                            145,
+		MSG_ID_OPTICAL_FLOW:                            175,
 		MSG_ID_GLOBAL_VISION_POSITION_ESTIMATE:         102,
 		MSG_ID_VISION_POSITION_ESTIMATE:                158,
 		MSG_ID_VISION_SPEED_ESTIMATE:                   208,

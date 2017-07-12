@@ -17,8 +17,7 @@ import (
 )
 
 type Dialect struct {
-	Name        string
-	StringSizes map[int]bool
+	Name string
 
 	XMLName  xml.Name   `xml:"mavlink"`
 	Version  string     `xml:"version"`
@@ -53,6 +52,10 @@ type Message struct {
 	Name        string          `xml:"name,attr"`
 	Description string          `xml:"description"`
 	Fields      []*MessageField `xml:"field"`
+
+	// this field is only used during ParseDialect phase,
+	// it contains an empty string after ParseDialect returns
+	Raw string `xml:",innerxml"`
 }
 
 type MessageField struct {
@@ -226,6 +229,34 @@ func SanitizeComments(s string) string {
 	return strings.Replace(s, "\n", "\n// ", -1)
 }
 
+// Return the number of non-extension fields, that are contained in rawmsg, where rawmsg
+// is raw XML content of "message" element.
+func numBaseFields(rawmsg string) int {
+	dec := xml.NewDecoder(strings.NewReader(rawmsg))
+
+	fields := 0
+	for {
+		t, err := dec.Token()
+		if err != nil {
+			if err != io.EOF {
+				panic(err)
+			}
+			return fields
+		}
+		if se, ok := t.(xml.StartElement); ok {
+			switch se.Name.Local {
+			case "field":
+				fields++
+			case "extensions":
+				return fields
+			}
+			if err := dec.Skip(); err != nil {
+				panic(err)
+			}
+		}
+	}
+}
+
 // read in an xml-based dialect file,
 // and populate a Dialect struct with its contents
 func ParseDialect(in io.Reader, name string) (*Dialect, error) {
@@ -249,9 +280,16 @@ func ParseDialect(in io.Reader, name string) (*Dialect, error) {
 	n := 0
 	for _, msg := range dialect.Messages {
 		if msg.ID <= 0xff {
+			// we ignore field extensions, since they are from
+			// mavlink v2
+			ind := numBaseFields(msg.Raw)
+			if ind >= 0 {
+				msg.Fields = msg.Fields[:ind]
+			}
 			filteredMessages[n] = msg
 			n += 1
 		}
+		msg.Raw = ""
 	}
 	dialect.Messages = filteredMessages[:n]
 

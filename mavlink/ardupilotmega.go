@@ -491,9 +491,8 @@ func (self *SetMagOffsets) Unpack(p *Packet) error {
 
 // state of APM memory
 type Meminfo struct {
-	Freemem32 uint32 // free memory (32 bit)
-	Brkval    uint16 // heap top
-	Freemem   uint16 // free memory
+	Brkval  uint16 // heap top
+	Freemem uint16 // free memory
 }
 
 func (self *Meminfo) MsgID() MessageID {
@@ -505,10 +504,9 @@ func (self *Meminfo) MsgName() string {
 }
 
 func (self *Meminfo) Pack(p *Packet) error {
-	payload := make([]byte, 8)
-	binary.LittleEndian.PutUint32(payload[0:], uint32(self.Freemem32))
-	binary.LittleEndian.PutUint16(payload[4:], uint16(self.Brkval))
-	binary.LittleEndian.PutUint16(payload[6:], uint16(self.Freemem))
+	payload := make([]byte, 4)
+	binary.LittleEndian.PutUint16(payload[0:], uint16(self.Brkval))
+	binary.LittleEndian.PutUint16(payload[2:], uint16(self.Freemem))
 
 	p.MsgID = self.MsgID()
 	p.Payload = payload
@@ -516,12 +514,11 @@ func (self *Meminfo) Pack(p *Packet) error {
 }
 
 func (self *Meminfo) Unpack(p *Packet) error {
-	if len(p.Payload) < 8 {
+	if len(p.Payload) < 4 {
 		return fmt.Errorf("payload too small")
 	}
-	self.Freemem32 = uint32(binary.LittleEndian.Uint32(p.Payload[0:]))
-	self.Brkval = uint16(binary.LittleEndian.Uint16(p.Payload[4:]))
-	self.Freemem = uint16(binary.LittleEndian.Uint16(p.Payload[6:]))
+	self.Brkval = uint16(binary.LittleEndian.Uint16(p.Payload[0:]))
+	self.Freemem = uint16(binary.LittleEndian.Uint16(p.Payload[2:]))
 	return nil
 }
 
@@ -2642,7 +2639,7 @@ var DialectArdupilotmega *Dialect = &Dialect{
 	crcExtras: map[MessageID]uint8{
 		MSG_ID_SENSOR_OFFSETS:            134,
 		MSG_ID_SET_MAG_OFFSETS:           219,
-		MSG_ID_MEMINFO:                   112,
+		MSG_ID_MEMINFO:                   208,
 		MSG_ID_AP_ADC:                    188,
 		MSG_ID_DIGICAM_CONFIGURE:         84,
 		MSG_ID_DIGICAM_CONTROL:           22,
