@@ -2,11 +2,12 @@ package mavlink
 
 import (
 	"bufio"
+	"encoding/json"
 	"errors"
 	"io"
 	"sync"
 
-	"github.com/cnord/go-mavlink/x25"
+	"github.com/team-rocos/go-mavlink/x25"
 )
 
 //go:generate mavgen -f ../mavlink-upstream/message_definitions/v1.0/common.xml
@@ -24,6 +25,7 @@ const (
 var (
 	ErrUnknownMsgID = errors.New("unknown msg id")
 	ErrCrcFail      = errors.New("checksum did not match")
+	Messages        = make(map[string]Message)
 )
 
 type MessageID uint8
@@ -42,12 +44,18 @@ type Message interface {
 // use the ToPacket() and FromPacket() routines on specific message
 // types to convert them to/from the Message type.
 type Packet struct {
-	SeqID    uint8     // Sequence of packet
-	SysID    uint8     // ID of message sender system/aircraft
-	CompID   uint8     // ID of the message sender component
-	MsgID    MessageID // ID of message in payload
-	Payload  []byte
-	Checksum uint16
+	SeqID    uint8     `json:"seqId"`  // Sequence of packet
+	SysID    uint8     `json:"sysId"`  // ID of message sender system/aircraft
+	CompID   uint8     `json:"compId"` // ID of the message sender component
+	MsgID    MessageID `json:"msgId"`  // ID of message in payload
+	Payload  []byte    `json:"payload"`
+	Checksum uint16    `json:"checksum"`
+}
+
+// JSONPacket represents a packet that can be marshalled to and from json
+type JSONPacket struct {
+	Packet
+	Payload json.RawMessage `json:"payload"`
 }
 
 type Decoder struct {

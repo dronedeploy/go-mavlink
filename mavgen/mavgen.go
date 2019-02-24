@@ -71,6 +71,8 @@ type MessageField struct {
 
 var funcMap = template.FuncMap{
 	"UpperCamelCase": UpperCamelCase,
+	"LowerCamelCase": LowerCamelCase,
+	"LowerCase":      LowerCase,
 }
 
 func (f *MessageField) SizeInBytes() int {
@@ -136,6 +138,28 @@ func UpperCamelCase(s string) string {
 		}
 	}
 	return b.String()
+}
+
+// convert names to lower camel case
+func LowerCamelCase(s string) string {
+	var b bytes.Buffer
+	for i, frag := range strings.Split(s, "_") {
+		if frag != "" {
+
+			if i == 0 {
+				b.WriteString(strings.ToLower(frag[:1]))
+			} else {
+				b.WriteString(strings.ToUpper(frag[:1]))
+			}
+
+			b.WriteString(strings.ToLower(frag[1:]))
+		}
+	}
+	return b.String()
+}
+
+func LowerCase(s string) string {
+	return strings.ToLower(s)
 }
 
 // helper to pack a single element into a payload.
@@ -376,6 +400,7 @@ func (d *Dialect) GenerateGo(w io.Writer) error {
 
 	bb.WriteString("import (\n")
 	bb.WriteString("\"encoding/binary\"\n")
+	bb.WriteString("\"encoding/json\"\n")
 	bb.WriteString("\"fmt\"\n")
 	bb.WriteString("\"math\"\n")
 	bb.WriteString(")\n")
@@ -389,6 +414,7 @@ func (d *Dialect) GenerateGo(w io.Writer) error {
 
 	err := d.generateEnums(&bb)
 	d.generateClasses(&bb)
+	d.generateMessageMap(&bb)
 	d.generateMsgIds(&bb)
 
 	dofmt := true
@@ -458,6 +484,17 @@ var Dialect{{.Name | UpperCamelCase}} *Dialect = &Dialect{
 	return template.Must(template.New("msgIds").Funcs(funcMap).Parse(msgIdTmpl)).Execute(w, d)
 }
 
+func (d *Dialect) generateMessageMap(w io.Writer) error {
+	finderTempl := `
+func init() {
+	{{range .Messages}}{{$name := .Name}}Messages["{{$name | UpperCamelCase | LowerCase}}"] = &{{$name | UpperCamelCase}}{}
+	{{end}}
+} `
+
+	return template.Must(template.New("msgFinder").Funcs(funcMap).Parse(finderTempl)).Execute(w, d)
+
+}
+
 // generate class definitions for each msg id.
 // for now, pack/unpack payloads via encoding/binary since it
 // is expedient and correct. optimize this if/when needed.
@@ -468,7 +505,7 @@ func (d *Dialect) generateClasses(w io.Writer) error {
 {{$name := .Name | UpperCamelCase}}
 // {{.Description}}
 type {{$name}} struct { {{range .Fields}}
-  {{.Name | UpperCamelCase}} {{.GoType}} // {{.Description}}{{end}}
+  {{.Name | UpperCamelCase}} {{.GoType}} ` + "`json:\"{{.Name | LowerCamelCase }}\"`" + ` // {{.Description}}{{end}}` + `
 }
 
 func (self *{{$name}}) MsgID() MessageID {
@@ -495,6 +532,17 @@ func (self *{{$name}}) Unpack(p *Packet) error {
 	{{.PayloadUnpackSequence}}{{end}}
 	return nil
 }
+
+func (self *{{$name}}) ToJSON() ([]byte, error) {
+	return json.Marshal(self)
+}
+
+func {{$name}}FromJSON(data []byte) (*{{$name}}, error) {
+	p := &{{$name}}{}
+	err := json.Unmarshal(data, p)
+	return p, err
+}
+
 {{end}}
 `
 	for _, m := range d.Messages {

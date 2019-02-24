@@ -14,6 +14,21 @@ import (
 //
 //////////////////////////////////////////////////
 
+// Message represents a MAV message
+type Message interface {
+	MsgID() uint8
+	MsgName() string
+	Pack(p *Packet) error
+	Unpack(p *Packet) error
+	ToJSON() ([]byte, error)
+}
+
+// FromJSON takes an array of bytes and generates a message
+func (m Message) FromJSON(data []byte, msg Message) (Message, error) {
+	err := json.Unmarshal(data, msg)
+	return msg, err
+}
+
 // AccelcalVehiclePos:
 const (
 	ACCELCAL_VEHICLE_POS_LEVEL    = 1        //
@@ -3245,60 +3260,6 @@ func RpmFromJSON(data []byte) (*Rpm, error) {
 	p := &Rpm{}
 	err := json.Unmarshal(data, p)
 	return p, err
-}
-
-func init() {
-	Messages["sensoroffsets"] = &SensorOffsets{}
-	Messages["setmagoffsets"] = &SetMagOffsets{}
-	Messages["meminfo"] = &Meminfo{}
-	Messages["apadc"] = &ApAdc{}
-	Messages["digicamconfigure"] = &DigicamConfigure{}
-	Messages["digicamcontrol"] = &DigicamControl{}
-	Messages["mountconfigure"] = &MountConfigure{}
-	Messages["mountcontrol"] = &MountControl{}
-	Messages["mountstatus"] = &MountStatus{}
-	Messages["fencepoint"] = &FencePoint{}
-	Messages["fencefetchpoint"] = &FenceFetchPoint{}
-	Messages["fencestatus"] = &FenceStatus{}
-	Messages["ahrs"] = &Ahrs{}
-	Messages["simstate"] = &Simstate{}
-	Messages["hwstatus"] = &Hwstatus{}
-	Messages["radio"] = &Radio{}
-	Messages["limitsstatus"] = &LimitsStatus{}
-	Messages["wind"] = &Wind{}
-	Messages["data16"] = &Data16{}
-	Messages["data32"] = &Data32{}
-	Messages["data64"] = &Data64{}
-	Messages["data96"] = &Data96{}
-	Messages["rangefinder"] = &Rangefinder{}
-	Messages["airspeedautocal"] = &AirspeedAutocal{}
-	Messages["rallypoint"] = &RallyPoint{}
-	Messages["rallyfetchpoint"] = &RallyFetchPoint{}
-	Messages["compassmotstatus"] = &CompassmotStatus{}
-	Messages["ahrs2"] = &Ahrs2{}
-	Messages["camerastatus"] = &CameraStatus{}
-	Messages["camerafeedback"] = &CameraFeedback{}
-	Messages["battery2"] = &Battery2{}
-	Messages["ahrs3"] = &Ahrs3{}
-	Messages["autopilotversionrequest"] = &AutopilotVersionRequest{}
-	Messages["remotelogdatablock"] = &RemoteLogDataBlock{}
-	Messages["remotelogblockstatus"] = &RemoteLogBlockStatus{}
-	Messages["ledcontrol"] = &LedControl{}
-	Messages["magcalprogress"] = &MagCalProgress{}
-	Messages["magcalreport"] = &MagCalReport{}
-	Messages["ekfstatusreport"] = &EkfStatusReport{}
-	Messages["pidtuning"] = &PidTuning{}
-	Messages["deepstall"] = &Deepstall{}
-	Messages["gimbalreport"] = &GimbalReport{}
-	Messages["gimbalcontrol"] = &GimbalControl{}
-	Messages["gimbaltorquecmdreport"] = &GimbalTorqueCmdReport{}
-	Messages["goproheartbeat"] = &GoproHeartbeat{}
-	Messages["goprogetrequest"] = &GoproGetRequest{}
-	Messages["goprogetresponse"] = &GoproGetResponse{}
-	Messages["goprosetrequest"] = &GoproSetRequest{}
-	Messages["goprosetresponse"] = &GoproSetResponse{}
-	Messages["rpm"] = &Rpm{}
-
 }
 
 // Message IDs
