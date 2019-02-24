@@ -5,3 +5,4 @@ mavgen/mavgen
 
 # os x cruft
 .DS_Store
+mavlink-upstream
