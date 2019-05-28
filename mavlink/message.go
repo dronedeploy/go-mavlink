@@ -26,6 +26,7 @@ var (
 	ErrUnknownMsgID = errors.New("unknown msg id")
 	ErrCrcFail      = errors.New("checksum did not match")
 	Messages        = make(map[string]Message)
+	MessageIDs      = make(map[MessageID]Message)
 )
 
 type MessageID uint8

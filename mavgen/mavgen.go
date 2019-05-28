@@ -487,7 +487,7 @@ var Dialect{{.Name | UpperCamelCase}} *Dialect = &Dialect{
 func (d *Dialect) generateMessageMap(w io.Writer) error {
 	finderTempl := `
 func init() {
-	{{range .Messages}}{{$name := .Name}}Messages["{{$name | UpperCamelCase | LowerCase}}"] = &{{$name | UpperCamelCase}}{}
+	{{range .Messages}}{{$name := .Name}}{{$id := .ID}}Messages["{{$name | UpperCamelCase | LowerCase}}"] = &{{$name | UpperCamelCase}}MessageIDs[{{$id}}] = &{{$name | UpperCamelCase}}{}
 	{{end}}
 } `
 
