@@ -51,6 +51,7 @@ type Packet struct {
 	MsgID    MessageID `json:"msgId"`  // ID of message in payload
 	Payload  []byte    `json:"payload"`
 	Checksum uint16    `json:"checksum"`
+	IsRepeat bool
 }
 
 // JSONPacket represents a packet that can be marshalled to and from json
@@ -255,8 +256,13 @@ func (enc *Encoder) EncodePacket(p *Packet) error {
 
 	crc := x25.New()
 
+	seq := enc.CurrSeqID
+	if p.IsRepeat {
+		seq = p.SeqID
+	}
+
 	// header
-	hdr := []byte{startByte, byte(len(p.Payload)), enc.CurrSeqID, p.SysID, p.CompID, uint8(p.MsgID)}
+	hdr := []byte{startByte, byte(len(p.Payload)), seq, p.SysID, p.CompID, uint8(p.MsgID)}
 	if err := enc.writeAndCheck(hdr); err != nil {
 		return err
 	}
@@ -282,46 +288,9 @@ func (enc *Encoder) EncodePacket(p *Packet) error {
 	}
 
 	err = enc.bw.Flush()
-	if err == nil {
+	if err == nil && !p.IsRepeat {
 		enc.CurrSeqID++
 	}
-
-	return err
-}
-
-// EncodeRepeatPacket writes p to its writer but uses the same sequence number as the original
-func (enc *Encoder) EncodeRepeatPacket(p *Packet) error {
-
-	crc := x25.New()
-
-	// header
-	hdr := []byte{startByte, byte(len(p.Payload)), p.SeqID, p.SysID, p.CompID, uint8(p.MsgID)}
-	if err := enc.writeAndCheck(hdr); err != nil {
-		return err
-	}
-	crc.Write(hdr[1:]) // don't include start byte
-
-	// payload
-	if err := enc.writeAndCheck(p.Payload); err != nil {
-		return err
-	}
-	crc.Write(p.Payload)
-
-	// crc extra
-	crcx, err := enc.Dialects.findCrcX(p.MsgID)
-	if err != nil {
-		return err
-	}
-	crc.WriteByte(crcx)
-
-	// crc
-	crcBytes := u16ToBytes(crc.Sum16())
-	if err := enc.writeAndCheck(crcBytes); err != nil {
-		return err
-	}
-
-	err = enc.bw.Flush()
-	// unlike a normal EncodePacket, we don't increment the sequence number as this is a repeat send
 
 	return err
 }
