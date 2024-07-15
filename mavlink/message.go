@@ -7,7 +7,7 @@ import (
 	"io"
 	"sync"
 
-	"github.com/team-rocos/go-mavlink/x25"
+	"github.com/dronedeploy/go-mavlink/x25"
 )
 
 //go:generate mavgen -f ../mavlink-upstream/message_definitions/v1.0/common.xml
